@@ -164,8 +164,8 @@ if ($message['text'] == "排班表" || $message['text'] == "班表") {  //班表
         'messages' => array(
             array(
                 'type' => 'image', // 訊息類型 (圖片)
-                'originalContentUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210411.jpg', // 回復圖片
-                'previewImageUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210411.jpg' // 回復的預覽圖片
+                'originalContentUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210825.jpg', // 回復圖片
+                'previewImageUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210825.jpg' // 回復的預覽圖片
             )
         )
     ));
