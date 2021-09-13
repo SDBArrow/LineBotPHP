@@ -348,7 +348,7 @@ if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
     $Security = $row["security"]; //取出權限等級
 
     //判斷權限
-    if ($Security == "1"){
+    if ($Security == 1){
         $returnmessage = "你是管理員"; 
     }else{
         $returnmessage = "你不是管理員";
