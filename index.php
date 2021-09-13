@@ -291,7 +291,7 @@ switch (true) {
         ));
         mysqli_close($db_connection);
         break;
-    case ($message['text'] == "更新" || $message['text'] == "更新名字"): //更新 line 名稱， 用於更改值日生
+    case ($message['text'] == "更新" || $message['text'] == "更新名字"): //更新 line 名稱
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -322,7 +322,7 @@ switch (true) {
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                 $returnmessage = "已更新資料";
             } else{
-                $returnmessage = "名字已是最新";
+                $returnmessage = "更新失敗，請洽管理員";
             }
         } else {  //無此人名字
             $returnmessage = "請先註冊";
@@ -366,8 +366,18 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
 
     //判斷權限
     if ($Security == 1){ 
-        $duty_id = mb_substr($message['text'] ,3,2,"UTF-8");
-        $returnmessage = $duty_id; 
+        //查詢資料庫的個人流水號
+        $name = mb_substr($message['text'] ,6,"UTF-8");
+        $sql = "select * from member where name = '" . $name . "'"; 
+        if ($row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql))){
+            $returnmessage = "名字存在";
+        }else{
+            $returnmessage = "名字不存在";
+        }  //查詢結果
+        /*
+        $returnuserid = $row["userid"]; //取出資料庫的流水號
+        $duty_id = mb_substr($message['text'] ,3,2,"UTF-8");  
+        $returnmessage = "時段：".$duty_id."\n userid = ".$returnuserid; */
     }else{
         $returnmessage = "你不是管理員";
     }
