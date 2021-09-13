@@ -367,7 +367,7 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
     //判斷權限
     if ($Security == 1){ 
         //查詢資料庫的個人流水號
-        $name = mb_substr($message['text'] ,6,"UTF-8");
+        $name = mb_substr($message['text'], 6, null, "UTF-8");
         /*
         $sql = "select * from member where name = '" . $name . "'"; 
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
