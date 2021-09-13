@@ -349,7 +349,7 @@ switch (true) {
         break;
 }
 
-if ($message['text'] == "排班") {
+if (substr($message['text'],0,2) == "排班") {
     // 回傳名字到原本發訊息的地方(群組或機器人私訊)
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
