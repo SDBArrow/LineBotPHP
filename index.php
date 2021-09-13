@@ -271,7 +271,7 @@ switch (true) {
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
 
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
-            $sql = "alter table member AUTO_INCREMENT=1;set @@auto_increment_increment=1;set @@auto_increment_offset=1;alter table member AUTO_INCREMENT=1;insert into heroku_f12557e3de6953c.member (name, lineuid) value ('".$Name."','".$UserId."');";
+            $sql = "set @@auto_increment_increment=1;set @@auto_increment_offset=1;alter table member AUTO_INCREMENT=1;insert into heroku_f12557e3de6953c.member (name, lineuid) value ('".$Name."','".$UserId."');";
             mysqli_query($db_connection, $sql);  //新增到資料庫
             $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
         } else {  //無此人名字
