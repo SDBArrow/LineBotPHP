@@ -361,27 +361,31 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
     // 查詢是否為管理員
     include('./connect.php'); //連結資料庫設定
     $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $Security = $row["security"]; //取出權限等級
+    $messagedata = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $Security = $messagedata["security"]; //取出權限等級
 
     //判斷權限
     if ($Security == 1){ 
+
         //查詢資料庫的個人流水號
-        $name = mb_substr($message['text'], 7, null, "UTF-8");
-        
+        $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
         $sql = "select * from member where name = '" . $name . "'"; 
-        $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
+        $table_member = mysqli_query($db_connection, $sql);  //查詢結果
+        $rowtotal = mysqli_num_rows($table_member); //總資料比數
         
-        if ($rowtotal > 0){  
-            $returnmessage = "找到";
+        if ($rowtotal > 0){  //如果有這個人
+            $table_member_userid = $table_member["userid"]; //取出流水號
+            $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取輸入的工作日編號
+            $sql = "update duty_list set userid = '" .$table_member_userid. "'where duty_id ='".$duty_id ."'"; 
+            if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                $returnmessage = "已更新到工作日";
+            } else{
+                $returnmessage = "更新失敗";
+            }
+
         }else{
-            $returnmessage = "找不到";
-        }  //查詢結果
-        /*
-        $returnuserid = $row["userid"]; //取出資料庫的流水號
-        $duty_id = mb_substr($message['text'] ,3,2,"UTF-8");  
-        $returnmessage = "時段：".$duty_id."\n userid = ".$returnuserid; */
+            $returnmessage = "此人尚未註冊";
+        }  
     }else{
         $returnmessage = "你不是管理員";
     }
