@@ -351,12 +351,13 @@ switch (true) {
 
 if ($message['text'] == "排班") {
     // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+    $test = substr($message['text'],0,2);
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
             array(
                 'type' => 'text', // 訊息類型 (文字)
-                'text' => substr($message['text'],0,2), // 回復訊息
+                'text' => "收到：".$test, // 回復訊息
             )
         )
     ));  
