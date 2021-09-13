@@ -350,16 +350,33 @@ switch (true) {
 }
 
 if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂碼需用mb_substr設定編碼
+    $UserId = $event['source']['userId']; //抓該訊息的發送者
+    
+    // 查詢是否為管理員
+    include('./connect.php'); //連結資料庫設定
+    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
+    $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $Security = $row["security"]; //取出權限等級
+
+    //判斷權限
+    if ($Security == 1){ 
+        $duty_id = mb_substr($message['text'] ,3,2,"UTF-8");
+        $returnmessage = $duty_id; 
+    }else{
+        $returnmessage = "你不是管理員";
+    }
+
     // 回傳名字到原本發訊息的地方(群組或機器人私訊)
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
             array(
                 'type' => 'text', // 訊息類型 (文字)
-                'text' => mb_substr($message['text'] ,0,2,"UTF-8"), // 回復訊息
+                'text' => $returnmessage, // 回復訊息
             )
         )
     ));  
+    mysqli_close($db_connection);
 }
 
 if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
