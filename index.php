@@ -318,7 +318,7 @@ switch (true) {
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
 
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
-            $sql = "update member set name = '" .$Name. "'where id =".$UserId ."'";
+            $sql = "update member set name = '" .$Name. "'where lineid =".$UserId ."'";
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                 $returnmessage = "已更新資料";
             } else{
