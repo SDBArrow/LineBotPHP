@@ -224,8 +224,7 @@ switch (true) {
             )
         ));
         break;
-    case (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $message['text']) || preg_match("/^[0-9]{2}-[0-9]{2}$/", $message['text'])):
-        //日期查遛狗名單，判斷inputdata是否為日期
+    case (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $message['text']) || preg_match("/^[0-9]{2}-[0-9]{2}$/", $message['text']))://日期查遛狗名單，判斷inputdata是否為日期
         $time = $message['text'];  //抓時間
         $__y = "";
         $__m = "";
