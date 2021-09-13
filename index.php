@@ -376,7 +376,7 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
         if ($rowtotal > 0){  //如果有這個人
             $table_member_userid = $table_member["userid"]; //取出流水號
             $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取輸入的工作日編號
-            $sql = "update duty_list set userid = '" .$table_member_userid. "'where duty_id ='".$duty_id ."'"; 
+            $sql = "update duty_list set userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                 $returnmessage = "已更新到工作日";
             } else{
@@ -384,7 +384,7 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
             }
 
         }else{
-            $returnmessage = "此人尚未註冊";
+            $returnmessage = "被排班的人員尚未註冊";
         }  
     }else{
         $returnmessage = "你不是管理員";
