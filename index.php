@@ -332,7 +332,7 @@ switch (true) {
             )
         ));
         mysqli_close($db_connection);
-        break;
+        break;/*
     case (substr($message['text'],0,2) == "排班"): //更新 line 名稱， 用於更改值日生
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $client->replyMessage(array(
@@ -344,10 +344,22 @@ switch (true) {
                 )
             )
         ));
-        mysqli_close($db_connection);
-        break;
+        break;*/
     default:
         break;
+}
+
+if ($message['text'] == "排班") {
+    // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'text', // 訊息類型 (文字)
+                'text' => "成功", // 回復訊息
+            )
+        )
+    ));  
 }
 
 if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
