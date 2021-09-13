@@ -156,7 +156,7 @@ switch (true) {
         $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
         $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
-    case ($message['text'] == "排班表" || $message['text'] == "班表"): //班表
+    case ($message['text'] == "班表"): //班表
         $client->replyMessage(array(
             'replyToken' => $event['replyToken'],
             'messages' => array(
@@ -328,6 +328,19 @@ switch (true) {
                 array(
                     'type' => 'text', // 訊息類型 (文字)
                     'text' => $returnmessage, // 回復訊息
+                )
+            )
+        ));
+        mysqli_close($db_connection);
+        break;
+    case (substr($message['text'],0,2) == "排班"): //更新 line 名稱， 用於更改值日生
+        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'text', // 訊息類型 (文字)
+                    'text' => "成功", // 回復訊息
                 )
             )
         ));
