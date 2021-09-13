@@ -243,8 +243,8 @@ switch (true) {
         if (checkdate($__m, $__d, $__y)) { //確認時間是否有效
             $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         }
-        break;/*
-    case ($message['text'] == "新增資料" || $message['text'] == "新增資料"): //將UID添加到資料庫
+        break;
+    case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //將UID添加到資料庫
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -271,7 +271,8 @@ switch (true) {
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
 
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
-            $sql = "insert into heroku_f12557e3de6953c.duty_list (name, lineuid, name) value (".$sql.",".$sql.",".$sql.")";
+            $sql = "insert into heroku_f12557e3de6953c.member (name, lineuid) value (".$Name.",".$UserId.")";
+            mysqli_query($db_connection, $sql);  //新增到資料庫
             $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
         } else {  //無此人名字
             $returnmessage = "已經註冊過";
@@ -287,7 +288,7 @@ switch (true) {
             )
         ));
         mysqli_close($db_connection);
-        break;*/
+        break;
     default:
         break;
 }
