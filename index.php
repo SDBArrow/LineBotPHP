@@ -405,7 +405,7 @@ switch (true) {
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
 
-        if ($rowtotal > 1) {    //筆數 = 0 代表無資料
+        if ($rowtotal > 0) {    //筆數 = 0 代表無資料
             $sql = "update duty_list set name = '" .$Name. "'where id =".$UserId ."'";
             mysqli_query($db_connection, $sql);  //新增到資料庫
             $returnmessage = "已更新資料";
