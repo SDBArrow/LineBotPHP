@@ -368,14 +368,15 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
     if ($Security == 1){ 
         //查詢資料庫的個人流水號
         $name = mb_substr($message['text'] ,6,"UTF-8");
+        /*
         $sql = "select * from member where name = '" . $name . "'"; 
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-        
+        */
         if ($rowtotal > 0){  
-            $returnmessage = "名字存在";
+            $returnmessage = $name;
         }else{
-            $returnmessage = "名字不存在";
+            $returnmessage = $name;
         }  //查詢結果
         /*
         $returnuserid = $row["userid"]; //取出資料庫的流水號
