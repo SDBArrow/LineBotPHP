@@ -349,15 +349,14 @@ switch (true) {
         break;
 }
 
-if ($message['text'] == "排班") {
+if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂碼需用mb_substr設定編碼
     // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-    $test = substr($message['text'],0,2);
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
             array(
                 'type' => 'text', // 訊息類型 (文字)
-                'text' => "收到：".$test, // 回復訊息
+                'text' => mb_substr($message['text'] ,0,2,"UTF-8"), // 回復訊息
             )
         )
     ));  
