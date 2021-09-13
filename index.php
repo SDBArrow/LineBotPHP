@@ -271,8 +271,11 @@ switch (true) {
 
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
             $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
-            mysqli_query($db_connection, $sql);  //新增到資料庫
-            $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
+            if (mysqli_query($db_connection, $sql)){    //新增到資料庫
+                $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
+            } else{
+                $returnmessage = "新增失敗，請洽管理員";
+            }
         } else {  //無此人名字
             $returnmessage = "已經註冊過";
         }
@@ -316,8 +319,11 @@ switch (true) {
 
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
             $sql = "update duty_list set name = '" .$Name. "'where id =".$UserId ."'";
-            mysqli_query($db_connection, $sql);  //新增到資料庫
-            $returnmessage = "已更新資料";
+            if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                $returnmessage = "已更新資料";
+            } else{
+                $returnmessage = "更新失敗，請洽管理員";
+            }
         } else {  //無此人名字
             $returnmessage = "請先註冊";
         }
