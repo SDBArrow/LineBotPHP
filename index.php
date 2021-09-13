@@ -244,7 +244,7 @@ switch (true) {
             $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         }
         break;
-    case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //將UID添加到資料庫
+    case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //添加用戶 UID、name 到資料庫
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -289,97 +289,7 @@ switch (true) {
         ));
         mysqli_close($db_connection);
         break;
-        case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //將UID添加到資料庫
-
-        $UserId = $event['source']['userId']; //抓該訊息的發送者
-        $GroupId = $event['source']['groupId']; //抓該訊息的群組
-        $Name = ""; //初始化
-
-        // 查詢名字
-        if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-            $response = $client->getUserProfile(array(
-                'UserId' => $UserId,
-            ));
-            $Name = $response->displayName;  //取名字欄位
-        } else {
-            $response = $client->getGroupProfile(array(
-                'UserId' => $UserId,
-                'GroupId' => $GroupId,
-            ));
-            $Name = $response->displayName;
-        }
-
-        //連線到資料庫取資料
-        include('./connect.php'); //連結資料庫設定
-        $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
-        $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-
-        if ($rowtotal < 1) {    //筆數 = 0 代表無資料
-            $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
-            mysqli_query($db_connection, $sql);  //新增到資料庫
-            $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
-        } else {  //無此人名字
-            $returnmessage = "已經註冊過";
-        }
-        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => $returnmessage, // 回復訊息
-                )
-            )
-        ));
-        mysqli_close($db_connection);
-        break;
-    case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //將UID添加到資料庫
-
-        $UserId = $event['source']['userId']; //抓該訊息的發送者
-        $GroupId = $event['source']['groupId']; //抓該訊息的群組
-        $Name = ""; //初始化
-
-        // 查詢名字
-        if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-            $response = $client->getUserProfile(array(
-                'UserId' => $UserId,
-            ));
-            $Name = $response->displayName;  //取名字欄位
-        } else {
-            $response = $client->getGroupProfile(array(
-                'UserId' => $UserId,
-                'GroupId' => $GroupId,
-            ));
-            $Name = $response->displayName;
-        }
-
-        //連線到資料庫取資料
-        include('./connect.php'); //連結資料庫設定
-        $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
-        $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-
-        if ($rowtotal < 1) {    //筆數 = 0 代表無資料
-            $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
-            mysqli_query($db_connection, $sql);  //新增到資料庫
-            $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
-        } else {  //無此人名字
-            $returnmessage = "已經註冊過";
-        }
-        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => $returnmessage, // 回復訊息
-                )
-            )
-        ));
-        mysqli_close($db_connection);
-        break;
-    case ($message['text'] == "更新" || $message['text'] == "更新資料"): //將UID添加到資料庫
+    case ($message['text'] == "更新" || $message['text'] == "更新資料"): //更新 line 名稱， 用於更改值日生
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -433,7 +343,7 @@ if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
     
     // 查詢是否為管理員
     include('./connect.php'); //連結資料庫設定
-    $sql = "select * from duty_list where lineuid = '" . $UserId . "'"; 
+    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
     $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
     $Security = $row["security"]; //取出權限等級
 
