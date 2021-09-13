@@ -291,7 +291,7 @@ switch (true) {
         ));
         mysqli_close($db_connection);
         break;
-    case ($message['text'] == "更新" || $message['text'] == "更新資料"): //更新 line 名稱， 用於更改值日生
+    case ($message['text'] == "更新" || $message['text'] == "更新名字"): //更新 line 名稱， 用於更改值日生
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -322,7 +322,7 @@ switch (true) {
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                 $returnmessage = "已更新資料";
             } else{
-                $returnmessage = "更新失敗，請洽管理員";
+                $returnmessage = "名字已是最新";
             }
         } else {  //無此人名字
             $returnmessage = "請先註冊";
