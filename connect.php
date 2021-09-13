@@ -3,9 +3,9 @@ $server = getenv('DB_HOST'); //主機
 $db_username = getenv('DB_USERNAME'); //你的資料庫使用者名稱
 $db_password = getenv('DB_PASSWORD'); //你的資料庫密碼
 $db_name = getenv('DB_NAME'); //選擇資料庫
-$cleardb_ca = getenv('CLEARDB_SSL_CA_CERT'); //你的資料庫使用者名稱
-$cleardb_cert = getenv('CLEARDB_SSL_CLI_CERT'); //你的資料庫密碼
-$cleardb_key = getenv('CLEARDB_SSL_KEY'); //選擇資料庫
+$cleardb_ca = getenv('CLEARDB_SSL_CA_CERT'); //SSL ca
+$cleardb_cert = getenv('CLEARDB_SSL_CLI_CERT'); //SSL cert
+$cleardb_key = getenv('CLEARDB_SSL_KEY'); //SSL rsa key
 
 //檢測有沒有 openssl
 if(!extension_loaded('openssl')) {
