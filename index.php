@@ -383,7 +383,7 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
             } else{
                 $returnmessage = "更新失敗";
             }*/
-            $returnmessage = "已存在".$name;
+            $returnmessage = "已存在".$name.$table_member_userid;
         }else{
             $returnmessage = "被排班的人員尚未註冊";
         }  
