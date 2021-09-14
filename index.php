@@ -338,67 +338,54 @@ switch (true) {
             )
         ));
         mysqli_close($db_connection);
-        break;/*
-    case (substr($message['text'],0,2) == "排班"): //更新 line 名稱， 用於更改值日生
+        break;
+    case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
+        $UserId = $event['source']['userId']; //抓該訊息的發送者
+    
+        // 查詢是否為管理員
+        include('./connect.php'); //連結資料庫設定
+        $sql = "select * from member where lineuid = '" . $UserId . "'"; 
+        $messagedata = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+        $Security = $messagedata["security"]; //取出權限等級
+    
+        //判斷權限
+        if ($Security == 1){ 
+            //查詢資料庫的個人流水號
+            $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            $sql = "select * from member where name = '" . $name . "'"; 
+            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
+            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            
+            if ($rowtotal > 0){  //如果有這個人
+                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
+                $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
+                $sql = "update duty_list set userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
+                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $returnmessage = "已更新到工作日";
+                } else{
+                    $returnmessage = "更新失敗";
+                }
+            }else{
+                $returnmessage = "被排班的人員尚未註冊";
+            }  
+        }else{
+            $returnmessage = "你不是管理員";
+        }
+    
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $client->replyMessage(array(
             'replyToken' => $event['replyToken'],
             'messages' => array(
                 array(
                     'type' => 'text', // 訊息類型 (文字)
-                    'text' => "成功", // 回復訊息
+                    'text' => $returnmessage, // 回復訊息
                 )
             )
-        ));
-        break;*/
+        ));  
+        mysqli_close($db_connection);
+        break;
     default:
         break;
-}
-
-if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂碼需用mb_substr設定編碼
-    $UserId = $event['source']['userId']; //抓該訊息的發送者
-    
-    // 查詢是否為管理員
-    include('./connect.php'); //連結資料庫設定
-    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $messagedata = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $Security = $messagedata["security"]; //取出權限等級
-
-    //判斷權限
-    if ($Security == 1){ 
-        //查詢資料庫的個人流水號
-        $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
-        $sql = "select * from member where name = '" . $name . "'"; 
-        $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($table_member); //總資料比數
-        
-        if ($rowtotal > 0){  //如果有這個人
-            $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
-            $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
-            $sql = "update duty_list set userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
-            if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                $returnmessage = "已更新到工作日";
-            } else{
-                $returnmessage = "更新失敗";
-            }
-        }else{
-            $returnmessage = "被排班的人員尚未註冊";
-        }  
-    }else{
-        $returnmessage = "你不是管理員";
-    }
-
-    // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'text', // 訊息類型 (文字)
-                'text' => $returnmessage, // 回復訊息
-            )
-        )
-    ));  
-    mysqli_close($db_connection);
 }
 
 if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
