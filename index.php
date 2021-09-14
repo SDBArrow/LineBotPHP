@@ -162,8 +162,8 @@ switch (true) {
             'messages' => array(
                 array(
                     'type' => 'image', // 訊息類型 (圖片)
-                    'originalContentUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210905.jpg', // 回復圖片
-                    'previewImageUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210905.jpg' // 回復的預覽圖片
+                    'originalContentUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg', // 回復圖片
+                    'previewImageUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg' // 回復的預覽圖片
                 )
             )
         ));
