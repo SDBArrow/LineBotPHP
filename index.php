@@ -374,7 +374,7 @@ if (mb_substr($message['text'] ,0,2,"UTF-8") == "排班") { //substr會出現亂
         
         if ($rowtotal > 0){  //如果有這個人
             
-            //$table_member_userid = $table_member["userid"]; //取出流水號
+            $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
             /*
             $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
             $sql = "update duty_list set userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
