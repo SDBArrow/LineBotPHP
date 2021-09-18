@@ -388,31 +388,31 @@ switch (true) {
         break;
 }
 
-if ($message['text'] == "管理員" || $message['text'] == "管理員檢測") {
-    $UserId = $event['source']['userId']; //抓該訊息的發送者
-    
-    // 查詢是否為管理員
-    include('./connect.php'); //連結資料庫設定
-    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $Security = $row["security"]; //取出權限等級
+if ($message['text'] == "測試" || $message['text'] == "測試") {
 
-    //判斷權限
-    if ($Security == 1){
-        $returnmessage = "你是管理員"; 
-    }else{
-        $returnmessage = "你不是管理員";
-    }
-
-    // 回傳名字到原本發訊息的地方(群組或機器人私訊)
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
             array(
-                'type' => 'text', // 訊息類型 (文字)
-                'text' => $returnmessage, // 回復訊息
+                'type' => 'template', //訊息類型 (模板)
+                'altText' => 'Example confirm template', //替代文字
+                'template' => array(
+                    'type' => 'confirm', //類型 (確認)
+                    'text' => 'Are you sure?', //文字
+                    'actions' => array(
+                        array(
+                            'type' => 'message', //類型 (訊息)
+                            'label' => 'Yes', //標籤 1
+                            'text' => 'Yes' //用戶發送文字 1
+                        ),
+                        array(
+                            'type' => 'message', //類型 (訊息)
+                            'label' => 'No', //標籤 2
+                            'text' => 'No' //用戶發送文字 2
+                        )
+                    )
+                )
             )
         )
-    ));  
-    mysqli_close($db_connection);
+    ));
 }
