@@ -395,7 +395,7 @@ if ($message['text'] == "測試" || $message['text'] == "測試") {
         'messages' => array(
             array(
                 'type' => 'template', //訊息類型 (模板)
-                'altText' => 'Example confirm template', //替代文字
+                'altText' => '工作自我檢核', //替代文字
                 'template' => array(
                     'type' => 'confirm', //類型 (確認)
                     'text' => 'Are you sure?', //文字
