@@ -46,7 +46,7 @@ foreach ($client->parseEvents() as $event) {
 function WorkSchedule($time, $event, $client)
 {
     include('./connect.php'); //連結資料庫設定
-    $timecount = (strtotime($time) - strtotime("2021-02-21 00:00:00")) / (60 * 60 * 24); //相隔天數
+    $timecount = (strtotime($time) - strtotime("2021-09-19 00:00:00")) / (60 * 60 * 24); //相隔天數
     $weekcount = floor($timecount / 7); //相隔週數
 
     //今天單周還雙周
@@ -66,36 +66,37 @@ function WorkSchedule($time, $event, $client)
     $row_name = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
     $name = $row_name["name"];
 
+    //回傳變數初始化
+    $returntext = "";
+
     if ($name == "") {  //檢查是否是替補日
-        $tempor = 0; //初始化
-        $tempor = $tempor + $weekcount;  //替補計算
-        $tempor = $tempor % 12; //因為有12個人，所以每12次重新一次
+        $tempor = 6; //初始化
+        $tempor = $tempor + floor($weekcount/2)*3;  //替補計算
+        if ( $oddandeven == 0 && $weekdaytempor == 0){
+            $tempor = $tempor % 11; //因為有12個人，所以每12次重新一次
+        }elseif($oddandeven == 0 && $weekdaytempor == 1){
+            $tempor = $tempor % 11 + 1 ; //因為有12個人，所以每12次重新一次
+        }else{  
+            $tempor = $tempor % 11 + 2; //因為有11個人，所以每11次重新一次
+        }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
         $row_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $turn = $row_trun["name"];
-        //傳輸訊息
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $turn // 回復訊息
-                )
-            )
-        ));
+        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $turn; // 回復訊息
     } else {   //不是替補日
-        //傳輸訊息
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name // 回復訊息
-                )
-            )
-        ));
+        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
+    //傳輸訊息
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'text', // 訊息類型 (文字)
+                'text' => $returntext,
+            )
+        )
+    ));
     mysqli_close($db_connection);
 }
 //訊息判斷
@@ -384,35 +385,307 @@ switch (true) {
         ));  
         mysqli_close($db_connection);
         break;
-    default:
-        break;
-}
-
-if ($message['text'] == "測試" || $message['text'] == "測試") {
-
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'template', //訊息類型 (模板)
-                'altText' => '工作自我檢核', //替代文字
-                'template' => array(
-                    'type' => 'confirm', //類型 (確認)
-                    'text' => 'Are you sure?', //文字
-                    'actions' => array(
-                        array(
-                            'type' => 'message', //類型 (訊息)
-                            'label' => 'Yes', //標籤 1
-                            'text' => 'Yes' //用戶發送文字 1
-                        ),
-                        array(
-                            'type' => 'message', //類型 (訊息)
-                            'label' => 'No', //標籤 2
-                            'text' => 'No' //用戶發送文字 2
+    case ($message['text'] == "簽到" || $message['text'] == "打卡" || $message['text'] == "工作檢核"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
                         )
                     )
                 )
             )
-        )
-    ));
+        ));
+        break;
+    case ($message['text'] == "E419冰箱(檢查有無發臭過期食物)"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "E419倒垃圾"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "E419走廊整潔"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "關E419冷氣、電燈"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "E420走廊整潔"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "E420檢查設備"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "E420整理桌椅"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "關E420電燈、冷氣"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "關小房間冷氣、電燈"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    case ($message['text'] == "整理鞋櫃"):
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => '工作自我檢核', //替代文字
+                    'template' => array(
+                        'type' => 'confirm', //類型 (確認)
+                        'text' => 'Are you sure?', //文字
+                        'actions' => array(
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'Yes', //標籤 1
+                                'text' => 'Yes' //用戶發送文字 1
+                            ),
+                            array(
+                                'type' => 'message', //類型 (訊息)
+                                'label' => 'No', //標籤 2
+                                'text' => 'No' //用戶發送文字 2
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+        break;
+    default:
+        break;
 }
+/*
+if ($message['text'] == "測試" || $message['text'] == "測試") {
+
+}*/
