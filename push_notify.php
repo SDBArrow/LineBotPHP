@@ -34,11 +34,11 @@ function WorkSchedule($time, $client)
 		$tempor = 6; //初始化 上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
-            $tempor = $tempor % 11; 
+            $tempor = $tempor % 11;                 //兩個星期的第一次
         }elseif($oddandeven == 0 && $weekdaytempor == 1){
-            $tempor = $tempor % 11 + 1; 
-        }else{  
-            $tempor = $tempor % 11 + 2;
+            $tempor = $tempor % 11 + 1;             //兩個星期的第二次
+        }else{      
+            $tempor = $tempor % 11 + 2;             //兩個星期的第三次
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
@@ -48,12 +48,13 @@ function WorkSchedule($time, $client)
     } else {   //不是替補日
         $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
+	//Push訊息
 	$client->pushtonotify(
 		$message = array(
 			'message' => $returntext
 		)
 	);
-	mysqli_close($db_connection);
+	mysqli_close($db_connection); //關閉資料庫連線
 }
 //heroku 00:00會執行此檔案，但由於heroku沒在使用會進入休眠狀態，所以正常需要一分鐘緩衝時間，最慢五分鐘過
 if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {

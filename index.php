@@ -73,11 +73,11 @@ function WorkSchedule($time, $event, $client)
         $tempor = 6; //初始化 上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
-            $tempor = $tempor % 11; 
+            $tempor = $tempor % 11;                 //兩個星期的第一次
         }elseif($oddandeven == 0 && $weekdaytempor == 1){
-            $tempor = $tempor % 11 + 1; 
-        }else{  
-            $tempor = $tempor % 11 + 2;
+            $tempor = $tempor % 11 + 1;             //兩個星期的第二次
+        }else{      
+            $tempor = $tempor % 11 + 2;             //兩個星期的第三次
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
@@ -97,7 +97,7 @@ function WorkSchedule($time, $event, $client)
             )
         )
     ));
-    mysqli_close($db_connection);
+    mysqli_close($db_connection); //關閉資料庫連線
 }
 
 //訊息判斷
@@ -400,12 +400,12 @@ switch (true) {
                             array(
                                 'type' => 'message', //類型 (訊息)
                                 'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
                                 'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -422,7 +422,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E419冰箱(檢查有無發臭過期食物)', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -449,7 +449,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E419倒垃圾', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -476,7 +476,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E419走廊整潔', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -503,7 +503,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => '關E419冷氣、電燈', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -530,7 +530,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E420走廊整潔', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -557,7 +557,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E420檢查設備', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -584,7 +584,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => 'E420整理桌椅', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -611,7 +611,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => '關E420電燈、冷氣', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -638,7 +638,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => '關小房間冷氣、電燈', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
@@ -665,7 +665,7 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => '整理鞋櫃', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
