@@ -395,16 +395,16 @@ switch (true) {
                     'altText' => '工作自我檢核', //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => 'Are you sure?', //文字
+                        'text' => '工作檢核', //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
+                                'label' => '完成', //標籤 1
                                 'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
+                                'label' => '尚未完成', //標籤 2
                                 'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
@@ -426,13 +426,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -453,13 +453,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -480,13 +480,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -507,13 +507,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -534,13 +534,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -561,13 +561,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -588,13 +588,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -615,13 +615,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -642,13 +642,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
@@ -669,13 +669,13 @@ switch (true) {
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'Yes', //標籤 1
-                                'text' => 'Yes' //用戶發送文字 1
+                                'label' => '完成', //標籤 1
+                                'text' => '完成' //用戶發送文字 1
                             ),
                             array(
                                 'type' => 'message', //類型 (訊息)
-                                'label' => 'No', //標籤 2
-                                'text' => 'No' //用戶發送文字 2
+                                'label' => '尚未完成', //標籤 2
+                                'text' => '尚未完成' //用戶發送文字 2
                             )
                         )
                     )
