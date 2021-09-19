@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
-//$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
+//$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
+$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
 $client = new LINENotifyXiaoFei($channelAccessToken); //把Token,Secret丟到LINENotifyXiaoFei建立連線
 function WorkSchedule($time, $client)
 {
@@ -42,9 +42,9 @@ function WorkSchedule($time, $client)
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
-        $row_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $turn = $row_trun["name"];
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $turn; // 回復訊息
+        $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $dutytrun = $row_dutytrun["name"];
+        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
         $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
@@ -56,7 +56,7 @@ function WorkSchedule($time, $client)
 	mysqli_close($db_connection);
 }
 //heroku 00:00會執行此檔案，但由於heroku沒在使用會進入休眠狀態，所以正常需要一分鐘緩衝時間，最慢五分鐘過
-if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "16:33" || date('H:i') == "16:34" || date('H:i') == "16:35") {
+if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
 	//標頭
 	$client->pushtonotify(
 		$message = array(

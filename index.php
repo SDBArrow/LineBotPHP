@@ -81,9 +81,9 @@ function WorkSchedule($time, $event, $client)
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
-        $row_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $turn = $row_trun["name"];
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $turn; // 回復訊息
+        $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $dutytrun = $row_dutytrun["name"];
+        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
         $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
