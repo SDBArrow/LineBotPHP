@@ -70,14 +70,14 @@ function WorkSchedule($time, $event, $client)
     $returntext = "";
 
     if ($name == "") {  //檢查是否是替補日
-        $tempor = 6; //初始化
-        $tempor = $tempor + floor($weekcount/2)*3;  //替補計算
+        $tempor = 6; //初始化 上次替補結尾輪到6號
+        $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
-            $tempor = $tempor % 11; //因為有12個人，所以每12次重新一次
+            $tempor = $tempor % 11; 
         }elseif($oddandeven == 0 && $weekdaytempor == 1){
-            $tempor = $tempor % 11 + 1 ; //因為有12個人，所以每12次重新一次
+            $tempor = $tempor % 11 + 1; 
         }else{  
-            $tempor = $tempor % 11 + 2; //因為有11個人，所以每11次重新一次
+            $tempor = $tempor % 11 + 2;
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
@@ -99,6 +99,7 @@ function WorkSchedule($time, $event, $client)
     ));
     mysqli_close($db_connection);
 }
+
 //訊息判斷
 switch (true) {
     case $message['text'] == "早安": //早安
