@@ -28,7 +28,7 @@ function WorkSchedule($time, $client)
 	$name = $row_name["name"];
 
     //回傳變數初始化
-    $returntext = "";
+    $ReturnMessage = "";
 	
 	if ($name == "") {  //檢查是否是替補日
 		$tempor = 6; //初始化 上次替補結尾輪到6號
@@ -44,14 +44,14 @@ function WorkSchedule($time, $client)
         $sql = "select * from duty_turn where id = " . $tempor;
         $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $row_dutytrun["name"];
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
+        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
+        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
 	//Push訊息
 	$client->pushtonotify(
 		$message = array(
-			'message' => $returntext
+			'message' => $ReturnMessage
 		)
 	);
 	mysqli_close($db_connection); //關閉資料庫連線

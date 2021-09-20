@@ -6,42 +6,64 @@ include("./config.php");
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
-//加入的處理
-foreach ($client->parseEvents() as $event) {
-    switch ($event['type']) {
-        case 'message':
-            $message = $event['message'];
-            break;
-        case 'postback':
-            //require_once('postback.php'); //postback
-            break;
-        case 'follow': //加為好友觸發
-            $client->replyMessage(array(
-                'replyToken' => $event['replyToken'],
-                'messages' => array(
-                    array(
-                        'type' => 'text',
-                        'text' => '您好，我是小飛的溫泉指揮官'
-                    )
-                )
-            ));
-            break;
-        case 'join': //加入群組觸發
-            $client->replyMessage(array(
-                'replyToken' => $event['replyToken'],
-                'messages' => array(
-                    array(
-                        'type' => 'text',
-                        'text' => '您好，我是小飛的溫泉指揮官'
-                    )
-                )
-            ));
-            break;
-        default:
-            //error_log("Unsupporeted event type: " . $event['type']);
-            break;
-    }
+
+
+//回覆文字訊息
+function ReplyText($ReturnMessage, $event, $client){
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'text', // 訊息類型 (文字)
+                'text' => $ReturnMessage // 回復訊息
+            )
+        )
+    ));
 }
+
+//回覆圖片訊息
+function ReplyImage($ReturnImageUrl, $event, $client){
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'image', // 訊息類型 (圖片)
+                'originalContentUrl' => $ReturnImageUrl, // 回復圖片
+                'previewImageUrl' => $ReturnImageUrl // 回復的預覽圖片
+            )
+        )
+    ));
+}
+
+//回覆模板訊息
+function ReplayTemplate($ReturnTitle, $ReturnOptions1, $ReturnOptions2, $event, $client){
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'template', //訊息類型 (模板)
+                'altText' => '工作自我檢核', //替代文字
+                'template' => array(
+                    'type' => 'confirm', //類型 (確認)
+                    'text' => $ReturnTitle, //文字
+                    'actions' => array(
+                        array(
+                            'type' => 'message', //類型 (訊息)
+                            'label' => '完成', //標籤 1
+                            'text' => $ReturnOptions1 //用戶發送文字 1
+                        ),
+                        array(
+                            'type' => 'message', //類型 (訊息)
+                            'label' => '尚未完成', //標籤 2
+                            'text' => $ReturnOptions2 //用戶發送文字 2
+                        )
+                    )
+                )
+            )
+        )
+    ));
+}
+
 //處理遛狗查詢 
 function WorkSchedule($time, $event, $client)
 {
@@ -67,7 +89,7 @@ function WorkSchedule($time, $event, $client)
     $name = $row_name["name"];
 
     //回傳變數初始化
-    $returntext = "";
+    $ReturnMessage = "";
 
     if ($name == "") {  //檢查是否是替補日
         $tempor = 6; //初始化 上次替補結尾輪到6號
@@ -83,68 +105,55 @@ function WorkSchedule($time, $event, $client)
         $sql = "select * from duty_turn where id = " . $tempor;
         $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $row_dutytrun["name"];
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
+        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
-        $returntext = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
+        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
     //傳輸訊息
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'text', // 訊息類型 (文字)
-                'text' => $returntext,
-            )
-        )
-    ));
+    ReplyText($ReturnMessage, $event, $client); //回傳訊息
     mysqli_close($db_connection); //關閉資料庫連線
+}
+
+//加入的處理
+foreach ($client->parseEvents() as $event) {
+    switch ($event['type']) {
+        case 'message':
+            $message = $event['message'];
+            break;
+        case 'postback':
+            //require_once('postback.php'); //postback
+            break;
+        case 'follow': //加為好友觸發
+            $ReturnMessage = "您好，我是小飛的溫泉指揮官";
+            ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            break;
+        case 'join': //加入群組觸發
+            $ReturnMessage = "您好，我是小飛的溫泉指揮官";
+            ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            break;
+        default:
+            //error_log("Unsupporeted event type: " . $event['type']);
+            break;
+    }
 }
 
 //訊息判斷
 switch (true) {
     case $message['text'] == "早安": //早安
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => "早安!" // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "早安!";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => "指令表\n1.今日遛狗\n2.註冊\n3.更新註冊名字(Line有改名的話)\n4.班表\n5.日期查詢範例：2022-01-01\n6.注意事項\n7.明日遛狗\n8.餵食規則\n9.座位表\n10.地板物品\n11.抽" // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.更新註冊名字(Line有改名的話)\n4.班表\n5.日期查詢範例：2022-01-01\n6.注意事項\n7.明日遛狗\n8.餵食規則\n9.座位表\n10.地板物品\n11.抽";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => '小飛之後帶下去上廁所，如果當下小飛沒馬上大號的話，要至少等小飛5~10分鐘再帶上來，小飛通常會下去一陣子後才上大號，其餘規則請至419_3門口查看' // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "小飛之後帶下去上廁所，如果當下小飛沒馬上大號的話，要至少等小飛5~10分鐘再帶上來，小飛通常會下去一陣子後才上大號，其餘規則請至419_3門口查看";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "餵食規則" || $message['text'] == "餵食"): //餵食
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => "一餐:\n1/8罐頭+70克飼料\n1/8罐頭+200公克水" // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "一餐:\n1/8罐頭+70克飼料\n1/8罐頭+200公克水";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "遛狗" || $message['text'] == "今日遛狗" || $message['text'] == "今天遛狗"): //今天遛狗
         $time = date('Y-m-d');  //抓時間
@@ -159,52 +168,20 @@ switch (true) {
         $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
     case ($message['text'] == "班表"): //班表
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'image', // 訊息類型 (圖片)
-                    'originalContentUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg', // 回復圖片
-                    'previewImageUrl' => 'https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg' // 回復的預覽圖片
-                )
-            )
-        ));
+        $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg";
+        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "地板" || $message['text'] == "地板物品"): //地板物品
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'image', // 訊息類型 (圖片)
-                    'originalContentUrl' => 'https://dogmission.herokuapp.com/images/floor_20210905.jpg', // 回復圖片
-                    'previewImageUrl' => 'https://dogmission.herokuapp.com/images/floor_20210905.jpg' // 回復的預覽圖片
-                )
-            )
-        ));
+        $ReturnImageUrl = "https://dogmission.herokuapp.com/images/floor_20210905.jpg";
+        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "座位" || $message['text'] == "座位表"): //座位
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'image', // 訊息類型 (圖片)
-                    'originalContentUrl' => 'https://dogmission.herokuapp.com/images/seat_20210908.jpg', // 回復圖片
-                    'previewImageUrl' => 'https://dogmission.herokuapp.com/images/seat_20210908.jpg' // 回復的預覽圖片
-                )
-            )
-        ));
+        $ReturnImageUrl = "https://dogmission.herokuapp.com/images/seat_20210908.jpg";
+        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
-
     case ($message['text'] == "昨天遛狗" || $message['text'] == "前天遛狗" || $message['text'] == "大前天遛狗"): //智障問題
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => '不會自己往上看嗎' // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "不會自己往上看嗎";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "抽":  //抽獎
         require 'vendor/autoload.php';  //引入軟件包PhpSpreadsheet
@@ -214,17 +191,8 @@ switch (true) {
         $worksheet = $spreadsheet->getActiveSheet();
         $highestRow = $worksheet->getHighestRow(); // 總行数 
         $rand = rand(1, $highestRow); //產生最大數為資料數量的一個亂數
-        $name = $worksheet->getCellByColumnAndRow(1, $rand)->getValue(); //取得亂數產生的相對URL
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'image', // 訊息類型 (圖片)
-                    'originalContentUrl' => $name, // 回復圖片
-                    'previewImageUrl' => $name // 回復的預覽圖片
-                )
-            )
-        ));
+        $ReturnImageUrl = $worksheet->getCellByColumnAndRow(1, $rand)->getValue(); //取得亂數產生的相對URL
+        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $message['text']) || preg_match("/^[0-9]{2}-[0-9]{2}$/", $message['text']))://日期查遛狗名單，判斷inputdata是否為日期
         $time = $message['text'];  //抓時間
@@ -274,23 +242,16 @@ switch (true) {
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
             $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
             if (mysqli_query($db_connection, $sql)){    //新增到資料庫
-                $returnmessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
+                $ReturnMessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
             } else{
-                $returnmessage = "新增失敗，請洽管理員";
+                $ReturnMessage = "新增失敗，請洽管理員";
             }
         } else {  //無此人名字
-            $returnmessage = "已經註冊過";
+            $ReturnMessage = "已經註冊過";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => $returnmessage, // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "不會自己往上看嗎";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case ($message['text'] == "更新" || $message['text'] == "更新名字"): //更新 line 名稱
@@ -322,23 +283,16 @@ switch (true) {
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
             $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                $returnmessage = "已更新資料";
+                $ReturnMessage = "已更新資料";
             } else{
-                $returnmessage = "更新失敗，請洽管理員";
+                $ReturnMessage = "更新失敗，請洽管理員";
             }
         } else {  //無此人名字
-            $returnmessage = "請先註冊";
+            $ReturnMessage = "請先註冊";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => $returnmessage, // 回復訊息
-                )
-            )
-        ));
+        $ReturnMessage = "不會自己往上看嗎";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
@@ -363,330 +317,90 @@ switch (true) {
                 $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
                 $sql = "update duty_list set userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                    $returnmessage = "已更新到工作日";
+                    $ReturnMessage = "已更新到工作日";
                 } else{
-                    $returnmessage = "更新失敗";
+                    $ReturnMessage = "更新失敗";
                 }
             }else{
-                $returnmessage = "被排班的人員尚未註冊";
+                $ReturnMessage = "被排班的人員尚未註冊";
             }  
         }else{
-            $returnmessage = "你不是管理員";
+            $ReturnMessage = "你不是管理員";
         }
     
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'text', // 訊息類型 (文字)
-                    'text' => $returnmessage, // 回復訊息
-                )
-            )
-        ));  
+        $ReturnMessage = "不會自己往上看嗎";
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
-    case ($message['text'] == "簽到" || $message['text'] == "打卡" || $message['text'] == "工作檢核"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => '工作檢核', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E419冰箱(檢查有無發臭過期食物)"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E419冰箱(檢查有無發臭過期食物)', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E419倒垃圾"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E419倒垃圾', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E419走廊整潔"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E419走廊整潔', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "關E419冷氣、電燈"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => '關E419冷氣、電燈', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E420走廊整潔"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E420走廊整潔', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E420檢查設備"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E420檢查設備', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "E420整理桌椅"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => 'E420整理桌椅', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "關E420電燈、冷氣"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => '關E420電燈、冷氣', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "關小房間冷氣、電燈"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => '關小房間冷氣、電燈', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
-    case ($message['text'] == "整理鞋櫃"):
-        $client->replyMessage(array(
-            'replyToken' => $event['replyToken'],
-            'messages' => array(
-                array(
-                    'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
-                    'template' => array(
-                        'type' => 'confirm', //類型 (確認)
-                        'text' => '整理鞋櫃', //文字
-                        'actions' => array(
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '完成', //標籤 1
-                                'text' => '完成' //用戶發送文字 1
-                            ),
-                            array(
-                                'type' => 'message', //類型 (訊息)
-                                'label' => '尚未完成', //標籤 2
-                                'text' => '尚未完成' //用戶發送文字 2
-                            )
-                        )
-                    )
-                )
-            )
-        ));
-        break;
+    case (mb_substr($message['text'] ,0,4,"UTF-8") == "工作檢核"):
+        switch (true) {
+            case ($message['text'] == "E419冰箱(檢查有無發臭過期食物)"):
+                $ReturnTitle = "E419冰箱(檢查有無發臭過期食物)";
+                $ReturnOptions1 = "完成 E419冰箱";
+                $ReturnOptions2 = "尚未完成 E419冰箱";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "E419倒垃圾"):
+                $ReturnTitle = "E419倒垃圾";
+                $ReturnOptions1 = "完成 E419倒垃圾";
+                $ReturnOptions2 = "尚未完成 E419倒垃圾";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "E419走廊整潔"):
+                $ReturnTitle = "E419走廊整潔";
+                $ReturnOptions1 = "完成 E419走廊整潔";
+                $ReturnOptions2 = "尚未完成 E419走廊整潔";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "關E419冷氣、電燈"):
+                $ReturnTitle = "關E419冷氣、電燈";
+                $ReturnOptions1 = "完成 關E419冷氣、電燈";
+                $ReturnOptions2 = "尚未完成 關E419冷氣、電燈";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "E420走廊整潔"):
+                $ReturnTitle = "E420走廊整潔";
+                $ReturnOptions1 = "完成 E420走廊整潔";
+                $ReturnOptions2 = "尚未完成 E420走廊整潔";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "E420檢查設備"):
+                $ReturnTitle = "E420檢查設備";
+                $ReturnOptions1 = "完成 E420檢查設備";
+                $ReturnOptions2 = "尚未完成 E420檢查設備";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "E420整理桌椅"):
+                $ReturnTitle = "E420整理桌椅";
+                $ReturnOptions1 = "完成 E420整理桌椅";
+                $ReturnOptions2 = "尚未完成 E420整理桌椅";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "關E420電燈、冷氣"):
+                $ReturnTitle = "關E420電燈、冷氣";
+                $ReturnOptions1 = "完成 關E420電燈、冷氣";
+                $ReturnOptions2 = "尚未完成 關E420電燈、冷氣";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "關小房間冷氣、電燈"):
+                $ReturnTitle = "關小房間冷氣、電燈";
+                $ReturnOptions1 = "完成 關小房間冷氣、電燈";
+                $ReturnOptions2 = "尚未完成 關小房間冷氣、電燈";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case ($message['text'] == "整理鞋櫃"):
+                $ReturnTitle = "整理鞋櫃";
+                $ReturnOptions1 = "完成 整理鞋櫃";
+                $ReturnOptions2 = "尚未完成 整理鞋櫃";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            default:
+                break;
+        }
     default:
         break;
 }
 /*
 if ($message['text'] == "測試" || $message['text'] == "測試") {
-
 }*/
