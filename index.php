@@ -401,7 +401,7 @@ switch (true) {
                 $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
                 
                 include('./connect.php'); //連結資料庫設定
-                $sql = "update sign_table set ".$item." = '完成' where day_int = '".$weekdaytempor."'"; 
+                $sql = "update sign_table set ".$item." = '完成' where day_int = ".$weekdaytempor; 
                 //"update duty_list set userid = '" .$table_member_userid. "' where duty_id =".$duty_id; 
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                     $ReturnMessage = "該項目打卡成功";
