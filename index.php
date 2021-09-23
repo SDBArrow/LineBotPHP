@@ -399,7 +399,7 @@ switch (true) {
 
                 $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
                 $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
-                /*
+                
                 include('./connect.php'); //連結資料庫設定
                 $sql = "update sign_table set '".$item."' = '完成' where day_int = '".$weekdaytempor."'"; 
 
@@ -407,8 +407,8 @@ switch (true) {
                     $ReturnMessage = "該項目打卡成功";
                 } else{
                     $ReturnMessage = "該項目打卡失敗";
-                }*/
-                $ReturnMessage = $weekdaytempor;
+                }
+                //$ReturnMessage = $weekdaytempor;
                 ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break; 
             case (mb_substr($message['text'] ,5,4,"UTF-8") == "尚未完成"):
