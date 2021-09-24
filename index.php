@@ -501,7 +501,7 @@ if ($message['text'] == "測試" || $message['text'] == "測試") {
                                 array(
                                     'type' => 'postback', //類型 (回傳)
                                     'label' => 'Postback example 1', //標籤 1
-                                    'data' => 'action=buy&itemid=123' //資料
+                                    'data' => '測試' //資料
                                 ),
                                 array(
                                     'type' => 'message', //類型 (訊息)
