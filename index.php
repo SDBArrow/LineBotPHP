@@ -495,7 +495,6 @@ if ($message['text'] == "測試" || $message['text'] == "測試") {
                     'type' => 'carousel', //類型 (輪播)
                     'columns' => array(
                         array(
-                            'thumbnailImageUrl' => 'https://api.reh.tw/line/bot/example/assets/images/example.jpg', //圖片網址 <不一定需要>
                             'title' => 'Example Menu 1', //標題 1 <不一定需要>
                             'text' => 'Description 1', //文字 1
                             'actions' => array(
@@ -509,15 +508,9 @@ if ($message['text'] == "測試" || $message['text'] == "測試") {
                                     'label' => 'Message example 1', //標籤 2
                                     'text' => 'Message example 1' //用戶發送文字
                                 ),
-                                array(
-                                    'type' => 'uri', //類型 (連結)
-                                    'label' => 'Uri example 1', //標籤 3
-                                    'uri' => 'https://github.com/GoneToneStudio/line-example-bot-tiny-php' //連結網址
-                                )
                             )
                         ),
                         array(
-                            'thumbnailImageUrl' => 'https://api.reh.tw/line/bot/example/assets/images/example.jpg', //圖片網址 <不一定需要>
                             'title' => 'Example Menu 2', //標題 2 <不一定需要>
                             'text' => 'Description 2', //文字 2
                             'actions' => array(
@@ -531,11 +524,6 @@ if ($message['text'] == "測試" || $message['text'] == "測試") {
                                     'label' => 'Message example 2', //標籤 2
                                     'text' => 'Message example 2' //用戶發送文字
                                 ),
-                                array(
-                                    'type' => 'uri', //類型 (連結)
-                                    'label' => 'Uri example 2', //標籤 3
-                                    'uri' => 'https://github.com/GoneToneStudio/line-example-bot-tiny-php' //連結網址
-                                )
                             )
                         )
                     )
