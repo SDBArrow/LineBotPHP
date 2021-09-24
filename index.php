@@ -8,7 +8,7 @@ $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
 
 
-//回覆文字訊息
+// 回覆文字訊息
 function ReplyText($ReturnMessage, $event, $client){
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
@@ -21,7 +21,7 @@ function ReplyText($ReturnMessage, $event, $client){
     ));
 }
 
-//回覆圖片訊息
+// 回覆圖片訊息
 function ReplyImage($ReturnImageUrl, $event, $client){
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
@@ -35,7 +35,7 @@ function ReplyImage($ReturnImageUrl, $event, $client){
     ));
 }
 
-//回覆模板訊息
+// 回覆模板訊息
 function ReplayTemplate($ReturnTitle, $ReturnOptions1, $ReturnOptions2, $event, $client){
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
@@ -64,7 +64,7 @@ function ReplayTemplate($ReturnTitle, $ReturnOptions1, $ReturnOptions2, $event, 
     ));
 }
 
-//處理遛狗查詢 
+// 處理遛狗查詢 
 function WorkSchedule($time, $event, $client)
 {
     include('./connect.php'); //連結資料庫設定
@@ -114,7 +114,7 @@ function WorkSchedule($time, $event, $client)
     mysqli_close($db_connection); //關閉資料庫連線
 }
 
-//處理遛狗查詢 
+// 查詢是否有值日生權限
 function checkduty($UserId)
 {
     include('./connect.php'); //連結資料庫設定
@@ -396,7 +396,7 @@ switch (true) {
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_chair";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E420電燈、冷氣"):
+            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E420電燈和冷氣"):
                 $ReturnTitle = "關E420電燈、冷氣";
                 $ReturnOptions1 = "工作檢核 完成 e420_ conditioner_light";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_ conditioner_light";
@@ -408,7 +408,7 @@ switch (true) {
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_Shoebox";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣、電燈"):
+            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣和電燈"):
                 $ReturnTitle = "關小房間冷氣、電燈";
                 $ReturnOptions1 = "工作檢核 完成 room_ conditioner_light";
                 $ReturnOptions2 = "工作檢核 尚未完成 room_ conditioner_light";
