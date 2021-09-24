@@ -36,7 +36,7 @@ function ReplyImage($ReturnImageUrl, $event, $client){
 }
 
 // 回覆模板訊息
-function ReplayTemplate($ReturnTitle, $ReturnOptions1, $ReturnOptions2, $event, $client){
+function ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2, $ReturnOptions1, $ReturnOptions2, $event, $client){
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
@@ -49,13 +49,13 @@ function ReplayTemplate($ReturnTitle, $ReturnOptions1, $ReturnOptions2, $event, 
                     'actions' => array(
                         array(
                             'type' => 'message', //類型 (訊息)
-                            'label' => '完成', //標籤 1
-                            'text' => $ReturnOptions1 //用戶發送文字 1
+                            'label' => $ReturnOptionsLabel1, //標籤 1
+                            'text' => $ReturnOptions1, //用戶發送文字 1
                         ),
                         array(
                             'type' => 'message', //類型 (訊息)
-                            'label' => '尚未完成', //標籤 2
-                            'text' => $ReturnOptions2 //用戶發送文字 2
+                            'label' => $ReturnOptionsLabel2, //標籤 2
+                            'text' => $ReturnOptions2, //用戶發送文字 2
                         )
                     )
                 )
@@ -358,61 +358,81 @@ switch (true) {
                 $ReturnTitle = "E419冰箱(檢查有無發臭過期食物)";
                 $ReturnOptions1 = "工作檢核 完成 e419_refrigerator";
                 $ReturnOptions2 = "工作檢核 尚未完成 e419_refrigerator";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419倒垃圾"):
                 $ReturnTitle = "E419倒垃圾";
                 $ReturnOptions1 = "工作檢核 完成 e419_ashcan";
                 $ReturnOptions2 = "工作檢核 尚未完成 e419_ashcan";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419走廊整潔"):
                 $ReturnTitle = "E419走廊整潔";
                 $ReturnOptions1 = "工作檢核 完成 e419_corridor";
                 $ReturnOptions2 = "工作檢核 尚未完成 e419_corridor";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E419冷氣、電燈"):
                 $ReturnTitle = "關E419冷氣、電燈";
                 $ReturnOptions1 = "工作檢核 完成 e419_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 尚未完成 e419_ conditioner_light";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptions2 = "工作檢核 還有人在使用 e419_ conditioner_light";
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "還有人在使用";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420走廊整潔"):
                 $ReturnTitle = "E420走廊整潔";
                 $ReturnOptions1 = "工作檢核 完成 e420_corridor";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_corridor";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") ==  "E420檢查設備"):
                 $ReturnTitle = "E420檢查設備";
                 $ReturnOptions1 = "工作檢核 完成 e420_equipment";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_equipment";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420整理桌椅"):
                 $ReturnTitle = "E420整理桌椅";
                 $ReturnOptions1 = "工作檢核 完成 e420_chair";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_chair";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E420電燈和冷氣"):
                 $ReturnTitle = "關E420電燈、冷氣";
                 $ReturnOptions1 = "工作檢核 完成 e420_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 尚未完成 e420_ conditioner_light";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptions2 = "工作檢核 還有人在使用 e420_ conditioner_light";
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "還有人在使用";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "整理鞋櫃"):
                 $ReturnTitle = "整理鞋櫃";
                 $ReturnOptions1 = "工作檢核 完成 e420_Shoebox";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_Shoebox";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "尚未完成";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣和電燈"):
                 $ReturnTitle = "關小房間冷氣、電燈";
                 $ReturnOptions1 = "工作檢核 完成 room_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 尚未完成 room_ conditioner_light";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                $ReturnOptions2 = "工作檢核 還有人在使用 room_ conditioner_light";
+                $ReturnOptionsLabel1 = "完成";
+                $ReturnOptionsLabel1 = "還有人在使用";
+                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,2,"UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
@@ -438,10 +458,10 @@ switch (true) {
                 $ReturnMessage = "請完成後再重新選擇";
                 ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
-            case (mb_substr($message['text'] ,5,5,"UTF-8") == "還有人在使用"):
+            case (mb_substr($message['text'] ,5,6,"UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
-                    $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
+                    $item = mb_substr($message['text'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
                     
                     include('./connect.php'); //連結資料庫設定
