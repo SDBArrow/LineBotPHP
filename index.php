@@ -483,6 +483,50 @@ switch (true) {
     default:
         break;
 }
-/*
+
 if ($message['text'] == "測試" || $message['text'] == "測試") {
-}*/
+    $client->replyMessage(array(
+        'replyToken' => $event['replyToken'],
+        'messages' => array(
+            array(
+                'type' => 'template', //訊息類型 (模板)
+                'altText' => '工作自我檢核', //替代文字
+                'template' => array(
+                    'type' => 'confirm', //類型 (確認)
+                    'columns' => array(
+                        array(
+                            'text' => "測試1", //文字
+                            'actions' => array(
+                                array(
+                                    'type' => 'message', //類型 (訊息)
+                                    'label' => "yes", //標籤 1
+                                    'text' => "yes", //用戶發送文字 1
+                                ),
+                                array(
+                                    'type' => 'message', //類型 (訊息)
+                                    'label' => "no", //標籤 2
+                                    'text' => "no", //用戶發送文字 2
+                                )
+                            )
+                        ),
+                        array(
+                            'text' => "測試2", //文字
+                            'actions' => array(
+                                array(
+                                    'type' => 'message', //類型 (訊息)
+                                    'label' => "yes", //標籤 1
+                                    'text' => "yes", //用戶發送文字 1
+                                ),
+                                array(
+                                    'type' => 'message', //類型 (訊息)
+                                    'label' => "no", //標籤 2
+                                    'text' => "no", //用戶發送文字 2
+                                )
+                            )
+                        )
+                    )
+                )   
+            )
+        )
+    ));
+}
