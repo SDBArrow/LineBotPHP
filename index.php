@@ -119,8 +119,8 @@ function checkduty($UserId)
 {
     include('./connect.php'); //連結資料庫設定
     $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $$table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $duty_level = $messagedata["duty_level"]; //取出權限等級
+    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $duty_level = $table_member["duty_level"]; //取出權限等級
     return $duty_level;
 }
 
@@ -129,8 +129,8 @@ function checksecurity($UserId)
 {
     include('./connect.php'); //連結資料庫設定
     $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $$table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $Security = $messagedata["security"]; //取出權限等級
+    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $Security = $table_member["security"]; //取出權限等級
     return $Security;
 }
 //加入的處理
@@ -163,7 +163,7 @@ switch (true) {
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
-        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.更新註冊名字(Line有改名的話)\n4.班表\n5.日期查詢範例：2022-01-01\n6.注意事項\n7.明日遛狗\n8.餵食規則\n9.座位表\n10.地板物品\n11.抽";
+        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.更新註冊名字(Line有改名的話)\n5.班表\n6.日期查詢範例：2022-01-01\n7.注意事項\n8.明日遛狗\n9.餵食規則\n10.座位表\n11.地板物品\n12.排班 代碼 人名\n13.抽";
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
@@ -255,8 +255,8 @@ switch (true) {
         //連線到資料庫取資料
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
-        $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
+        $tabel_member = mysqli_query($db_connection, $sql);  //查詢結果
+        $rowtotal = mysqli_num_rows($tabel_member); //總資料比數
 
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
             $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
@@ -273,7 +273,7 @@ switch (true) {
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
-    case ($message['text'] == "更新" || $message['text'] == "更新名字"): //更新 line 名稱
+    case ($message['text'] == "更新" || $message['text'] == "更新註冊名字"): //更新 line 名稱
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
@@ -320,8 +320,8 @@ switch (true) {
         // 查詢是否為管理員
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $messagedata = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-        $Security = $messagedata["security"]; //取出權限等級
+        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+        $Security = $table_member["security"]; //取出權限等級
     
         //判斷權限
         if ($Security == 1){ 
@@ -348,7 +348,6 @@ switch (true) {
         }
     
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $ReturnMessage = "不會自己往上看嗎";
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
@@ -418,7 +417,7 @@ switch (true) {
                 $ReturnOptionsLabel1 = "還有人在使用";
                 ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
                 break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "整理鞋櫃"):
+            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420整理鞋櫃"):
                 $ReturnTitle = "整理鞋櫃";
                 $ReturnOptions1 = "工作檢核 完成 e420_Shoebox";
                 $ReturnOptions2 = "工作檢核 尚未完成 e420_Shoebox";
