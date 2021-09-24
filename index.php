@@ -114,6 +114,25 @@ function WorkSchedule($time, $event, $client)
     mysqli_close($db_connection); //關閉資料庫連線
 }
 
+//處理遛狗查詢 
+function checkduty($UserId)
+{
+    include('./connect.php'); //連結資料庫設定
+    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
+    $$table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $duty_level = $messagedata["duty_level"]; //取出權限等級
+    return $duty_level;
+}
+
+// 查詢是否為管理員
+function checksecurity($UserId)
+{
+    include('./connect.php'); //連結資料庫設定
+    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
+    $$table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+    $Security = $messagedata["security"]; //取出權限等級
+    return $Security;
+}
 //加入的處理
 foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
@@ -396,20 +415,25 @@ switch (true) {
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,2,"UTF-8") == "完成"):
-
-                $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
-                $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
                 
-                include('./connect.php'); //連結資料庫設定
-                $sql = "update sign_table set ".$item." = '完成' where day_int = ".$weekdaytempor; 
-                //"update duty_list set userid = '" .$table_member_userid. "' where duty_id =".$duty_id; 
-                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                    $ReturnMessage = "該項目打卡成功";
-                } else{
-                    $ReturnMessage = "該項目打卡失敗";
+                $UserId = $event['source']['userId']; //抓該訊息的發送者
+                if(checkduty($UserId)){
+                    $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
+                    $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
+                    
+                    include('./connect.php'); //連結資料庫設定
+                    $sql = "update sign_table set ".$item." = '完成' where day_int = ".$weekdaytempor; 
+                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                        $ReturnMessage = "該項目打卡成功";
+                    } else{
+                        $ReturnMessage = "該項目打卡失敗";
+                    }
+                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    mysqli_close($db_connection);  //關閉資料庫連線
+                }else{
+                    $ReturnMessage = "你不是今天值日生";
+                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
-                //$ReturnMessage = $weekdaytempor;
-                ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break; 
             case (mb_substr($message['text'] ,5,4,"UTF-8") == "尚未完成"):
                 $ReturnMessage = "請完成後再重新選擇";
