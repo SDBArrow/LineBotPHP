@@ -362,60 +362,59 @@ switch (true) {
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419倒垃圾"):
                 $ReturnTitle = "E419倒垃圾";
-                $ReturnOptions1 = "工作檢核 完成 E419倒垃圾";
-                $ReturnOptions2 = "工作檢核 尚未完成 E419倒垃圾";
+                $ReturnOptions1 = "工作檢核 完成 e419_ashcan";
+                $ReturnOptions2 = "工作檢核 尚未完成 e419_ashcan";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419走廊整潔"):
                 $ReturnTitle = "E419走廊整潔";
-                $ReturnOptions1 = "完成 E419走廊整潔";
-                $ReturnOptions2 = "尚未完成 E419走廊整潔";
+                $ReturnOptions1 = "工作檢核 完成 e419_corridor";
+                $ReturnOptions2 = "工作檢核 尚未完成 e419_corridor";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E419冷氣、電燈"):
                 $ReturnTitle = "關E419冷氣、電燈";
-                $ReturnOptions1 = "完成 關E419冷氣、電燈";
-                $ReturnOptions2 = "尚未完成 關E419冷氣、電燈";
+                $ReturnOptions1 = "工作檢核 完成 e419_ conditioner_light";
+                $ReturnOptions2 = "工作檢核 尚未完成 e419_ conditioner_light";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420走廊整潔"):
                 $ReturnTitle = "E420走廊整潔";
-                $ReturnOptions1 = "完成 E420走廊整潔";
-                $ReturnOptions2 = "尚未完成 E420走廊整潔";
+                $ReturnOptions1 = "工作檢核 完成 e420_corridor";
+                $ReturnOptions2 = "工作檢核 尚未完成 e420_corridor";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") ==  "E420檢查設備"):
                 $ReturnTitle = "E420檢查設備";
-                $ReturnOptions1 = "完成 E420檢查設備";
-                $ReturnOptions2 = "尚未完成 E420檢查設備";
+                $ReturnOptions1 = "工作檢核 完成 e420_equipment";
+                $ReturnOptions2 = "工作檢核 尚未完成 e420_equipment";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420整理桌椅"):
                 $ReturnTitle = "E420整理桌椅";
-                $ReturnOptions1 = "完成 E420整理桌椅";
-                $ReturnOptions2 = "尚未完成 E420整理桌椅";
+                $ReturnOptions1 = "工作檢核 完成 e420_chair";
+                $ReturnOptions2 = "工作檢核 尚未完成 e420_chair";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E420電燈、冷氣"):
                 $ReturnTitle = "關E420電燈、冷氣";
-                $ReturnOptions1 = "完成 關E420電燈、冷氣";
-                $ReturnOptions2 = "尚未完成 關E420電燈、冷氣";
-                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣、電燈"):
-                $ReturnTitle = "關小房間冷氣、電燈";
-                $ReturnOptions1 = "關小房間冷氣、電燈，完成";
-                $ReturnOptions2 = "關小房間冷氣、電燈未完成，還有其他人";
+                $ReturnOptions1 = "工作檢核 完成 e420_ conditioner_light";
+                $ReturnOptions2 = "工作檢核 尚未完成 e420_ conditioner_light";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "整理鞋櫃"):
                 $ReturnTitle = "整理鞋櫃";
-                $ReturnOptions1 = "完成 整理鞋櫃";
-                $ReturnOptions2 = "尚未完成 整理鞋櫃";
+                $ReturnOptions1 = "工作檢核 完成 e420_Shoebox";
+                $ReturnOptions2 = "工作檢核 尚未完成 e420_Shoebox";
+                ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
+                break;
+            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣、電燈"):
+                $ReturnTitle = "關小房間冷氣、電燈";
+                $ReturnOptions1 = "工作檢核 完成 room_ conditioner_light";
+                $ReturnOptions2 = "工作檢核 尚未完成 room_ conditioner_light";
                 ReplayTemplate($ReturnTitle, $ReturnOptions1 , $ReturnOptions1, $event, $client); //回傳訊息
                 break;
             case (mb_substr($message['text'] ,5,2,"UTF-8") == "完成"):
-                
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
                     $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
@@ -426,7 +425,7 @@ switch (true) {
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                         $ReturnMessage = "該項目打卡成功";
                     } else{
-                        $ReturnMessage = "該項目打卡失敗";
+                        $ReturnMessage = "該項目不存在";
                     }
                     ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
@@ -439,8 +438,26 @@ switch (true) {
                 $ReturnMessage = "請完成後再重新選擇";
                 ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
-            case (mb_substr($message['text'] ,5,5,"UTF-8") == "研究室有人"):
-                break;       
+            case (mb_substr($message['text'] ,5,5,"UTF-8") == "還有人在使用"):
+                $UserId = $event['source']['userId']; //抓該訊息的發送者
+                if(checkduty($UserId)){
+                    $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
+                    $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
+                    
+                    include('./connect.php'); //連結資料庫設定
+                    $sql = "update sign_table set ".$item." = '還有人在使用' where day_int = ".$weekdaytempor; 
+                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                        $ReturnMessage = "該項目打卡成功";
+                    } else{
+                        $ReturnMessage = "該項目不存在";
+                    }
+                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    mysqli_close($db_connection);  //關閉資料庫連線
+                }else{
+                    $ReturnMessage = "你不是今天值日生";
+                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                }
+                break; 
             default:
                 break;
         }
