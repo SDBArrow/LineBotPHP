@@ -395,9 +395,9 @@ switch (true) {
                                     ),
                                 )
                             ),
-                            /*
                             array(
                                 'title' => 'E419走廊整潔', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -413,6 +413,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => '關E419冷氣、電燈', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -433,6 +434,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => 'E420走廊整潔', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -448,6 +450,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => 'E420檢查設備', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -463,6 +466,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => 'E420整理桌椅', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -478,6 +482,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => '關E420電燈和冷氣', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -498,6 +503,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => 'E420整理桌椅', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -513,6 +519,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => '關小房間冷氣和電燈', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -530,7 +537,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 room_conditioner_light' //資料
                                     ),
                                 )
-                            ),*/
+                            ),
                         )
                     )
                 )
