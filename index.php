@@ -140,7 +140,7 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             break;
         case 'postback': //隱藏訊息
-            $ReturnMessage = "postback";
+            $ReturnMessage = $event['data'];
             ReplyText($ReturnMessage, $event, $client); //回傳訊息
             break;
         case 'follow': //加為好友觸發
