@@ -140,8 +140,9 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             break;
         case 'postback': //隱藏訊息
+            /*
             $ReturnMessage = $event['postback']['data'];
-            ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            ReplyText($ReturnMessage, $event, $client); //回傳訊息*/
             break;
         case 'follow': //加為好友觸發
             $ReturnMessage = "您好，我是小飛的溫泉指揮官";
@@ -157,7 +158,7 @@ foreach ($client->parseEvents() as $event) {
     }
 }
 
-//訊息判斷
+//一般訊息判斷
 switch (true) {
     case $message['text'] == "早安": //早安
         $ReturnMessage = "早安!";
@@ -352,89 +353,194 @@ switch (true) {
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
-    case (mb_substr($message['text'] ,0,4,"UTF-8") == "工作檢核"): //工作檢核功能
-        switch (true) {
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419冰箱"):
-                $ReturnTitle = "E419冰箱(檢查有無發臭過期食物)";
-                $ReturnOptions1 = "工作檢核 完成 e419_refrigerator";
-                $ReturnOptions2 = "工作檢核 尚未完成 e419_refrigerator";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419倒垃圾"):
-                $ReturnTitle = "E419倒垃圾";
-                $ReturnOptions1 = "工作檢核 完成 e419_ashcan";
-                $ReturnOptions2 = "工作檢核 尚未完成 e419_ashcan";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E419走廊整潔"):
-                $ReturnTitle = "E419走廊整潔";
-                $ReturnOptions1 = "工作檢核 完成 e419_corridor";
-                $ReturnOptions2 = "工作檢核 尚未完成 e419_corridor";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E419冷氣、電燈"):
-                $ReturnTitle = "關E419冷氣、電燈";
-                $ReturnOptions1 = "工作檢核 完成 e419_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 還有人在使用 e419_ conditioner_light";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "還有人在使用";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420走廊整潔"):
-                $ReturnTitle = "E420走廊整潔";
-                $ReturnOptions1 = "工作檢核 完成 e420_corridor";
-                $ReturnOptions2 = "工作檢核 尚未完成 e420_corridor";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") ==  "E420檢查設備"):
-                $ReturnTitle = "E420檢查設備";
-                $ReturnOptions1 = "工作檢核 完成 e420_equipment";
-                $ReturnOptions2 = "工作檢核 尚未完成 e420_equipment";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420整理桌椅"):
-                $ReturnTitle = "E420整理桌椅";
-                $ReturnOptions1 = "工作檢核 完成 e420_chair";
-                $ReturnOptions2 = "工作檢核 尚未完成 e420_chair";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關E420電燈和冷氣"):
-                $ReturnTitle = "關E420電燈、冷氣";
-                $ReturnOptions1 = "工作檢核 完成 e420_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 還有人在使用 e420_ conditioner_light";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "還有人在使用";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "E420整理鞋櫃"):
-                $ReturnTitle = "整理鞋櫃";
-                $ReturnOptions1 = "工作檢核 完成 e420_Shoebox";
-                $ReturnOptions2 = "工作檢核 尚未完成 e420_Shoebox";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "尚未完成";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,NULL,"UTF-8") == "關小房間冷氣和電燈"):
-                $ReturnTitle = "關小房間冷氣、電燈";
-                $ReturnOptions1 = "工作檢核 完成 room_ conditioner_light";
-                $ReturnOptions2 = "工作檢核 還有人在使用 room_ conditioner_light";
-                $ReturnOptionsLabel1 = "完成";
-                $ReturnOptionsLabel1 = "還有人在使用";
-                ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1 , $ReturnOptionsLabel2, $ReturnOptions1 , $ReturnOptions2, $event, $client); //回傳訊息
-                break;
-            case (mb_substr($message['text'] ,5,2,"UTF-8") == "完成"):
+    case ($message['text'] == "工作檢核"): //工作檢核功能
+        $client->replyMessage(array(
+            'replyToken' => $event['replyToken'],
+            'messages' => array(
+                array(
+                    'type' => 'template', //訊息類型 (模板)
+                    'altText' => 'Example buttons template', //替代文字
+                    'template' => array(
+                        'type' => 'carousel', //類型 (輪播)
+                        'columns' => array(
+                            array(
+                                'title' => 'E419冰箱(檢查有無發臭過期食物)', //標題 1 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e419_refrigerator' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e419_refrigerator' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E419倒垃圾', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e419_ashcan' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e419_ashcan' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E419走廊整潔', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e419_corridor' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e419_corridor' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => '關E419冷氣、電燈', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e419_conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '還有人在使用', //標籤 1
+                                        'data' => '工作檢核 還有人在使用 e419_conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e419_conditioner_light' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E420走廊整潔', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e420_corridor' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e420_corridor' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E420檢查設備', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e420_equipment' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e420_equipment' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E420整理桌椅', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e420_chair' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e420_chair' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => '關E420電燈和冷氣', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e420_ conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '還有人在使用', //標籤 1
+                                        'data' => '工作檢核 還有人在使用 e419_ conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e420_conditioner_light' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => 'E420整理桌椅', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 e420_Shoebox' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 e420_Shoebox' //資料
+                                    ),
+                                )
+                            ),
+                            array(
+                                'title' => '關小房間冷氣和電燈', //標題 2 <不一定需要>
+                                'actions' => array(
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '完成', //標籤 1
+                                        'data' => '工作檢核 完成 room_conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '還有人在使用', //標籤 1
+                                        'data' => '工作檢核 還有人在使用 room_conditioner_light' //資料
+                                    ),
+                                    array(
+                                        'type' => 'postback', //類型 (回傳)
+                                        'label' => '尚未完成', //標籤 1
+                                        'data' => '工作檢核 尚未完成 room_conditioner_light' //資料
+                                    ),
+                                )
+                            ),
+                        )
+                    )
+                )
+            )
+        ));
+    default:
+        break;
+}
+
+switch (true) {
+    case (mb_substr($event['postback']['data'], 0, 4, "UTF-8") == "工作檢核"):
+        switch (true){
+            case (mb_substr($event['postback']['data'], 5, 2, "UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
                     $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
@@ -454,11 +560,11 @@ switch (true) {
                     ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
-            case (mb_substr($message['text'] ,5,4,"UTF-8") == "尚未完成"):
+            case (mb_substr($message['text'], 5, 4, "UTF-8") == "尚未完成"):
                 $ReturnMessage = "請完成後再重新選擇";
                 ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
-            case (mb_substr($message['text'] ,5,6,"UTF-8") == "還有人在使用"):
+            case (mb_substr($message['text'], 5, 6, "UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
                     $item = mb_substr($message['text'], 12, null, "UTF-8"); // 取出打卡的工作項目
@@ -481,55 +587,11 @@ switch (true) {
             default:
                 break;
         }
+        break;
     default:
         break;
 }
-
+/*
 if ($message['text'] == "測試" || $message['text'] == "測試") {
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'template', //訊息類型 (模板)
-                'altText' => 'Example buttons template', //替代文字
-                'template' => array(
-                    'type' => 'carousel', //類型 (輪播)
-                    'columns' => array(
-                        array(
-                            'title' => 'Example Menu 1', //標題 1 <不一定需要>
-                            'text' => 'Description 1', //文字 1
-                            'actions' => array(
-                                array(
-                                    'type' => 'postback', //類型 (回傳)
-                                    'label' => 'Postback example 1', //標籤 1
-                                    'data' => '測試' //資料
-                                ),
-                                array(
-                                    'type' => 'message', //類型 (訊息)
-                                    'label' => 'Message example 1', //標籤 2
-                                    'text' => 'Message example 1' //用戶發送文字
-                                ),
-                            )
-                        ),
-                        array(
-                            'title' => 'Example Menu 2', //標題 2 <不一定需要>
-                            'text' => 'Description 2', //文字 2
-                            'actions' => array(
-                                array(
-                                    'type' => 'postback', //類型 (回傳)
-                                    'label' => 'Postback example 2', //標籤 1
-                                    'data' => 'action=buy&itemid=123' //資料
-                                ),
-                                array(
-                                    'type' => 'message', //類型 (訊息)
-                                    'label' => 'Message example 2', //標籤 2
-                                    'text' => 'Message example 2' //用戶發送文字
-                                ),
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    ));
-}
+    
+}*/
