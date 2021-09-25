@@ -500,7 +500,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 e420_conditioner_light' //資料
                                     ),
                                 )
-                            ),
+                            ),*/
                             array(
                                 'title' => 'E420整理桌椅', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
@@ -516,7 +516,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 e420_Shoebox' //資料
                                     ),
                                 )
-                            ),
+                            ),/*
                             array(
                                 'title' => '關小房間冷氣和電燈', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
