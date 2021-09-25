@@ -365,6 +365,7 @@ switch (true) {
                         'columns' => array(
                             array(
                                 'title' => 'E419冰箱(檢查有無發臭過期食物)', //標題 1 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -380,6 +381,7 @@ switch (true) {
                             ),
                             array(
                                 'title' => 'E419倒垃圾', //標題 2 <不一定需要>
+                                'text' => 'Description 1', //文字 1
                                 'actions' => array(
                                     array(
                                         'type' => 'postback', //類型 (回傳)
@@ -393,6 +395,7 @@ switch (true) {
                                     ),
                                 )
                             ),
+                            /*
                             array(
                                 'title' => 'E419走廊整潔', //標題 2 <不一定需要>
                                 'actions' => array(
@@ -527,7 +530,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 room_conditioner_light' //資料
                                     ),
                                 )
-                            ),
+                            ),*/
                         )
                     )
                 )
