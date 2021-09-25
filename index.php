@@ -139,8 +139,9 @@ foreach ($client->parseEvents() as $event) {
         case 'message':
             $message = $event['message'];
             break;
-        case 'postback':
-            //require_once('postback.php'); //postback
+        case 'postback': //隱藏訊息
+            $ReturnMessage = "postback";
+            ReplyText($ReturnMessage, $event, $client); //回傳訊息
             break;
         case 'follow': //加為好友觸發
             $ReturnMessage = "您好，我是小飛的溫泉指揮官";
