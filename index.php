@@ -410,7 +410,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 e419_corridor' //資料
                                     ),
                                 )
-                            ),
+                            ),/*
                             array(
                                 'title' => '關E419冷氣、電燈', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
@@ -537,7 +537,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 room_conditioner_light' //資料
                                     ),
                                 )
-                            ),
+                            ),*/
                         )
                     )
                 )
