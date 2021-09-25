@@ -538,7 +538,7 @@ switch (true) {
             case (mb_substr($event['postback']['data'], 5, 2, "UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
-                    $item = mb_substr($message['text'], 8, null, "UTF-8"); // 取出打卡的工作項目
+                    $item = mb_substr($event['postback']['data'], 8, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
                     
                     include('./connect.php'); //連結資料庫設定
@@ -555,14 +555,14 @@ switch (true) {
                     ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
-            case (mb_substr($message['text'], 5, 4, "UTF-8") == "尚未完成"):
+            case (mb_substr($event['postback']['data'], 5, 4, "UTF-8") == "尚未完成"):
                 $ReturnMessage = "請完成後再重新選擇";
                 ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
-            case (mb_substr($message['text'], 5, 6, "UTF-8") == "還有人在使用"):
+            case (mb_substr($event['postback']['data'], 5, 6, "UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
-                    $item = mb_substr($message['text'], 12, null, "UTF-8"); // 取出打卡的工作項目
+                    $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
                     
                     include('./connect.php'); //連結資料庫設定
