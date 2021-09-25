@@ -482,12 +482,12 @@ switch (true) {
                                     array(
                                         'type' => 'postback', //類型 (回傳)
                                         'label' => '完成', //標籤 1
-                                        'data' => '工作檢核 完成 e420_ conditioner_light' //資料
+                                        'data' => '工作檢核 完成 e420_conditioner_light' //資料
                                     ),
                                     array(
                                         'type' => 'postback', //類型 (回傳)
                                         'label' => '還有人在使用', //標籤 1
-                                        'data' => '工作檢核 還有人在使用 e419_ conditioner_light' //資料
+                                        'data' => '工作檢核 還有人在使用 e419_conditioner_light' //資料
                                     ),
                                 )
                             ),
