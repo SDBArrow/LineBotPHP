@@ -539,7 +539,7 @@ switch (true) {
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 8, null, "UTF-8"); // 取出打卡的工作項目
-                    $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
+                    $weekdaytempor = date('w'); // 取出今天星期幾
                     
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '完成' where day_int = ".$weekdaytempor; 
@@ -563,7 +563,7 @@ switch (true) {
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
                 if(checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
-                    $weekdaytempor = date('w', strtotime($time)); // 取出今天星期幾
+                    $weekdaytempor = date('w'); // 取出今天星期幾
                     
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '還有人在使用' where day_int = ".$weekdaytempor; 
