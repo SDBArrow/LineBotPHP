@@ -377,9 +377,6 @@ switch (true) {
                                         'label' => '尚未完成', //標籤 1
                                         'data' => '工作檢核 尚未完成 e419_refrigerator' //資料
                                     ),
-                                    array(
-
-                                    ),
                                 )
                             ),
                             array(
@@ -427,11 +424,6 @@ switch (true) {
                                         'type' => 'postback', //類型 (回傳)
                                         'label' => '還有人在使用', //標籤 1
                                         'data' => '工作檢核 還有人在使用 e419_conditioner_light' //資料
-                                    ),
-                                    array(
-                                        'type' => 'postback', //類型 (回傳)
-                                        'label' => '尚未完成', //標籤 1
-                                        'data' => '工作檢核 尚未完成 e419_conditioner_light' //資料
                                     ),
                                 )
                             ),
@@ -482,7 +474,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 e420_chair' //資料
                                     ),
                                 )
-                            ),/*
+                            ),
                             array(
                                 'title' => '關E420電燈和冷氣', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
@@ -497,13 +489,8 @@ switch (true) {
                                         'label' => '還有人在使用', //標籤 1
                                         'data' => '工作檢核 還有人在使用 e419_ conditioner_light' //資料
                                     ),
-                                    array(
-                                        'type' => 'postback', //類型 (回傳)
-                                        'label' => '尚未完成', //標籤 1
-                                        'data' => '工作檢核 尚未完成 e420_conditioner_light' //資料
-                                    ),
                                 )
-                            ),*/
+                            ),
                             array(
                                 'title' => 'E420整理桌椅', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
@@ -519,7 +506,7 @@ switch (true) {
                                         'data' => '工作檢核 尚未完成 e420_Shoebox' //資料
                                     ),
                                 )
-                            ),/*
+                            ),
                             array(
                                 'title' => '關小房間冷氣和電燈', //標題 2 <不一定需要>
                                 'text' => 'Description 1', //文字 1
@@ -534,13 +521,8 @@ switch (true) {
                                         'label' => '還有人在使用', //標籤 1
                                         'data' => '工作檢核 還有人在使用 room_conditioner_light' //資料
                                     ),
-                                    array(
-                                        'type' => 'postback', //類型 (回傳)
-                                        'label' => '尚未完成', //標籤 1
-                                        'data' => '工作檢核 尚未完成 room_conditioner_light' //資料
-                                    ),
                                 )
-                            ),*/
+                            ),
                         )
                     )
                 )
