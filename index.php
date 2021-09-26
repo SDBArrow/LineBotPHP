@@ -271,7 +271,6 @@ switch (true) {
             $ReturnMessage = "已經註冊過";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $ReturnMessage = "不會自己往上看嗎";
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
