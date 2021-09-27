@@ -56,7 +56,7 @@ if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" |
     //新增權限給今日值日生
     $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-        $ReturnMessage = "權限更新成功";
+        $ReturnMessage = "權限更新成功";3
     } else{
         $ReturnMessage = "權限更新失敗";
     }
