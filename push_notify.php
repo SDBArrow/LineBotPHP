@@ -66,11 +66,11 @@ if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" |
 	);
 	//今日遛狗
 	$time = date('Y-m-d');//抓時間
-	$result = WorkSchedule($time, $client); //丟去副程式WorkSchedule
+	WorkSchedule($time, $client); //丟去副程式WorkSchedule
 	//明日遛狗
 	$time = date('Y-m-d', strtotime("+1 day"));  //抓時間
-	$result = WorkSchedule($time, $client); //丟去副程式WorkSchedule
+	WorkSchedule($time, $client); //丟去副程式WorkSchedule
 	//後天遛狗
 	$time = date('Y-m-d', strtotime("+2 day"));  //抓時間
-	$result = WorkSchedule($time, $client); //丟去副程式WorkSchedule
+	WorkSchedule($time, $client); //丟去副程式WorkSchedule
 }
