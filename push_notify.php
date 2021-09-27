@@ -36,9 +36,9 @@ function WorkSchedule($time, $client)
         if ( $oddandeven == 0 && $weekdaytempor == 0){
             $tempor = $tempor % 11;                 //兩個星期的第一次
         }elseif($oddandeven == 0 && $weekdaytempor == 1){
-            $tempor = $tempor % 11 + 1;             //兩個星期的第二次
+            $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
         }else{      
-            $tempor = $tempor % 11 + 2;             //兩個星期的第三次
+            $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
         }
         //查詢替補
         $sql = "select * from duty_turn where id = " . $tempor;
