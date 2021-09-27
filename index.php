@@ -105,7 +105,7 @@ function WorkSchedule($time, $event, $client)
         $sql = "select * from duty_turn where id = " . $tempor;
         $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $row_dutytrun["name"];
-        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
+        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun."\n".$tempor; // 回復訊息
     } else {   //不是替補日
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
@@ -531,6 +531,8 @@ switch (true) {
         break;
 }
 
+//postback 訊息判斷
+//
 switch (true) {
     case (mb_substr($event['postback']['data'], 0, 4, "UTF-8") == "工作檢核"):
         switch (true){
