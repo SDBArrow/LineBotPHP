@@ -42,7 +42,7 @@ function WorkSchedule($time)
 }
 
 //時間判斷
-if (date('H:i') == "00:27" || date('H:i') == "00:28" || date('H:i') == "00:29" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
+if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
     //查詢今天值日生
     $time = date('Y-m-d');  //抓時間
     $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
@@ -54,7 +54,7 @@ if (date('H:i') == "00:27" || date('H:i') == "00:28" || date('H:i') == "00:29" |
         $ReturnMessage = "權限更新失敗";
     }
     echo $ReturnMessage;
-}elseif (date('H:i') == "00:26" || date('H:i') == "00:27" || date('H:i') == "00:28" || date('H:i') == "23:57" || date('H:i') == "23:58" || date('H:i') == "23:59"){
+}elseif (date('H:i') == "23:54" || date('H:i') == "23:55" || date('H:i') == "23:56" || date('H:i') == "23:57" || date('H:i') == "23:58" || date('H:i') == "23:59"){
     //清除昨天的值日生權限
     $sql = "update member set duty_level = ''";
     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
