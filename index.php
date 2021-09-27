@@ -587,6 +587,6 @@ switch (true) {
         break;
 }
 
-/*
+/* //測試用
 if ($message['text'] == "測試" || $message['text'] == "測試") {
 }*/
