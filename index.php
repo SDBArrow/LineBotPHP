@@ -532,7 +532,6 @@ switch (true) {
 }
 
 //postback 訊息判斷
-//
 switch (true) {
     case (mb_substr($event['postback']['data'], 0, 4, "UTF-8") == "工作檢核"):
         switch (true){
@@ -587,7 +586,7 @@ switch (true) {
     default:
         break;
 }
+
 /*
 if ($message['text'] == "測試" || $message['text'] == "測試") {
-    
 }*/
