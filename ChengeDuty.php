@@ -43,20 +43,18 @@ function WorkSchedule($time)
 
 //時間判斷
 if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
+    //清除昨天的值日生權限
+    $sql = "update member set duty_level = ''";
+    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+        $ReturnMessage = "權限移除成功";
+    } else{
+        $ReturnMessage = "權限移除失敗";
+    }
     //查詢今天值日生
     $time = date('Y-m-d');  //抓時間
     $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
     //新增權限給今日值日生
     $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
-    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-        $ReturnMessage = "權限更新成功";
-    } else{
-        $ReturnMessage = "權限更新失敗";
-    }
-    echo $ReturnMessage;
-}elseif (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"){
-    //清除昨天的值日生權限
-    $sql = "update member set duty_level = ''";
     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
         $ReturnMessage = "權限更新成功";
     } else{
