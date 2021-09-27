@@ -54,7 +54,7 @@ if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" |
         $ReturnMessage = "權限更新失敗";
     }
     echo $ReturnMessage;
-}elseif (date('H:i') == "23:54" || date('H:i') == "23:55" || date('H:i') == "23:56" || date('H:i') == "23:57" || date('H:i') == "23:58" || date('H:i') == "23:59"){
+}elseif (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"){
     //清除昨天的值日生權限
     $sql = "update member set duty_level = ''";
     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
