@@ -71,13 +71,13 @@ function WorkSchedule($time, $event, $client)
     $timecount = (strtotime($time) - strtotime("2021-09-19 00:00:00")) / (60 * 60 * 24); //相隔天數
     $weekcount = floor($timecount / 7); //相隔週數
 
-    //今天單周還雙周
+    //查詢日期單周還雙周
     $oddandeven = $weekcount % 2;
     $sql = "select * from week where week_int = " . $oddandeven;
     $row_week = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
     $week = $row_week["week_ch"];
 
-    //今天星期幾
+    //查詢日期星期幾
     $weekdaytempor = date('w', strtotime($time));
     $sql = "select * from day where day_int = " . $weekdaytempor;
     $row_day = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
@@ -178,15 +178,15 @@ switch (true) {
         break;
     case ($message['text'] == "遛狗" || $message['text'] == "今日遛狗" || $message['text'] == "今天遛狗"): //今天遛狗
         $time = date('Y-m-d');  //抓時間
-        $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
     case ($message['text'] == "明日遛狗" || $message['text'] == "明天遛狗"):  //明天遛狗
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
-        $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
     case ($message['text'] == "後日遛狗" || $message['text'] == "後天遛狗"):  //後天遛狗
         $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
-        $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
     case ($message['text'] == "班表"): //班表
         $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg";
@@ -231,7 +231,7 @@ switch (true) {
             $__d = substr($time, 8, 2);
         }
         if (checkdate($__m, $__d, $__y)) { //確認時間是否有效
-            $result = WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+            WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         }
         break;
     case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //添加用戶 UID、name 到資料庫
