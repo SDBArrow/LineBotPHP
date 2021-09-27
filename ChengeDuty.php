@@ -9,7 +9,7 @@ function WorkSchedule($time)
     $timecount = (strtotime($time) - strtotime("2021-09-19 00:00:00")) / (60 * 60 * 24); //相隔天數
     $weekcount = floor($timecount / 7); //相隔週數
     $oddandeven = $weekcount % 2;   //今天單周還雙周
-    $weekdaytempo= date('w', strtotime($time));  //今天星期幾
+    $weekdaytempor = date('w', strtotime($time));  //今天星期幾
 
     //查詢值日生
     $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
@@ -29,7 +29,7 @@ function WorkSchedule($time)
             $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
         }
         //查詢替補
-        $sql = "select * from duty_turn where id = " . $tempor;
+        $sql = "select * from duty_turn where id = ".$tempor;
         $table_duty_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $table_duty_trun["userid"];
         $ReturnMessage = $dutytrun; // 回復訊息
@@ -42,7 +42,7 @@ function WorkSchedule($time)
 }
 
 //時間判斷
-if (date('H:i') == "00:18" || date('H:i') == "00:19" || date('H:i') == "00:20" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
+if (date('H:i') == "00:23" || date('H:i') == "00:24" || date('H:i') == "00:25" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
     //查詢今天值日生
     $time = date('Y-m-d');  //抓時間
     $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
