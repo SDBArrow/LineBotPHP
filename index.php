@@ -280,6 +280,8 @@ switch (true) {
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
         $Name = ""; //初始化
 
+        $ReturnMessage = $UserId;
+        /*
         // 查詢名字
         if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
             $response = $client->getUserProfile(array(
@@ -308,7 +310,7 @@ switch (true) {
             }
         } else {  //無此人名字
             $ReturnMessage = "請先註冊";
-        }
+        }*/
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
