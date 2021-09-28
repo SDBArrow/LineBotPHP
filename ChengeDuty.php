@@ -97,7 +97,7 @@ switch(true){
             echo $ReturnMessage;
         }
     case (date('w') == 2):
-        $sql = "update member set duty_level = ''";
+        $sql = "update sign_table set e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
             $ReturnMessage = "權限移除成功";
         } else{
