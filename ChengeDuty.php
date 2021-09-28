@@ -41,26 +41,59 @@ function WorkSchedule($time)
     return($ReturnMessage);
 }
 
-//時間判斷
-if (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05") {
-    //清除昨天的值日生權限
-    $sql = "update member set duty_level = ''";
-    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-        $ReturnMessage = "權限移除成功";
-    } else{
-        $ReturnMessage = "權限移除失敗";
-    }
-    //查詢今天值日生
-    $time = date('Y-m-d');  //抓時間
-    $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
-    //新增權限給今日值日生
-    $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
-    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-        $ReturnMessage = "權限更新成功";
-    }else{
-        $ReturnMessage = "權限更新失敗";
-    }
-    echo $ReturnMessage;
+switch(true){
+    //每天00:00要執行的
+    case (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+        //清除昨天的值日生權限
+        $sql = "update member set duty_level = ''";
+        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+            $ReturnMessage = "權限移除成功";
+        } else{
+            $ReturnMessage = "權限移除失敗";
+        }
+        //查詢今天值日生
+        $time = date('Y-m-d');  //抓時間
+        $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
+        //新增權限給今日值日生
+        $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
+        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+            $ReturnMessage = "權限更新成功";
+        }else{
+            $ReturnMessage = "權限更新失敗";
+        }
+        echo $ReturnMessage;
+    //一星期執行一次、每個星期天執行
+    case (date('w') == 2):
+        $time = date('Y-m-d');  //抓時間
+        $duty_0 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
+        $duty_1 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
+        $duty_2 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+3 day"));  //抓時間
+        $duty_3 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+4 day"));  //抓時間
+        $duty_4 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+5 day"));  //抓時間
+        $duty_5 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+6 day"));  //抓時間
+        $duty_6 = WorkSchedule($time);
+        $sql = "update sign_table set e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = '' where day_int = 0 or day_int = 1 or day_int =2 or day_int =3 or day_int =4 or day_int =5 or day_int = 6;
+        update sign_table set userid =".$duty_0." where day_int = 0;
+        update sign_table set userid =".$duty_1." where day_int = 1;
+        update sign_table set userid =".$duty_2." where day_int = 2;
+        update sign_table set userid =".$duty_3." where day_int = 3;
+        update sign_table set userid =".$duty_4." where day_int = 4;
+        update sign_table set userid =".$duty_5." where day_int = 5;
+        update sign_table set userid =".$duty_6." where day_int = 6;";
+        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+            $ReturnMessage = "檢核表更新成功";
+        } else{
+            $ReturnMessage = "檢核表更新失敗";
+        }
+        break;
+    default:
+        break;
 }
 
 
