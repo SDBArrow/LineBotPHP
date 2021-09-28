@@ -103,6 +103,7 @@ switch(true){
         } else{
             $ReturnMessage = "權限移除失敗";
         }
+        echo $ReturnMessage;
     default:
         break;
 }
