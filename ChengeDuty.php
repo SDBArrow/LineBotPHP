@@ -100,7 +100,7 @@ switch(true){
         }
     case (date('w') == 2):
         //查詢今天值日生
-        $time = date('Y-m-d');  //抓時間
+        $time = date('m');  //抓時間
         $sql = "select * from sign_table where day_int = ". $time; 
         $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $today_duty= $table_sign_table["userid"];
