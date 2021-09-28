@@ -166,7 +166,7 @@ switch (true) {
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
-        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.更新註冊名字(Line有改名的話)\n5.班表\n6.日期查詢範例：2022-01-01\n7.注意事項\n8.明日遛狗\n9.餵食規則\n10.座位表\n11.地板物品\n12.排班 代碼 人名\n13.抽";
+        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n5.更新註冊名字(Line有改名的話)\n6.班表\n7.日期查詢範例：2022-01-01\n8.注意事項\n9.明日遛狗\n10.餵食規則\n11.座位表\n12.地板物品\n13.排班 代碼 @人名\n14.抽";
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
