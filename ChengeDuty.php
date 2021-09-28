@@ -65,18 +65,18 @@ switch(true){
     //一星期執行一次、每個星期天執行
     case (date('w') == 2):
         $time = date('Y-m-d');  //抓時間
-        $duty_2 = WorkSchedule($time);
-        $time = date('Y-m-d', strtotime("-1 day"));  //抓時間
-        $duty_1 = WorkSchedule($time);
-        $time = date('Y-m-d', strtotime("-2 day"));  //抓時間
         $duty_0 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
-        $duty_3 = WorkSchedule($time);
+        $duty_1 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
-        $duty_4 = WorkSchedule($time);
+        $duty_2 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+3 day"));  //抓時間
-        $duty_5 = WorkSchedule($time);
+        $duty_3 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+4 day"));  //抓時間
+        $duty_4 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+5 day"));  //抓時間
+        $duty_5 = WorkSchedule($time);
+        $time = date('Y-m-d', strtotime("+6 day"));  //抓時間
         $duty_6 = WorkSchedule($time);
         
         $sql[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = '' where day_int = 0 or day_int = 1 or day_int =2 or day_int =3 or day_int =4 or day_int =5 or day_int = 6";
@@ -90,9 +90,9 @@ switch(true){
 
         for($var = 0; $var < count($sql); $var++){
             if(mysqli_query($db_connection, $sql[$var])){ //更新到資料庫
-                $ReturnMessage = "檢核表更新成功";
+                $ReturnMessage = "檢核表更新成功\n";
             } else{
-                $ReturnMessage = "檢核表更新失敗";
+                $ReturnMessage = "檢核表更新失敗\n";
             }
             echo $ReturnMessage;
         }
