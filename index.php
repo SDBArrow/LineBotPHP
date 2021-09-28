@@ -322,8 +322,7 @@ switch (true) {
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
             $rowtotal = mysqli_num_rows($table_member); //總資料比數
-            $ReturnMessage = $rowtotal;
-            /*
+        
             if ($rowtotal > 0){  //如果有這個人
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
                 $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
@@ -335,7 +334,7 @@ switch (true) {
                 }
             }else{
                 $ReturnMessage = "被排班的人員尚未註冊";
-            }  */
+            } 
         }else{
             $ReturnMessage = "你不是管理員";
         }
