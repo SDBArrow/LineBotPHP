@@ -85,10 +85,10 @@ function WorkSchedule($time, $event, $client)
     $day = $row_day["day_ch"];
 
     //查詢值日生
-    $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = duty_list.userid";
-    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $name = $table_member["name"];
-    $userid = $table_member["userid"];
+    $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
+    $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+    $userid = $row_userid["userid"];
+
 
     //回傳變數初始化
     $ReturnMessage = "";
@@ -109,6 +109,9 @@ function WorkSchedule($time, $event, $client)
         $dutytrun = $row_dutytrun["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
+        $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = duty_list.userid";
+        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $name = $table_member["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
     }
     //傳輸訊息
