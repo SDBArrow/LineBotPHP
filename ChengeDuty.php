@@ -108,8 +108,8 @@ switch(true){
         //查詢今天值日生
         $time = date('W');  //抓時間
         $sql = "select * from sign_table where day_int = ".$time; 
-        $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $today_duty= $table_sign_table["userid"];
+        $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $today_duty= $row["userid"];
         //新增權限給今日值日生
         $sql = "update member set duty_level = 1 where userid =".$today_duty;
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
