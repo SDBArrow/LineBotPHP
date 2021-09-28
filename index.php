@@ -577,7 +577,7 @@ switch (true) {
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '完成：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                        $ReturnMessage = "該項目打卡成功";
+                        $ReturnMessage = "打卡成功：".$item;
                     } else{
                         $ReturnMessage = "該項目不存在";
                     }
@@ -612,11 +612,11 @@ switch (true) {
                         ));
                         $Name = $response->displayName;
                     }
-                    
+
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '還有人在使用：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                        $ReturnMessage = "該項目打卡成功";
+                        $ReturnMessage = "打卡成功：.$item";
                     } else{
                         $ReturnMessage = "該項目不存在";
                     }
