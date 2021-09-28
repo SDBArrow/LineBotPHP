@@ -86,13 +86,14 @@ function WorkSchedule($time, $event, $client)
 
     //查詢值日生
     $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = duty_list.userid";
-    $row_name = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $name = $row_name["name"];
+    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+    $name = $table_member["name"];
+    $userid = $table_member["userid"];
 
     //回傳變數初始化
     $ReturnMessage = "";
 
-    if ($name == "") {  //檢查是否是替補日
+    if ($userid == "") {  //檢查是否是替補日
         $tempor = 6; //初始化 上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
