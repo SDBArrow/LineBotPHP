@@ -106,8 +106,7 @@ switch(true){
             $ReturnMessage = "權限移除失敗";
         }
         //查詢今天值日生
-        $time = date('W');  //抓時間
-        echo date('W');
+        $time = date('w');  //抓時間
         $sql = "select * from sign_table where day_int = ".$time; 
         $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $today_duty= $row["userid"];
