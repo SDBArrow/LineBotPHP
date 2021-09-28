@@ -105,6 +105,12 @@ switch(true){
         $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $userid = $row_userid["userid"];
         echo $userid;
+        if($userid == NULL){
+            echo "NULL";
+        }elseif($userid == ""){
+            echo "空";
+        }
+
     default:
         break;
 }
