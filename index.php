@@ -560,9 +560,22 @@ switch (true) {
                 if(checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 8, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
-                    
+                    $Name = ""; //初始化
+                    // 查詢名字
+                    if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
+                        $response = $client->getUserProfile(array(
+                            'UserId' => $UserId,
+                        ));
+                        $Name = $response->displayName;  //取名字欄位
+                    } else {
+                        $response = $client->getGroupProfile(array(
+                            'UserId' => $UserId,
+                            'GroupId' => $GroupId,
+                        ));
+                        $Name = $response->displayName;
+                    }
                     include('./connect.php'); //連結資料庫設定
-                    $sql = "update sign_table set ".$item." = '完成' where day_int = ".$weekdaytempor; 
+                    $sql = "update sign_table set ".$item." = '完成：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                         $ReturnMessage = "該項目打卡成功";
                     } else{
@@ -584,9 +597,24 @@ switch (true) {
                 if(checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
+
+                    // 查詢名字
+                    $Name = ""; //初始化
+                    if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
+                        $response = $client->getUserProfile(array(
+                            'UserId' => $UserId,
+                        ));
+                        $Name = $response->displayName;  //取名字欄位
+                    } else {
+                        $response = $client->getGroupProfile(array(
+                            'UserId' => $UserId,
+                            'GroupId' => $GroupId,
+                        ));
+                        $Name = $response->displayName;
+                    }
                     
                     include('./connect.php'); //連結資料庫設定
-                    $sql = "update sign_table set ".$item." = '還有人在使用' where day_int = ".$weekdaytempor; 
+                    $sql = "update sign_table set ".$item." = '還有人在使用：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                         $ReturnMessage = "該項目打卡成功";
                     } else{
