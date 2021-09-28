@@ -293,13 +293,13 @@ switch (true) {
             ));
             $Name = $response->displayName;
         }
-        $ReturnMessage = $Name;
-        /*
+        
         //連線到資料庫取資料
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-
+        $ReturnMessage = $rowtotal;
+        /*
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
             $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
