@@ -104,7 +104,7 @@ function WorkSchedule($time, $event, $client)
             $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
         }
         //查詢替補
-        $sql = "select * from duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
+        $sql = "select * from member,duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
         $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $row_dutytrun["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
