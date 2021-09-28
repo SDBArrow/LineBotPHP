@@ -553,7 +553,7 @@ switch (true) {
 
 //postback 訊息判斷
 switch (true) {
-    case (mb_substr($event['postback']['data'], 0, 4, "UTF-8") == "工作檢核"):
+    case (mb_substr($event['postback']['data'], 0, 4, "UTF-8") == "工作檢核"): //工作檢核結果判斷
         switch (true){
             case (mb_substr($event['postback']['data'], 5, 2, "UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
