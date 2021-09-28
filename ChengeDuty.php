@@ -78,20 +78,20 @@ switch(true){
         $duty_5 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+6 day"));  //抓時間
         $duty_6 = WorkSchedule($time);
-        $sql = "update sign_table set e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = '' where day_int = 0 or day_int = 1 or day_int =2 or day_int =3 or day_int =4 or day_int =5 or day_int = 6;
-        update sign_table set userid =".$duty_0." where day_int = 0;
-        update sign_table set userid =".$duty_1." where day_int = 1;
-        update sign_table set userid =".$duty_2." where day_int = 2;
-        update sign_table set userid =".$duty_3." where day_int = 3;
-        update sign_table set userid =".$duty_4." where day_int = 4;
-        update sign_table set userid =".$duty_5." where day_int = 5;
-        update sign_table set userid =".$duty_6." where day_int = 6;";
+        echo $duty_0;echo $duty_1;echo $duty_2;echo $duty_3;echo $duty_4;echo $duty_5;echo $duty_6;
+        $sql = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = '' where day_int = 0 or day_int = 1 or day_int =2 or day_int =3 or day_int =4 or day_int =5 or day_int = 6;
+        update sign_table set userid = ".$duty_0." where day_int = 0;
+        update sign_table set userid = ".$duty_1." where day_int = 1;
+        update sign_table set userid = ".$duty_2." where day_int = 2;
+        update sign_table set userid = ".$duty_3." where day_int = 3;
+        update sign_table set userid = ".$duty_4." where day_int = 4;
+        update sign_table set userid = ".$duty_5." where day_int = 5;
+        update sign_table set userid = ".$duty_6." where day_int = 6;";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
             $ReturnMessage = "檢核表更新成功";
         } else{
             $ReturnMessage = "檢核表更新失敗";
         }
-        break;
     default:
         break;
 }
