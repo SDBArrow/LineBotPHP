@@ -85,7 +85,7 @@ function WorkSchedule($time, $event, $client)
     $day = $row_day["day_ch"];
 
     //查詢值日生
-    $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
+    $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = duty_list.userid";
     $row_name = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
     $name = $row_name["name"];
 
@@ -103,7 +103,7 @@ function WorkSchedule($time, $event, $client)
             $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
         }
         //查詢替補
-        $sql = "select * from duty_turn where id = " . $tempor;
+        $sql = "select * from duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
         $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $dutytrun = $row_dutytrun["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
