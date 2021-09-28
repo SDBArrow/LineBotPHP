@@ -53,7 +53,9 @@ switch(true){
         }
         //查詢今天值日生
         $time = date('Y-m-d');  //抓時間
-        $today_duty = WorkSchedule($time); //丟去副程式WorkSchedule
+        $sql = "select * from sign_table where day_int = ". $time; 
+        $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $today_duty= $table_sign_table["userid"];
         //新增權限給今日值日生
         $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
@@ -79,7 +81,7 @@ switch(true){
         $time = date('Y-m-d', strtotime("+6 day"));  //抓時間
         $duty_6 = WorkSchedule($time);
         
-        $sql[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = '' where day_int = 0 or day_int = 1 or day_int =2 or day_int =3 or day_int =4 or day_int =5 or day_int = 6";
+        $sql[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
         $sql[1] = "update sign_table set userid = ".$duty_0." where day_int = 0";
         $sql[2] = "update sign_table set userid = ".$duty_1." where day_int = 1";
         $sql[3] = "update sign_table set userid = ".$duty_2." where day_int = 2";
@@ -97,11 +99,17 @@ switch(true){
             echo $ReturnMessage;
         }
     case (date('w') == 2):
-        $sql = "update sign_table set e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
+        //查詢今天值日生
+        $time = date('Y-m-d');  //抓時間
+        $sql = "select * from sign_table where day_int = ". $time; 
+        $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $today_duty= $table_sign_table["userid"];
+        //新增權限給今日值日生
+        $sql = "update member set duty_level = 1 where userid ='".$today_duty."'";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-            $ReturnMessage = "權限移除成功";
-        } else{
-            $ReturnMessage = "權限移除失敗";
+            $ReturnMessage = "權限更新成功";
+        }else{
+            $ReturnMessage = "權限更新失敗";
         }
         echo $ReturnMessage;
     default:
