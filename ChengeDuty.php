@@ -107,6 +107,7 @@ switch(true){
         }
         //查詢今天值日生
         $time = date('W');  //抓時間
+        echo $time;
         $sql = "select * from sign_table where day_int = ".$time; 
         $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $today_duty= $row["userid"];
