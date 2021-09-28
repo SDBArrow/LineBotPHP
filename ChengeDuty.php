@@ -63,7 +63,7 @@ switch(true){
         }
         echo $ReturnMessage;
     //一星期執行一次、每個星期天執行
-    case (date('w') == 2):
+    case (date('w') == 0):
         $time = date('Y-m-d');  //抓時間
         $duty_0 = WorkSchedule($time);
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
@@ -95,6 +95,13 @@ switch(true){
                 $ReturnMessage = "檢核表更新失敗\n";
             }
             echo $ReturnMessage;
+        }
+    case (date('w') == 2):
+        $sql = "update member set duty_level = ''";
+        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+            $ReturnMessage = "權限移除成功";
+        } else{
+            $ReturnMessage = "權限移除失敗";
         }
     default:
         break;
