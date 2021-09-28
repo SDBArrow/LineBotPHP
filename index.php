@@ -3,6 +3,7 @@
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 include("./config.php");
+include('./connect.php'); //連結資料庫設定
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
@@ -298,8 +299,7 @@ switch (true) {
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-        $ReturnMessage = $rowtotal;
-        /*
+
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
             $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
             if(mysqli_query($db_connection, $sql)){ //更新到資料庫
@@ -309,7 +309,7 @@ switch (true) {
             }
         } else {  //無此人名字
             $ReturnMessage = "請先註冊";
-        }*/
+        }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
