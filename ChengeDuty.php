@@ -98,6 +98,13 @@ switch(true){
             }
             echo $ReturnMessage;
         }
+    case (date('w') == 2):
+        $weekdaytempor = 2;
+        $oddandeven = 1;
+        $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
+        $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $userid = $row_userid["userid"];
+        echo $userid;
     default:
         break;
 }
