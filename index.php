@@ -295,7 +295,6 @@ switch (true) {
         }
 
         //連線到資料庫取資料
-        include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
@@ -317,15 +316,8 @@ switch (true) {
         break;
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
         $UserId = $event['source']['userId']; //抓該訊息的發送者
-    
-        // 查詢是否為管理員
-        include('./connect.php'); //連結資料庫設定
-        $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-        $Security = $table_member["security"]; //取出權限等級
-    
         //判斷權限
-        if ($Security == 1){ 
+        if (checksecurity($UserId)){ // 查詢是否為管理員
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
@@ -348,6 +340,34 @@ switch (true) {
             $ReturnMessage = "你不是管理員";
         }
     
+        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        mysqli_close($db_connection);
+        break;
+    case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限"): //分享當日值日生權限
+        $UserId = $event['source']['userId']; //抓該訊息的發送者
+        //判斷權限
+        if (checkduty($UserId)){ // 查詢是否為管理員
+            //查詢資料庫的個人流水號
+            $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            $sql = "select * from member where name = '" . $name . "'"; 
+            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
+            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            
+            if ($rowtotal > 0){  //如果有這個人
+                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
+                $sql = "update member set duty_level = 1 where userid = ".$table_member_userid;
+                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $ReturnMessage = "已分享權限";
+                } else{
+                    $ReturnMessage = "更新失敗";
+                }
+            }else{
+                $ReturnMessage = "資料庫查無此人";
+            }  
+        }else{
+            $ReturnMessage = "你不是值日生";
+        }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
