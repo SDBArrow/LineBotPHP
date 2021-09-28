@@ -280,8 +280,6 @@ switch (true) {
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
         $Name = ""; //初始化
 
-        $ReturnMessage = $UserId;
-        /*
         // 查詢名字
         if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
             $response = $client->getUserProfile(array(
@@ -295,7 +293,8 @@ switch (true) {
             ));
             $Name = $response->displayName;
         }
-
+        $ReturnMessage = $Name;
+        /*
         //連線到資料庫取資料
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
         $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
