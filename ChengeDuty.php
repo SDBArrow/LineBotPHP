@@ -52,10 +52,10 @@ switch(true){
             $ReturnMessage = "權限移除失敗";
         }
         //查詢今天值日生
-        $time = date('W');  //抓時間
+        $time = date('w');  //抓時間
         $sql = "select * from sign_table where day_int = ".$time; 
-        $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $today_duty= $table_sign_table["userid"];
+        $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $today_duty= $row["userid"];
         //新增權限給今日值日生
         $sql = "update member set duty_level = 1 where userid =".$today_duty;
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
@@ -98,26 +98,6 @@ switch(true){
             }
             echo $ReturnMessage;
         }
-    case (date('w') == 2):
-        $sql = "update member set duty_level = ''";
-        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-            $ReturnMessage = "權限移除成功";
-        } else{
-            $ReturnMessage = "權限移除失敗";
-        }
-        //查詢今天值日生
-        $time = date('w');  //抓時間
-        $sql = "select * from sign_table where day_int = ".$time; 
-        $row = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $today_duty= $row["userid"];
-        //新增權限給今日值日生
-        $sql = "update member set duty_level = 1 where userid =".$today_duty;
-        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-            $ReturnMessage = "權限更新成功";
-        }else{
-            $ReturnMessage = "權限更新失敗";
-        }
-        echo $ReturnMessage;
     default:
         break;
 }
