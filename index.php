@@ -310,7 +310,6 @@ switch (true) {
             $ReturnMessage = "請先註冊";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        $ReturnMessage = "不會自己往上看嗎";
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
@@ -323,7 +322,8 @@ switch (true) {
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
             $rowtotal = mysqli_num_rows($table_member); //總資料比數
-            
+            $ReturnMessage = $rowtotal;
+            /*
             if ($rowtotal > 0){  //如果有這個人
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
                 $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
@@ -335,7 +335,7 @@ switch (true) {
                 }
             }else{
                 $ReturnMessage = "被排班的人員尚未註冊";
-            }  
+            }  */
         }else{
             $ReturnMessage = "你不是管理員";
         }
@@ -347,7 +347,7 @@ switch (true) {
     case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限"): //分享當日值日生權限
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
-        if (checkduty($UserId)){ // 查詢是否為管理員
+        if (checkduty($UserId)){ // 查詢是否為值日生
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
