@@ -93,7 +93,7 @@ function WorkSchedule($time, $event, $client)
     //回傳變數初始化
     $ReturnMessage = "";
 
-    if ($userid == "") {  //檢查是否是替補日
+    if ($userid == NULL) {  //檢查是否是替補日
         $tempor = 6; //初始化 上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
