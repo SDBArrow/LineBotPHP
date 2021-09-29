@@ -348,7 +348,7 @@ switch (true) {
         ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
-    case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限"): //分享當日值日生權限
+    case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限" || mb_substr($message['text'] ,0,5,"UTF-8") == "值日生交換" ): //分享當日值日生權限
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
         if (checkduty($UserId)){ // 查詢是否為值日生
