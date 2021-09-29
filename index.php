@@ -316,7 +316,14 @@ switch (true) {
                     $ReturnMessage = "更新失敗，請洽管理員";
                 }
             }else{
-                $ReturnMessage = "名字重複，請選擇其他名字";
+                $sql = "select * from member where lineuid = '" . $UserId . "'";
+                $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+                $name = $table_member["name"];
+                if ($name == $Name){
+                    $ReturnMessage = "名字無更動";
+                }else{
+                    $ReturnMessage = "名字重複，請選擇其他名字";
+                }
             }
         } else {  //無此人名字
             $ReturnMessage = "請先註冊";
