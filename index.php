@@ -382,7 +382,7 @@ switch (true) {
             'messages' => array(
                 array(
                     'type' => 'template', //訊息類型 (模板)
-                    'altText' => 'Example buttons template', //替代文字
+                    'altText' => '工作檢核表', //替代文字
                     'template' => array(
                         'type' => 'carousel', //類型 (輪播)
                         'columns' => array(
