@@ -10,7 +10,7 @@ $mpdf = new \Mpdf\Mpdf(['mode' => 'UTF-8']);
 $mpdf -> autoLangToFont =true;
 $mpdf -> autoScriptToLang = true;
 
-$new_excel_path = "sign_table.xlsx";
+$new_excel_path = "lottery/sign_table.xlsx";
 $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
 $spreadsheet = $reader->load("$new_excel_path");
 
