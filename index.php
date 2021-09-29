@@ -308,7 +308,7 @@ switch (true) {
             $sql = "select * from member where name = '" . $Name . "'"; //資料庫的name不能重複
             $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
             $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
-            if ($rowtotal > 0){
+            if ($rowtotal < 1){
                 $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                     $ReturnMessage = "已更新資料";
