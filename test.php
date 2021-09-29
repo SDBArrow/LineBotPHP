@@ -15,7 +15,7 @@ $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
 $spreadsheet = $reader->load("$new_excel_path");
 
 //Creazione del writer
-$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Tcpdf');
+$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Mpdf');
 
 //Salvataggio del pfd
 $name = 'test';

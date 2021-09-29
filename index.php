@@ -305,11 +305,18 @@ switch (true) {
         $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
 
         if ($rowtotal > 0) {    //筆數 = 0 代表無資料
-            $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
-            if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                $ReturnMessage = "已更新資料";
-            } else{
-                $ReturnMessage = "更新失敗，請洽管理員";
+            $sql = "select * from member where name = '" . $Name . "'"; //資料庫的name不能重複
+            $mysqlreturn = mysqli_query($db_connection, $sql);  //查詢結果
+            $rowtotal = mysqli_num_rows($mysqlreturn); //總資料比數
+            if ($rowtotal > 0){
+                $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
+                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $ReturnMessage = "已更新資料";
+                } else{
+                    $ReturnMessage = "更新失敗，請洽管理員";
+                }
+            }else{
+                $ReturnMessage = "名字重複，請選擇其他名字";
             }
         } else {  //無此人名字
             $ReturnMessage = "請先註冊";
