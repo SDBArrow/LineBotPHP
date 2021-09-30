@@ -113,7 +113,7 @@ function WorkSchedule($time, $event, $client)
         $dutytrun = $row_dutytrun["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
     } else {   //不是替補日
-        $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = duty_list.userid";
+        $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = ".$userid;
         $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
         $name = $table_member["name"];
         $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
