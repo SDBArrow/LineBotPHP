@@ -88,7 +88,7 @@ function WorkSchedule($time, $event, $client)
     $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
     $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
 
-    if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){
+    if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
         $userid = $row_userid["new_userid"];
     }else{
         $userid = $row_userid["userid"];

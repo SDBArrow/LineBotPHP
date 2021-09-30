@@ -13,12 +13,16 @@ function WorkSchedule($time)
 
     //查詢值日生
     $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
-    $table_duty_list = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $duty = $table_duty_list["userid"];
+    $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+    if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
+        $userid = $row_userid["new_userid"];
+    }else{
+        $userid = $row_userid["userid"];
+    }
 
     $ReturnMessage = "";     //回傳變數初始化
 
-    if ($duty == "") {  //檢查是否是替補日
+    if ($userid == NULL) {  //檢查是否是替補日
         $tempor = 6; //初始化 2021-09-19上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
         if ( $oddandeven == 0 && $weekdaytempor == 0){
@@ -31,10 +35,10 @@ function WorkSchedule($time)
         //查詢替補
         $sql = "select * from duty_turn where id = ".$tempor;
         $table_duty_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $dutytrun = $table_duty_trun["userid"];
-        $ReturnMessage = $dutytrun; // 回復訊息
+        $userid = $table_duty_trun["userid"];
+        $ReturnMessage = $userid; // 回復訊息
     } else {   //不是替補日
-        $ReturnMessage = $duty; // 回復訊息
+        $ReturnMessage = $userid; // 回復訊息
     }
     //傳輸訊息
     mysqli_close($db_connection); //關閉資料庫連線
