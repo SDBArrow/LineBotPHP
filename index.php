@@ -100,12 +100,22 @@ function WorkSchedule($time, $event, $client)
     if ($userid == NULL) {  //檢查是否是替補日
         $tempor = 6; //初始化 上次替補結尾輪到6號
         $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
-        if ( $oddandeven == 0 && $weekdaytempor == 0){
-            $tempor = $tempor % 11;                 //兩個星期的第一次
-        }elseif($oddandeven == 0 && $weekdaytempor == 1){
-            $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
-        }else{      
-            $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
+        if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
+            if ( $oddandeven == 0 ){
+                $tempor = $tempor % 11;                 //兩個星期的第一次
+            }elseif($oddandeven == 1 && $weekdaytempor == 0){
+                $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
+            }elseif($oddandeven == 0 && $weekdaytempor == 2){      
+                $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
+            }
+        }else{
+            if ( $oddandeven == 0 && $weekdaytempor == 0){
+                $tempor = $tempor % 11;                 //兩個星期的第一次
+            }elseif($oddandeven == 0 && $weekdaytempor == 1){
+                $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
+            }else{      
+                $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
+            }
         }
         //查詢替補
         $sql = "select * from member,duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
