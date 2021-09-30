@@ -87,8 +87,12 @@ function WorkSchedule($time, $event, $client)
     //查詢值日生
     $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
     $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $userid = $row_userid["userid"];
 
+    if (strtotime($time) - strtotime("2021-10-02 00:00:00")>=0){
+        $userid = $row_userid["new_userid"];
+    }else{
+        $userid = $row_userid["userid"];
+    }
 
     //回傳變數初始化
     $ReturnMessage = "";
