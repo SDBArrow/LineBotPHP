@@ -198,7 +198,7 @@ switch (true) {
         WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
         break;
     case ($message['text'] == "班表"): //班表
-        $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20210915.jpg";
+        $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20210930.jpg";
         ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "地板" || $message['text'] == "地板物品"): //地板物品
