@@ -549,7 +549,7 @@ switch (true) {
                                 )
                             ),
                             array(
-                                'title' => 'E420整理桌椅', //標題 2 <不一定需要>
+                                'title' => 'E420整理鞋櫃', //標題 2 <不一定需要>
                                 'text' => '請確實執行', //文字 1
                                 'actions' => array(
                                     array(
