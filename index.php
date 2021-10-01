@@ -4,55 +4,11 @@ date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 require("./config.php");
-require('./connect.php'); //連結資料庫設定
+//require('./connect.php'); //連結資料庫設定
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
 $work = new Linebot();
-
-// 回覆圖片訊息
-function ReplyImage($ReturnImageUrl, $event, $client){
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'image', // 訊息類型 (圖片)
-                'originalContentUrl' => $ReturnImageUrl, // 回復圖片
-                'previewImageUrl' => $ReturnImageUrl // 回復的預覽圖片
-            )
-        )
-    ));
-}
-
-// 回覆模板訊息
-function ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2, $ReturnOptions1, $ReturnOptions2, $event, $client){
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'template', //訊息類型 (模板)
-                'altText' => '工作自我檢核', //替代文字
-                'template' => array(
-                    'type' => 'confirm', //類型 (確認)
-                    'text' => $ReturnTitle, //文字
-                    'actions' => array(
-                        array(
-                            'type' => 'message', //類型 (訊息)
-                            'label' => $ReturnOptionsLabel1, //標籤 1
-                            'text' => $ReturnOptions1, //用戶發送文字 1
-                        ),
-                        array(
-                            'type' => 'message', //類型 (訊息)
-                            'label' => $ReturnOptionsLabel2, //標籤 2
-                            'text' => $ReturnOptions2, //用戶發送文字 2
-                        )
-                    )
-                )
-            )
-        )
-    ));
-}
-
 
 // 查詢是否有值日生權限
 function checkduty($UserId)
@@ -63,7 +19,6 @@ function checkduty($UserId)
     $duty_level = $table_member["duty_level"]; //取出權限等級
     return $duty_level;
 }
-
 // 查詢是否為管理員
 function checksecurity($UserId)
 {
@@ -137,15 +92,15 @@ switch (true) {
         break;
     case ($message['text'] == "班表"): //班表
         $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20211001.jpg";
-        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
+        $work -> ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "地板" || $message['text'] == "地板物品"): //地板物品
         $ReturnImageUrl = "https://dogmission.herokuapp.com/images/floor_20210905.jpg";
-        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
+        $work -> ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "座位" || $message['text'] == "座位表"): //座位
         $ReturnImageUrl = "https://dogmission.herokuapp.com/images/seat_20210908.jpg";
-        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
+        $work -> ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "昨天遛狗" || $message['text'] == "前天遛狗" || $message['text'] == "大前天遛狗"): //智障問題
         $ReturnMessage = "不會自己往上看嗎";
@@ -160,7 +115,7 @@ switch (true) {
         $highestRow = $worksheet->getHighestRow(); // 總行数 
         $rand = rand(1, $highestRow); //產生最大數為資料數量的一個亂數
         $ReturnImageUrl = $worksheet->getCellByColumnAndRow(1, $rand)->getValue(); //取得亂數產生的相對URL
-        ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
+        $work -> ReplyImage($ReturnImageUrl, $event, $client); //回傳訊息
         break;
     case (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $message['text']) || preg_match("/^[0-9]{2}-[0-9]{2}$/", $message['text']))://日期查遛狗名單，判斷inputdata是否為日期
         $time = $message['text'];  //抓時間
