@@ -2,13 +2,13 @@
 //官方文檔：https://developers.line.biz/en/reference/messaging-api/
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-require_once('function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
+require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 include("./config.php");
 include('./connect.php'); //連結資料庫設定
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
-
+$work = new Linebot();
 
 // 回覆文字訊息
 function ReplyText($ReturnMessage, $event, $client){
@@ -67,6 +67,7 @@ function ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2
 }
 
 // 處理遛狗查詢 
+/*
 function WorkSchedule($time, $event, $client)
 {
     include('./connect.php'); //連結資料庫設定
@@ -132,7 +133,7 @@ function WorkSchedule($time, $event, $client)
     //傳輸訊息
     ReplyText($ReturnMessage, $event, $client); //回傳訊息
     mysqli_close($db_connection); //關閉資料庫連線
-}
+}*/
 
 // 查詢是否有值日生權限
 function checkduty($UserId)
@@ -202,7 +203,8 @@ switch (true) {
         break;
     case ($message['text'] == "遛狗" || $message['text'] == "今日遛狗" || $message['text'] == "今天遛狗"): //今天遛狗
         $time = date('Y-m-d');  //抓時間
-        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
+        ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "明日遛狗" || $message['text'] == "明天遛狗"):  //明天遛狗
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
