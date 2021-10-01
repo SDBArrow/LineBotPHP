@@ -10,3 +10,5 @@ LINE 自動聊天提醒機器人
 使用python 爬照片url 並存放在.xlsx，已達到隨機產生特定照片功能
 
 本程式參考 GoneToneStudio/line-example-bot-tiny-php
+
+本專案製作說明：https://hackmd.io/vxGa7qBTRR-SzJ4f9EcC0A
