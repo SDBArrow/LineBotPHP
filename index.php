@@ -9,19 +9,6 @@ $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
 $work = new Linebot();
-/*
-// 回覆文字訊息
-function $work -> ReplyText($ReturnMessage, $event, $client){
-    $client->replyMessage(array(
-        'replyToken' => $event['replyToken'],
-        'messages' => array(
-            array(
-                'type' => 'text', // 訊息類型 (文字)
-                'text' => $ReturnMessage // 回復訊息
-            )
-        )
-    ));
-}*/
 
 // 回覆圖片訊息
 function ReplyImage($ReturnImageUrl, $event, $client){
@@ -140,11 +127,13 @@ switch (true) {
         break;
     case ($message['text'] == "明日遛狗" || $message['text'] == "明天遛狗"):  //明天遛狗
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
-        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "後日遛狗" || $message['text'] == "後天遛狗"):  //後天遛狗
         $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
-        WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+        $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "班表"): //班表
         $ReturnImageUrl = "https://dogmission.herokuapp.com/images/Class_Schedule_20211001.jpg";
@@ -189,7 +178,8 @@ switch (true) {
             $__d = substr($time, 8, 2);
         }
         if (checkdate($__m, $__d, $__y)) { //確認時間是否有效
-            WorkSchedule($time, $event, $client); //丟去副程式WorkSchedule
+            $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
+            $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         }
         break;
     case ($message['text'] == "註冊資料" || $message['text'] == "註冊"): //添加用戶 UID、name 到資料庫
