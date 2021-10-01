@@ -1,33 +1,14 @@
 <?php
 //官方文檔：https://developers.line.biz/en/reference/messaging-api/
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
-require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 require("./config.php");
-//require('./connect.php'); //連結資料庫設定
+require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
+$client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
-$client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
+require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 $work = new Linebot();
 
-// 查詢是否有值日生權限
-function checkduty($UserId)
-{
-    include('./connect.php'); //連結資料庫設定
-    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $duty_level = $table_member["duty_level"]; //取出權限等級
-    return $duty_level;
-}
-// 查詢是否為管理員
-function checksecurity($UserId)
-{
-    include('./connect.php'); //連結資料庫設定
-    $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-    $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
-    $Security = $table_member["security"]; //取出權限等級
-    return $Security;
-}
 //加入的處理
 foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
@@ -235,7 +216,7 @@ switch (true) {
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
-        if (checksecurity($UserId)){ // 查詢是否為管理員
+        if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
@@ -265,7 +246,7 @@ switch (true) {
     case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限" || mb_substr($message['text'] ,0,5,"UTF-8") == "值日生交換" ): //分享當日值日生權限
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
-        if (checkduty($UserId)){ // 查詢是否為值日生
+        if ($work -> checkduty($UserId)){ // 查詢是否為值日生
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
@@ -475,7 +456,7 @@ switch (true) {
         switch (true){
             case (mb_substr($event['postback']['data'], 5, 2, "UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
-                if(checkduty($UserId)){
+                if($work -> checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 8, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
                     $Name = ""; //初始化
@@ -512,7 +493,7 @@ switch (true) {
                 break;   
             case (mb_substr($event['postback']['data'], 5, 6, "UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
-                if(checkduty($UserId)){
+                if($work -> checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
 
@@ -552,7 +533,3 @@ switch (true) {
     default:
         break;
 }
-
-/* //測試用
-if ($message['text'] == "測試" || $message['text'] == "測試") {
-}*/
