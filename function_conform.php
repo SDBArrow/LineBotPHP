@@ -2,6 +2,7 @@
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 
 class Linebot{
+    
     // 處理遛狗查詢 
     function WorkSchedule($time){
         include('./connect.php'); //連結資料庫設定
@@ -129,6 +130,19 @@ class Linebot{
                 'message' => $ReturnMessage
             )
         );
+    }
+
+    // LineBot_push 一個月只有五百則訊息扣搭
+    function PushText($ReturnMessage, $id, $client){
+        $client->replyMessage(array(
+            'to' => $id,
+            'messages' => array(
+                array(
+                    'type' => 'text', // 訊息類型 (文字)
+                    'text' => $ReturnMessage // 回復訊息
+                )
+            )
+        ));
     }
 
     // 回覆文字訊息
