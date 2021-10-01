@@ -2,6 +2,7 @@
 //官方文檔：https://developers.line.biz/en/reference/messaging-api/
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
+require_once('function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 include("./config.php");
 include('./connect.php'); //連結資料庫設定
 $message = null;
