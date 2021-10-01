@@ -69,7 +69,7 @@ class Linebot{
         return($ReturnMessage);
     }
 
-    // 處理遛狗查詢 
+    // 處理遛狗查詢只抓userid 
     function WorkScheduleOnlyUserid($time)
     {
         include('./connect.php'); //連結資料庫設定
