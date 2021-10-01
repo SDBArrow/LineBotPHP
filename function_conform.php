@@ -16,7 +16,7 @@ class LineBot
         ));
     }
 
-    function WorkSchedule($time)
+    public function WorkSchedule($time)
     {
         include('./connect.php'); //連結資料庫設定
         $timecount = (strtotime($time) - strtotime("2021-09-19 00:00:00")) / (60 * 60 * 24); //相隔天數
