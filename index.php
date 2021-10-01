@@ -3,15 +3,15 @@
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-include("./config.php");
-include('./connect.php'); //連結資料庫設定
+require("./config.php");
+require('./connect.php'); //連結資料庫設定
 $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 $client = new LINEBotXiaoFei($channelAccessToken, $channelSecret); //把Token,Secret丟到LINEBotXiaoFei建立連線
 $work = new Linebot();
-
+/*
 // 回覆文字訊息
-function ReplyText($ReturnMessage, $event, $client){
+function $work -> ReplyText($ReturnMessage, $event, $client){
     $client->replyMessage(array(
         'replyToken' => $event['replyToken'],
         'messages' => array(
@@ -21,7 +21,7 @@ function ReplyText($ReturnMessage, $event, $client){
             )
         )
     ));
-}
+}*/
 
 // 回覆圖片訊息
 function ReplyImage($ReturnImageUrl, $event, $client){
@@ -66,74 +66,6 @@ function ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2
     ));
 }
 
-// 處理遛狗查詢 
-/*
-function WorkSchedule($time, $event, $client)
-{
-    include('./connect.php'); //連結資料庫設定
-    $timecount = (strtotime($time) - strtotime("2021-09-19 00:00:00")) / (60 * 60 * 24); //相隔天數
-    $weekcount = floor($timecount / 7); //相隔週數
-
-    //查詢日期單周還雙周
-    $oddandeven = $weekcount % 2;
-    $sql = "select * from week where week_int = " . $oddandeven;
-    $row_week = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $week = $row_week["week_ch"];
-
-    //查詢日期星期幾
-    $weekdaytempor = date('w', strtotime($time));
-    $sql = "select * from day where day_int = " . $weekdaytempor;
-    $row_day = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-    $day = $row_day["day_ch"];
-
-    //查詢值日生
-    $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
-    $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-
-    if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
-        $userid = $row_userid["new_userid"];
-    }else{
-        $userid = $row_userid["userid"];
-    }
-
-    //回傳變數初始化
-    $ReturnMessage = "";
-
-    if ($userid == NULL) {  //檢查是否是替補日
-        $tempor = 6; //初始化 上次替補結尾輪到6號
-        $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
-        if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
-            if ( $oddandeven == 0 ){
-                $tempor = $tempor % 11;                 //兩個星期的第一次
-            }elseif($oddandeven == 1 && $weekdaytempor == 0){
-                $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
-            }elseif($oddandeven == 0 && $weekdaytempor == 2){      
-                $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
-            }
-        }else{
-            if ( $oddandeven == 0 && $weekdaytempor == 0){
-                $tempor = $tempor % 11;                 //兩個星期的第一次
-            }elseif($oddandeven == 0 && $weekdaytempor == 1){
-                $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
-            }else{      
-                $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
-            }
-        }
-        //查詢替補
-        $sql = "select * from member,duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
-        $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $dutytrun = $row_dutytrun["name"];
-        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
-    } else {   //不是替補日
-        $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = ".$userid;
-        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $name = $table_member["name"];
-        $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
-    }
-    //傳輸訊息
-    ReplyText($ReturnMessage, $event, $client); //回傳訊息
-    mysqli_close($db_connection); //關閉資料庫連線
-}*/
 
 // 查詢是否有值日生權限
 function checkduty($UserId)
@@ -163,15 +95,15 @@ foreach ($client->parseEvents() as $event) {
         case 'postback': //隱藏訊息
             /*
             $ReturnMessage = $event['postback']['data'];
-            ReplyText($ReturnMessage, $event, $client); //回傳訊息*/
+            $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息*/
             break;
         case 'follow': //加為好友觸發
             $ReturnMessage = "您好，我是小飛的溫泉指揮官";
-            ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
             break;
         case 'join': //加入群組觸發
             $ReturnMessage = "您好，我是小飛的溫泉指揮官";
-            ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
             break;
         default:
             //error_log("Unsupporeted event type: " . $event['type']);
@@ -183,28 +115,28 @@ foreach ($client->parseEvents() as $event) {
 switch (true) {
     case $message['text'] == "早安": //早安
         $ReturnMessage = "早安!";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
         $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n5.更新註冊名字(Line有改名的話)\n6.班表\n7.日期查詢範例：2022-01-01\n8.注意事項\n9.明日遛狗\n10.後天遛狗\n11.換班規則\n12.餵食規則\n13.座位表\n14.地板物品\n15.排班 代碼 @人名\n16.抽";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
         $ReturnMessage = "小飛之後帶下去上廁所，如果當下小飛沒馬上大號的話，要至少等小飛5~10分鐘再帶上來，小飛通常會下去一陣子後才上大號，其餘規則請至419_3門口查看";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "餵食規則" || $message['text'] == "餵食"): //餵食
         $ReturnMessage = "一餐:\n1/8罐頭+70克飼料\n1/8罐頭+200公克水";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "換班規則": //換班規則
         $ReturnMessage = "換班規則：雙方同意即可申請換班，若更換至替補。將會於最後一次原班表值班完後再做更換。";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "遛狗" || $message['text'] == "今日遛狗" || $message['text'] == "今天遛狗"): //今天遛狗
         $time = date('Y-m-d');  //抓時間
         $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "明日遛狗" || $message['text'] == "明天遛狗"):  //明天遛狗
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
@@ -228,7 +160,7 @@ switch (true) {
         break;
     case ($message['text'] == "昨天遛狗" || $message['text'] == "前天遛狗" || $message['text'] == "大前天遛狗"): //智障問題
         $ReturnMessage = "不會自己往上看嗎";
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "抽":  //抽獎
         require 'vendor/autoload.php';  //引入軟件包PhpSpreadsheet
@@ -297,7 +229,7 @@ switch (true) {
             $ReturnMessage = "已經註冊過";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case ($message['text'] == "更新" || $message['text'] == "更新註冊名字"): //更新 line 名稱
@@ -352,7 +284,7 @@ switch (true) {
             $ReturnMessage = "請先註冊";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
@@ -382,7 +314,7 @@ switch (true) {
         }
     
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限" || mb_substr($message['text'] ,0,5,"UTF-8") == "值日生交換" ): //分享當日值日生權限
@@ -410,7 +342,7 @@ switch (true) {
             $ReturnMessage = "你不是值日生";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
-        ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
     case ($message['text'] == "工作檢核"): //工作檢核功能
@@ -622,16 +554,16 @@ switch (true) {
                     } else{
                         $ReturnMessage = "該項目不存在";
                     }
-                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
                 }else{
                     $ReturnMessage = "你不是今天值日生";
-                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
             case (mb_substr($event['postback']['data'], 5, 4, "UTF-8") == "尚未完成"):
                 $ReturnMessage = "請完成後再重新選擇";
-                ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
             case (mb_substr($event['postback']['data'], 5, 6, "UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
@@ -661,11 +593,11 @@ switch (true) {
                     } else{
                         $ReturnMessage = "該項目不存在";
                     }
-                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
                 }else{
                     $ReturnMessage = "你不是今天值日生";
-                    ReplyText($ReturnMessage, $event, $client); //回傳訊息
+                    $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
             default:
