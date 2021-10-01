@@ -53,7 +53,7 @@ switch (true) {
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "換班規則": //換班規則
-        $ReturnMessage = "換班規則：雙方同意即可申請換班，若更換至替補。將會於最後一次原班表值班完後再做更換。";
+        $ReturnMessage = "換班規則：雙方同意即可申請換班，若更換至替補。將會於申請後完成最後一次原班表值班再做更換。";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "遛狗" || $message['text'] == "今日遛狗" || $message['text'] == "今天遛狗"): //今天遛狗

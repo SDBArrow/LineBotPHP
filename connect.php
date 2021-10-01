@@ -20,9 +20,7 @@ $db_connection->real_connect($server, $db_username, $db_password, $db_name, 3306
 
 mysqli_query($db_connection, "SET NAMES 'UTF8'"); //設定編碼
 
-
 /* no ssh
 $con = mysqli_connect($server,$db_username,$db_password);//連結資料庫
 mysqli_select_db($con,'user');//選擇資料庫（我的是test）
 */
-
