@@ -39,7 +39,7 @@ switch(true){
             echo $ReturnMessage;
         }
             //每天00:00要執行的
-    case (date('H:i') == "01:58" || date('H:i') == "01:59" || date('H:i') == "01:57" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
@@ -63,6 +63,5 @@ switch(true){
         echo $ReturnMessage;
     //一星期執行一次、每個星期天執行
     default:
-        echo "禁用\n";
         break;
 }
