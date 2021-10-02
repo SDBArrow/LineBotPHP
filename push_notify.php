@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-//$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
-$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
+$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
+//$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
 $client = new LINENotifyXiaoFei($channelAccessToken); //把Token,Secret丟到LINENotifyXiaoFei建立連線
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 $work = new Linebot();
@@ -26,7 +26,7 @@ switch(true){
 		  $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
 		  $work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		  break;
-    case (date('H:i') == "02:21" || date('H:i') == "02:22" || date('H:i') == "02:23" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
+    case (date('H:i') == "02:27" || date('H:i') == "02:28" || date('H:i') == "02:29" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
 		//標頭
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
