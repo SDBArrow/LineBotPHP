@@ -1,4 +1,5 @@
 <?php
+include('./connect.php'); //連結資料庫設定
 // Include the main TCPDF library (search for installation path).
 require_once('TCPDF/tcpdf.php');
 
@@ -152,7 +153,7 @@ $pdf->SetFont('msungstdlight', '', 10);
 // Add a page
 // This method has several options, check the source code documentation for more information.
 // 版面配置：P 直向 | L 橫向, 紙張大小 (必須大寫字母)
-$pdf->AddPage('P', 'LETTER');
+$pdf->AddPage('L', 'LETTER');
 
 // set text shadow effect
 // 文字陰影
