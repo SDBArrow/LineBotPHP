@@ -9,7 +9,7 @@ class MYPDF extends TCPDF {
 	//Page header
 	public function Header() {
 		// Set font
-        $this->SetFont('msungstdlight', '', 10);
+        $this->SetFont('DroidSansFallback.ttf', '', 10);
 
         // 公司與報表名稱
         $title = '
@@ -94,7 +94,7 @@ class MYPDF extends TCPDF {
 }
 
 // create new PDF document
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'Unicode', false);
+$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
