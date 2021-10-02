@@ -179,13 +179,18 @@ for ($i = 0; $i < 7; $i++) {
 
     $html .= '
         <tr>
-            <td style="line-height: 1.5; width: 90px;">102050' . $i . '</td>
-            <td style="line-height: 1.5; width: 90px;">王' . $i . '傑</td>
-            <td style="line-height: 1.5; width: 90px;">M</td>
-            <td style="line-height: 1.5; width: 90px;">72-11-16</td>
-            <td style="line-height: 1.5; width: 90px;">06-2600000</td>
-            <td style="line-height: 1.5; width: 90px;">0952000000</td>
-            <td style="line-height: 1.5; width: auto;">台南市安平區健康三街</td>
+            <td style="line-height: 1.5; width: 80px;">102050' . $i . '</td>
+            <td style="line-height: 1.5; width: 80px;">王' . $i . '傑</td>
+            <td style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 100px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
+            <td style="line-height: 1.5; width: auto;">完成：楊子弘</td>
         </tr>';
 }
 
