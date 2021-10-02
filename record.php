@@ -38,8 +38,8 @@ class MYPDF extends TCPDF {
         $fields = '
 <table cellpadding="1">
     <tr>
-        <td align="center" style="border-bottom: 1px solid black; width: 90px;">星期</td>
-        <td align="center" style="border-bottom: 1px solid black; width: 70px;">姓名</td>
+        <td align="center" style="border-bottom: 1px solid black; width: 80px;">星期</td>
+        <td align="center" style="border-bottom: 1px solid black; width: 80px;">姓名</td>
         <td align="center" style="border-bottom: 1px solid black; width: 90px;">E419冰箱</td>
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E419倒垃圾</td>
         <td align="center" style="border-bottom: 1px solid black; width: 105px;">E419走廊清潔</td>
