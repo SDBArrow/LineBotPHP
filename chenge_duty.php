@@ -39,9 +39,9 @@ switch(true){
             echo $ReturnMessage;
         }
             //每天00:00要執行的
-    case (date('H:i') == "01:46" || date('H:i') == "01:47" || date('H:i') == "01:48" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "01:51" || date('H:i') == "01:52" || date('H:i') == "01:53" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
-        $sql = "update member set duty_level = 0 where duty_level = 1;";
+        $sql = "update member set duty_level = 0";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
             $ReturnMessage = "權限移除成功\n";
         } else{
