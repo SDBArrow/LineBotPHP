@@ -39,7 +39,7 @@ class MYPDF extends TCPDF {
 <table cellpadding="1">
     <tr>
         <td align="center" style="border-bottom: 1px solid black; width: 80px;">星期</td>
-        <td align="center" style="border-bottom: 1px solid black; width: 80px;">姓名</td>
+        <td align="center" style="border-bottom: 1px solid black; width: 80px;">值日生</td>
         <td align="center" style="border-bottom: 1px solid black; width: 90px;">E419冰箱</td>
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E419倒垃圾</td>
         <td align="center" style="border-bottom: 1px solid black; width: 105px;">E419走廊清潔</td>
@@ -179,18 +179,18 @@ for ($i = 0; $i < 7; $i++) {
 
     $html .= '
         <tr>
-            <td style="line-height: 1.5; width: 80px;">102050' . $i . '</td>
-            <td style="line-height: 1.5; width: 80px;">王' . $i . '傑</td>
-            <td style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 100px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
-            <td style="line-height: 1.5; width: auto;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 80px;">102050' . $i . '</td>
+            <td align="center" style="line-height: 1.5; width: 80px;">王' . $i . '傑</td>
+            <td align="center" style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 100px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: auto;">完成：楊子弘</td>
         </tr>';
 }
 
