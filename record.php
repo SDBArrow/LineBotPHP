@@ -43,11 +43,11 @@ class MYPDF extends TCPDF {
         <td style="border-bottom: 1px solid black; width: 100px;">E419冰箱</td>
         <td style="border-bottom: 1px solid black; width: 100px;">E419倒垃圾</td>
         <td style="border-bottom: 1px solid black; width: 100px;">E419走廊清潔</td>
-        <td style="border-bottom: 1px solid black; width: 100px;">關E419冷氣、電燈</td>
+        <td style="border-bottom: 1px solid black; width: 110px;">關E419冷氣、電燈</td>
         <td style="border-bottom: 1px solid black; width: 100px;">E420走廊清潔</td> 
         <td style="border-bottom: 1px solid black; width: 100px;">E420檢查設備</td> 
         <td style="border-bottom: 1px solid black; width: 100px;">E420整理桌椅</td> 
-        <td style="border-bottom: 1px solid black; width: 100px;">關E420冷氣、電燈</td> 
+        <td style="border-bottom: 1px solid black; width: 110px;">關E420冷氣、電燈</td> 
         <td style="border-bottom: 1px solid black; width: 100px;">E420鞋櫃</td> 
         <td style="border-bottom: 1px solid black; width: auto;">關小房間冷氣、電燈</td> 
     </tr>
