@@ -148,7 +148,7 @@ $pdf->setFontSubsetting(true);
 // helvetica or times to reduce file size.
 // $pdf->SetFont('dejavusans', '', 14, '', true);
 // 中文字體名稱, 樣式 (B 粗, I 斜, U 底線, D 刪除線, O 上方線), 字型大小 (預設 12pt), 字型檔, 使用文字子集 
-$pdf->SetFont('msungstdlight', '', 10);
+$pdf->SetFont('DroidSansFallback', '', 10);
 
 // Add a page
 // This method has several options, check the source code documentation for more information.
