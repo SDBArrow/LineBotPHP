@@ -40,8 +40,12 @@ switch (true) {
         $ReturnMessage = "早安!";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
+    case $message['text'] == "本周紀錄": //早安
+        $ReturnMessage = "https://reurl.cc/WXqqYk";
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
-        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n5.更新註冊名字(Line有改名的話)\n6.班表\n7.日期查詢範例：2022-01-01\n8.注意事項\n9.明日遛狗\n10.後天遛狗\n11.換班規則\n12.餵食規則\n13.座位表\n14.地板物品\n15.排班 代碼 @人名\n16.抽";
+        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.本周紀錄\n5.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n6.更新註冊名字(Line有改名的話)\n7.班表\n8.日期查詢範例：2022-01-01\n9.注意事項\n10.明日遛狗\n11.後天遛狗\n12.換班規則\n13.餵食規則\n14.座位表\n15.地板物品\n16.排班 代碼 @人名\n17.抽";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
