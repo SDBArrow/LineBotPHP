@@ -35,6 +35,8 @@ class Linebot{
         $ReturnMessage = "";
         
         if ($userid == NULL) {  //檢查是否是替補日
+
+            //------此段代碼開始，可能因為替補數量不一樣而需要改公式
             $tempor = 6; //初始化 上次替補結尾輪到6號
             $tempor = $tempor + floor($weekcount/2)*3;  //替補計算  兩個星期會有三次替補
             if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
@@ -54,6 +56,8 @@ class Linebot{
                     $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
                 }
             }
+            //------會隨替補數量更改公式的代碼到此為止
+
             //查詢替補
             $sql = "select * from member,duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
             $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
