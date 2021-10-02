@@ -26,13 +26,13 @@ switch(true){
 		  $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
 		  $work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		  break;
-    case (date('H:i') == "02:35" || date('H:i') == "02:30" || date('H:i') == "02:31" || date('H:i') == "02:32" || date('H:i') == "02:33" || date('H:i') == "02:34"):
+    case (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
 		//標頭
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
 		$sql = "select * from sign_table,member where sign_table.userid = member.userid and day_int = ".$time; 
         $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-		if ($table_sign_table["e419_refrigerator"] == "" || $table_sign_table["e419_ashcan"] == "" || $table_sign_table["e419_corridor"] == "" || $table_sign_table["e419_conditioner_light"] == "" || $table_sign_table["e420_corridor"] == "" || $table_sign_table["e420_equipment"] == "" || $table_sign_table["e420_chair"] == "" || $table_sign_table["e420_chair"] == "" || $table_sign_table["e420_conditioner_light"] == "" || $table_sign_table["e420_Shoebox"] == "" || $table_sign_table["room_conditioner_light"] == ""){
+		if ($table_sign_table["e419_refrigerator"] == "" || $table_sign_table["e419_ashcan"] == "" || $table_sign_table["e419_corridor"] == "" || $table_sign_table["e419_conditioner_light"] == "" || $table_sign_table["e420_corridor"] == "" || $table_sign_table["e420_equipment"] == "" || $table_sign_table["e420_chair"] == "" || $table_sign_table["e420_conditioner_light"] == "" || $table_sign_table["e420_Shoebox"] == "" || $table_sign_table["room_conditioner_light"] == ""){
 			$ReturnMessage = "\n=====工作檢核自動提醒====="; //丟去副程式WorkSchedule
 			$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 			$ReturnMessage = $table_sign_table["name"]."工作檢核表尚未完成或有缺漏，請盡速補正"; //丟去副程式WorkSchedule
