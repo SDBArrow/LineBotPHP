@@ -39,8 +39,8 @@ class MYPDF extends TCPDF {
 <table cellpadding="1">
     <tr>
         <td style="border-bottom: 1px solid black; width: 110px;">星期</td>
-        <td style="border-bottom: 1px solid black; width: 100px;">姓名</td>
-        <td style="border-bottom: 1px solid black; width: 100px;">E419冰箱</td>
+        <td style="border-bottom: 1px solid black; width: 90px;">姓名</td>
+        <td style="border-bottom: 1px solid black; width: 95px;">E419冰箱</td>
         <td style="border-bottom: 1px solid black; width: 100px;">E419倒垃圾</td>
         <td style="border-bottom: 1px solid black; width: 100px;">E419走廊清潔</td>
         <td style="border-bottom: 1px solid black; width: 110px;">關E419冷氣、電燈</td>
