@@ -167,7 +167,7 @@ $pdf->AddPage('P', 'LETTER');
 // <p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
 // EOD;
 
-for ($i = 0; $i < 50; $i++) {
+for ($i = 0; $i < 7; $i++) {
     /**
      * 資料欄位
      *
