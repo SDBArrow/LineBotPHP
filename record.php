@@ -38,17 +38,17 @@ class MYPDF extends TCPDF {
         $fields = '
 <table cellpadding="1">
     <tr>
-        <td style="border-bottom: 1px solid black; width: 90px;">星期</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">姓名</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">E419冰箱</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">E419倒垃圾</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">E419走廊清潔</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">關E419冷氣、電燈</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">E420走廊清潔</td> 
-        <td style="border-bottom: 1px solid black; width: 90px;">E420檢查設備</td> 
-        <td style="border-bottom: 1px solid black; width: 90px;">E420整理桌椅</td> 
-        <td style="border-bottom: 1px solid black; width: 90px;">關E420冷氣、電燈</td> 
-        <td style="border-bottom: 1px solid black; width: 90px;">E420鞋櫃</td> 
+        <td style="border-bottom: 1px solid black; width: 75px;">星期</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">姓名</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">E419冰箱</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">E419倒垃圾</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">E419走廊清潔</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">關E419冷氣、電燈</td>
+        <td style="border-bottom: 1px solid black; width: 75px;">E420走廊清潔</td> 
+        <td style="border-bottom: 1px solid black; width: 75px;">E420檢查設備</td> 
+        <td style="border-bottom: 1px solid black; width: 75px;">E420整理桌椅</td> 
+        <td style="border-bottom: 1px solid black; width: 75px;">關E420冷氣、電燈</td> 
+        <td style="border-bottom: 1px solid black; width: 75px;">E420鞋櫃</td> 
         <td style="border-bottom: 1px solid black; width: auto;">關小房間冷氣、電燈</td> 
     </tr>
 </table>';
@@ -153,7 +153,7 @@ $pdf->SetFont('msungstdlight', '', 10);
 // Add a page
 // This method has several options, check the source code documentation for more information.
 // 版面配置：P 直向 | L 橫向, 紙張大小 (必須大寫字母)
-$pdf->AddPage('L', 'LETTER');
+$pdf->AddPage('L', 'B4');
 
 // set text shadow effect
 // 文字陰影
