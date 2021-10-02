@@ -5,7 +5,7 @@ require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LIN
 $work = new Linebot();
 
 switch(true){
-    case (date('w') == 0 || date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('w') == 0 && (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05")):
         $time = date('Y-m-d');  //抓時間
         $duty_0 = $work ->WorkScheduleOnlyUserid($time);
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
