@@ -177,7 +177,7 @@ for ($day = 0; $day < 7; $day++) {
      * style 屬性可使用 text-align: left|center|right; 來設定文字水平對齊方式
      */
 
-    $sql = "select * from sign_table,day,member where sign_table.userid = member.userid and sign_table.day_int = day.day_int and day_int = ". $day;
+    $sql = "select * from sign_table,day,member where sign_table.userid = member.userid and sign_table.day_int = day.day_int and sign_table.day_int = ". $day;
     $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
 
     $html .= '
