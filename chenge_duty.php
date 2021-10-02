@@ -41,11 +41,11 @@ switch(true){
             //每天00:00要執行的
     case (date('H:i') == "01:39" || date('H:i') == "01:40" || date('H:i') == "01:41" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
-        $sql = "update member set duty_level = 0";
+        $sql = "update member set duty_level = 0 where duty_level = 1;";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-            $ReturnMessage = "權限移除成功";
+            $ReturnMessage = "權限移除成功\n";
         } else{
-            $ReturnMessage = "權限移除失敗";
+            $ReturnMessage = "權限移除失敗\n";
         }
         //查詢今天值日生
         $time = date('w');  //抓時間
@@ -55,13 +55,13 @@ switch(true){
         //新增權限給今日值日生
         $sql = "update member set duty_level = 1 where userid =".$today_duty;
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-            $ReturnMessage = "權限更新成功";
+            $ReturnMessage = "權限更新成功\n";
         }else{
-            $ReturnMessage = "權限更新失敗";
+            $ReturnMessage = "權限更新失敗\n";
         }
         echo $ReturnMessage;
     //一星期執行一次、每個星期天執行
     default:
-        echo "禁用";
+        echo "禁用\n";
         break;
 }
