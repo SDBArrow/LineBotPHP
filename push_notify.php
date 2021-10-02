@@ -26,7 +26,7 @@ switch(true){
 		  $ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
 		  $work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		  break;
-    case (date('H:i') == "02:27" || date('H:i') == "02:28" || date('H:i') == "02:29" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
+    case (date('H:i') == "02:35" || date('H:i') == "02:30" || date('H:i') == "02:31" || date('H:i') == "02:32" || date('H:i') == "02:33" || date('H:i') == "02:34"):
 		//標頭
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
