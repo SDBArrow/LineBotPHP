@@ -2,7 +2,7 @@
 include('./connect.php'); //連結資料庫設定
 // Include the main TCPDF library (search for installation path).
 require_once('TCPDF/tcpdf.php');
-
+date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 // Extend the TCPDF class to create custom Header and Footer
 // 自訂頁首與頁尾
 class MYPDF extends TCPDF {
@@ -207,4 +207,4 @@ $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
 // 下載 PDF 的檔案名稱 (不可取中文名，即使有也會自動省略中文名)
-$pdf->Output('mis-employees.pdf', 'I');
+$pdf->Output('本周紀錄.pdf', 'I');
