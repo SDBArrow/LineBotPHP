@@ -12,12 +12,12 @@ class MYPDF extends TCPDF {
 
         // 公司與報表名稱
         $title = '
-<h4 style="font-size: 20pt; font-weight: normal; text-align: center;">MIS 腳印股份有限公司</h4>
+<h4 style="font-size: 20pt; font-weight: normal; text-align: center;">AIMMA 419-3</h4>
 
 <table>
     <tr>
         <td style="width: 30%;"></td>
-        <td style="border-bottom: 2px solid black; font-size: 20pt; font-weight: normal; text-align: center; width: 40%;">員工基本資料</td>
+        <td style="border-bottom: 2px solid black; font-size: 20pt; font-weight: normal; text-align: center; width: 40%;">本周工作檢核</td>
         <td style="width: 30%;"></td>
     </tr>
     <tr>
@@ -37,13 +37,18 @@ class MYPDF extends TCPDF {
         $fields = '
 <table cellpadding="1">
     <tr>
-        <td style="border-bottom: 1px solid black; width: 95px;"> ID</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">Name</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">Sex</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">Birthday</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">Tel</td>
-        <td style="border-bottom: 1px solid black; width: 90px;">Mobile</td>
-        <td style="border-bottom: 1px solid black; width: auto;">Address</td> 
+        <td style="border-bottom: 1px solid black; width: 65px;">星期</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">姓名</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">E419冰箱</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">E419倒垃圾</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">E419走廊清潔</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">關E419冷氣、電燈</td>
+        <td style="border-bottom: 1px solid black; width: 60px;">E420走廊清潔</td> 
+        <td style="border-bottom: 1px solid black; width: 60px;">E420檢查設備</td> 
+        <td style="border-bottom: 1px solid black; width: 60px;">E420整理桌椅</td> 
+        <td style="border-bottom: 1px solid black; width: 60px;">關E420冷氣、電燈</td> 
+        <td style="border-bottom: 1px solid black; width: 60px;">E420鞋櫃</td> 
+        <td style="border-bottom: 1px solid black; width: auto;">關小房間冷氣、電燈</td> 
     </tr>
 </table>';
 
