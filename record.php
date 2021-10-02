@@ -38,16 +38,16 @@ class MYPDF extends TCPDF {
         $fields = '
 <table cellpadding="1">
     <tr>
-        <td align="center" style="border-bottom: 1px solid black; width: 100px;">星期</td>
+        <td align="center" style="border-bottom: 1px solid black; width: 90px;">星期</td>
         <td align="center" style="border-bottom: 1px solid black; width: 70px;">姓名</td>
         <td align="center" style="border-bottom: 1px solid black; width: 80px;">E419冰箱</td>
         <td align="center" style="border-bottom: 1px solid black; width: 95px;">E419倒垃圾</td>
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E419走廊清潔</td>
-        <td align="center" style="border-bottom: 1px solid black; width: 120px;">關E419冷氣、電燈</td>
+        <td align="center" style="border-bottom: 1px solid black; width: 125px;">關E419冷氣、電燈</td>
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E420走廊清潔</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E420檢查設備</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 100px;">E420整理桌椅</td> 
-        <td align="center" style="border-bottom: 1px solid black; width: 120px;">關E420冷氣、電燈</td> 
+        <td align="center" style="border-bottom: 1px solid black; width: 125px;">關E420冷氣、電燈</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 95px;">E420鞋櫃</td> 
         <td align="center" style="border-bottom: 1px solid black; width: auto;">關小房間冷氣、電燈</td> 
     </tr>
