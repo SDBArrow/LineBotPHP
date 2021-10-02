@@ -51,11 +51,8 @@ switch(true){
         echo $ReturnMessage;
         //查詢今天值日生
         $time = date('w');  //抓時間
-        $sql = "select * from sign_table where day_int = ".$time; 
-        $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-        $today_duty= $table_sign_table["userid"];
         //新增權限給今日值日生
-        $sql = "update member set duty_level = 1 where userid =".$today_duty;
+        $sql = "update sign_table, member set member.duty_level = 1 where sign_table.day_int = ".$time." and sign_table.userid = member.userid";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
             $ReturnMessage = "權限更新成功\n";
         }else{
