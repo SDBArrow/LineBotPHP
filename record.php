@@ -49,7 +49,7 @@ class MYPDF extends TCPDF {
         <td style="border-bottom: 1px solid black; width: 100px;">E420整理桌椅</td> 
         <td style="border-bottom: 1px solid black; width: 120px;">關E420冷氣、電燈</td> 
         <td style="border-bottom: 1px solid black; width: 95px;">E420鞋櫃</td> 
-        <td style="border-bottom: 1px solid black; width: auto;">關小房間冷氣、電燈</td> 
+        <td style="border-bottom: 1px solid black; width: 120px;">關小房間冷氣、電燈</td> 
     </tr>
 </table>';
 
