@@ -168,7 +168,7 @@ $pdf->AddPage('L', 'B4');
 // <p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
 // EOD;
 
-for ($i = 0; $i < 7; $i++) {
+for ($day = 0; $day < 7; $day++) {
     /**
      * 資料欄位
      *
@@ -177,20 +177,23 @@ for ($i = 0; $i < 7; $i++) {
      * style 屬性可使用 text-align: left|center|right; 來設定文字水平對齊方式
      */
 
+    $sql = "select * from sign_table,day,member where sign_table.userid = member.userid and sign_table.day_int = day.day_int and day_int = ". $day;
+    $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+
     $html .= '
         <tr>
-            <td align="center" style="line-height: 1.5; width: 80px;">102050' . $i . '</td>
-            <td align="center" style="line-height: 1.5; width: 80px;">王' . $i . '傑</td>
-            <td align="center" style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 100px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 105px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 130px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: 90px;">完成：楊子弘</td>
-            <td align="center" style="line-height: 1.5; width: auto;">完成：楊子弘</td>
+            <td align="center" style="line-height: 1.5; width: 80px;">'.$table_sign_table["day_ch"].'</td>
+            <td align="center" style="line-height: 1.5; width: 80px;">'.$table_sign_table["name"].'</td>
+            <td align="center" style="line-height: 1.5; width: 90px;">'.$table_sign_table["e419_refrigerator"].'</td>
+            <td align="center" style="line-height: 1.5; width: 100px;">'.$table_sign_table["e419_ashcan"].'</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e419_corridor"].'</td>
+            <td align="center" style="line-height: 1.5; width: 130px;">'.$table_sign_table["e419_conditioner_light"].'</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e420_corridor"].'</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e420_equipment"].'</td>
+            <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e420_chair"].'</td>
+            <td align="center" style="line-height: 1.5; width: 130px;">'.$table_sign_table["e420_conditioner_light"].'</td>
+            <td align="center" style="line-height: 1.5; width: 90px;">'.$table_sign_table["e420_Shoebox"].'</td>
+            <td align="center" style="line-height: 1.5; width: auto;">'.$table_sign_table["room_conditioner_light"].'</td>
         </tr>';
 }
 
