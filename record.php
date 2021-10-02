@@ -9,7 +9,7 @@ class MYPDF extends TCPDF {
 	//Page header
 	public function Header() {
 		// Set font
-        $this->SetFont('TCPDF/fonts/DroidSansFallback.ttf', '', 10);
+        $this->SetFont('DroidSansFallback', '', 10);
 
         // 公司與報表名稱
         $title = '
