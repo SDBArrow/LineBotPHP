@@ -212,6 +212,7 @@ class Linebot{
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
         $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
         $duty_level = $table_member["duty_level"]; //取出權限等級
+        mysqli_close($db_connection);
         return $duty_level;
     }
 
@@ -222,6 +223,7 @@ class Linebot{
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
         $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
         $Security = $table_member["security"]; //取出權限等級
+        mysqli_close($db_connection);
         return $Security;
     }
 

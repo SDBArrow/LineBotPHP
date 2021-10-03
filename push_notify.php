@@ -42,6 +42,7 @@ switch(true){
 			$ReturnMessage = "\n".$table_sign_table["name"]."\n=======================\n--->工作檢核表尚未完成或有缺漏，請盡速補正"; //丟去副程式WorkSchedule
 			$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		}
+		mysqli_close($db_connection);
         break;
     default:
         break;
