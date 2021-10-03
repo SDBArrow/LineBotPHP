@@ -224,4 +224,22 @@ class Linebot{
         $Security = $table_member["security"]; //取出權限等級
         return $Security;
     }
+
+    // 查詢名字
+    function linename($UserId, $GroupId, $client){
+        // 查詢名字
+        if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
+            $response = $client->getUserProfile(array(
+                'UserId' => $UserId,
+            ));
+            $Name = $response->displayName;  //取名字欄位
+        } else {
+            $response = $client->getGroupProfile(array(
+                'UserId' => $UserId,
+                'GroupId' => $GroupId,
+            ));
+            $Name = $response->displayName;
+        }
+        return $Name;
+    }
 }

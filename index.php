@@ -126,21 +126,7 @@ switch (true) {
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
-        $Name = ""; //初始化
-
-        // 查詢名字
-        if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-            $response = $client->getUserProfile(array(
-                'UserId' => $UserId,
-            ));
-            $Name = $response->displayName;  //取名字欄位
-        } else {
-            $response = $client->getGroupProfile(array(
-                'UserId' => $UserId,
-                'GroupId' => $GroupId,
-            ));
-            $Name = $response->displayName;
-        }
+        $Name = $work -> linename($UserId, $GroupId, $client); //查詢名字
 
         //連線到資料庫取資料
         include('./connect.php'); //連結資料庫設定
@@ -166,21 +152,7 @@ switch (true) {
 
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         $GroupId = $event['source']['groupId']; //抓該訊息的群組
-        $Name = ""; //初始化
-
-        // 查詢名字
-        if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-            $response = $client->getUserProfile(array(
-                'UserId' => $UserId,
-            ));
-            $Name = $response->displayName;  //取名字欄位
-        } else {
-            $response = $client->getGroupProfile(array(
-                'UserId' => $UserId,
-                'GroupId' => $GroupId,
-            ));
-            $Name = $response->displayName;
-        }
+        $Name = $work -> linename($UserId, $GroupId, $client); //初始化
         
         //連線到資料庫取資料
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
@@ -460,73 +432,50 @@ switch (true) {
         switch (true){
             case (mb_substr($event['postback']['data'], 5, 2, "UTF-8") == "完成"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
+                $GroupId = $event['source']['groupId']; //抓該訊息的群組
+                $Name = $work -> linename($UserId, $GroupId, $client); //查詢名字
                 if($work -> checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 8, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
-                    $Name = ""; //初始化
-                    // 查詢名字
-                    if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-                        $response = $client->getUserProfile(array(
-                            'UserId' => $UserId,
-                        ));
-                        $Name = $response->displayName;  //取名字欄位
-                    } else {
-                        $response = $client->getGroupProfile(array(
-                            'UserId' => $UserId,
-                            'GroupId' => $GroupId,
-                        ));
-                        $Name = $response->displayName;
-                    }
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '完成：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                        $ReturnMessage = "打卡成功：".$item;
+                        $ReturnMessage = $Name."，打卡成功：".$item;
                     } else{
-                        $ReturnMessage = "該項目不存在";
+                        $ReturnMessage = $Name."，該項目不存在";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
                 }else{
-                    $ReturnMessage = "你不是今天值日生";
+                    $ReturnMessage = $Name."，你不是今天值日生";
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
             case (mb_substr($event['postback']['data'], 5, 4, "UTF-8") == "尚未完成"):
-                $ReturnMessage = "請完成後再重新選擇";
+                $UserId = $event['source']['userId']; //抓該訊息的發送者
+                $GroupId = $event['source']['groupId']; //抓該訊息的群組
+                $Name = $work -> linename($UserId, $GroupId, $client); //初始化
+                $ReturnMessage = $Name."，請完成後再重新選擇";
                 $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 break;   
             case (mb_substr($event['postback']['data'], 5, 6, "UTF-8") == "還有人在使用"):
                 $UserId = $event['source']['userId']; //抓該訊息的發送者
+                $GroupId = $event['source']['groupId']; //抓該訊息的群組
+                $Name = $work -> linename($UserId, $GroupId, $client); //查詢名字
                 if($work -> checkduty($UserId)){
                     $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
-
-                    // 查詢名字
-                    $Name = ""; //初始化
-                    if ($GroupId == "") {   //判斷是否有群組，必須使用不同的API
-                        $response = $client->getUserProfile(array(
-                            'UserId' => $UserId,
-                        ));
-                        $Name = $response->displayName;  //取名字欄位
-                    } else {
-                        $response = $client->getGroupProfile(array(
-                            'UserId' => $UserId,
-                            'GroupId' => $GroupId,
-                        ));
-                        $Name = $response->displayName;
-                    }
-
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '還有人在使用：".$Name."' where day_int = ".$weekdaytempor; 
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                        $ReturnMessage = "打卡成功：.$item";
+                        $ReturnMessage = $Name."，打卡成功：.$item";
                     } else{
-                        $ReturnMessage = "該項目不存在";
+                        $ReturnMessage = $Name."，該項目不存在";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
                 }else{
-                    $ReturnMessage = "你不是今天值日生";
+                    $ReturnMessage = $Name."，你不是今天值日生";
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                 }
                 break; 
