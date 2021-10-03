@@ -8,7 +8,6 @@ $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 $work = new Linebot();
-require('./connect.php'); //連結資料庫設定
 
 //加入的處理
 foreach ($client->parseEvents() as $event) {
@@ -156,6 +155,7 @@ switch (true) {
         $Name = $work -> linename($UserId, $GroupId, $client); //初始化
         
         //連線到資料庫取資料
+        include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
         $table_member = mysqli_query($db_connection, $sql);  //查詢結果
         $rowtotal = mysqli_num_rows($table_member); //總資料比數
@@ -195,6 +195,7 @@ switch (true) {
         //判斷權限
         if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
             //查詢資料庫的個人流水號
+            include('./connect.php'); //連結資料庫設定
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
@@ -226,6 +227,7 @@ switch (true) {
         if ($work -> checkduty($UserId)){ // 查詢是否為值日生
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            include('./connect.php'); //連結資料庫設定
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
             $rowtotal = mysqli_num_rows($table_member); //總資料比數
