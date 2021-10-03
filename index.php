@@ -139,10 +139,10 @@ switch (true) {
             if (mysqli_query($db_connection, $sql)){    //新增到資料庫
                 $ReturnMessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
             } else{
-                $ReturnMessage = "新增失敗，請洽管理員";
+                $ReturnMessage = $Name."，新增失敗，請洽管理員";
             }
         } else {  //無此人名字
-            $ReturnMessage = "已經註冊過";
+            $ReturnMessage = $Name."，已經註冊過";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
@@ -169,22 +169,22 @@ switch (true) {
             if ($rowtotal < 1){  //沒有存在，更新成這名字
                 $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                    $ReturnMessage = "已更新資料";
+                    $ReturnMessage = $Name."，已更新資料";
                 } else{
-                    $ReturnMessage = "更新失敗，請洽管理員";
+                    $ReturnMessage = $Name."，更新失敗，請洽管理員";
                 }
             }else{ //有存在，繼續判斷是沒更動還是有人使用
                 $sql = "select * from member where lineuid = '" . $UserId . "'";
                 $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
                 $table_member_name = $table_member["name"];
                 if ($Name == $table_member_name ){   //判斷名字是重複還是沒有更動
-                    $ReturnMessage = "名字無更動";
+                    $ReturnMessage = $Name."，名字無更動";
                 }else{
-                    $ReturnMessage = "名字重複，請選擇其他名字";
+                    $ReturnMessage = $Name."，名字重複，請選擇其他名字";
                 }
             }
         } else {  //沒註冊
-            $ReturnMessage = "請先註冊";
+            $ReturnMessage = $Name."，請先註冊";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
