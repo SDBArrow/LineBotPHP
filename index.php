@@ -61,7 +61,7 @@ switch (true) {
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
         if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
-            $ReturnMessage = "1.排班 代碼 @人名\n";
+            $ReturnMessage = "1.排班 代碼 @人名\n2.管理員權限 新增或移除 @人名";
         }else{
             $ReturnMessage = "你不是管理員";
         }
@@ -285,13 +285,20 @@ switch (true) {
                 $code = mb_substr($message['text'], 6, 2, "UTF-8");
                 if ( $code == "新增"){
                     $sql = "update member set security = 1 where userid = ".$table_member_userid;
+                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                        $ReturnMessage = "已".$code."權限";
+                    } else{
+                        $ReturnMessage = "更新失敗";
+                    }
                 }elseif($code == "新增"){
                     $sql = "update member set security = 0 where userid = ".$table_member_userid;
-                }
-                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                    $ReturnMessage = "已".$code."權限";
-                } else{
-                    $ReturnMessage = "更新失敗";
+                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                        $ReturnMessage = "已".$code."權限";
+                    } else{
+                        $ReturnMessage = "更新失敗";
+                    }
+                }else{
+                    $ReturnMessage = "沒有這個指令";
                 }
             }else{
                 $ReturnMessage = "資料庫查無此人";
