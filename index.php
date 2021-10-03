@@ -294,6 +294,10 @@ switch (true) {
         }else{
             $ReturnMessage = "你不是最高管理員";
         }
+        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        mysqli_close($db_connection);
+        break;
     case ($message['text'] == "工作檢核"): //工作檢核功能
         $client->replyMessage(array(
             'replyToken' => $event['replyToken'],
