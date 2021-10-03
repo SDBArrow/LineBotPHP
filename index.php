@@ -63,8 +63,8 @@ switch (true) {
         if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
             $ReturnMessage = "1.排班 代碼 @人名\n";
             $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-            break;
         }
+        break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
         $ReturnMessage = "小飛之後帶下去上廁所，如果當下小飛沒馬上大號的話，要至少等小飛5~10分鐘再帶上來，小飛通常會下去一陣子後才上大號，其餘規則請至419_3門口查看";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
