@@ -177,16 +177,16 @@ class Linebot{
     }
 
     // 回覆模板訊息
-    function ReplayTemplate($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2, $ReturnOptions1, $ReturnOptions2, $event, $client){
+    function ReplayTemplate($ReturnTitle, $ReturnExplain, $ReturnOptionsLabel1, $ReturnOptionsLabel2, $ReturnOptions1, $ReturnOptions2, $event, $client){
         $client->replyMessage(array(
             'replyToken' => $event['replyToken'],
             'messages' => array(
                 array(
                     'type' => 'template', //訊息類型 (模板)
-                    'altText' => '工作自我檢核', //替代文字
+                    'altText' => $ReturnTitle, //替代文字
                     'template' => array(
                         'type' => 'confirm', //類型 (確認)
-                        'text' => $ReturnTitle, //文字
+                        'text' => $ReturnExplain, //文字
                         'actions' => array(
                             array(
                                 'type' => 'message', //類型 (訊息)
