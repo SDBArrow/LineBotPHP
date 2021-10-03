@@ -212,7 +212,7 @@ switch (true) {
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
-        if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
+        if ( ($work -> checksecurity($UserId)) == 1 || ($work -> checksecurity($UserId)) == 2 ){ // 查詢是否為管理員
             //查詢資料庫的個人流水號
             include('./connect.php'); //連結資料庫設定
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
@@ -269,6 +269,31 @@ switch (true) {
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
+    case (mb_substr($message['text'] ,0,5,"UTF-8") == "管理員權限"):
+        $UserId = $event['source']['userId']; //抓該訊息的發送者
+        //判斷權限
+        if (($work -> checksecurity($UserId))==2){ // 查詢是否為最高管理員
+            //查詢資料庫的個人流水號
+            $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            include('./connect.php'); //連結資料庫設定
+            $sql = "select * from member where name = '" . $name . "'"; 
+            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
+            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            
+            if ($rowtotal > 0){  //如果有這個人
+                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
+                $sql = "update member set security = 1 where userid = ".$table_member_userid;
+                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $ReturnMessage = "已分享權限";
+                } else{
+                    $ReturnMessage = "更新失敗";
+                }
+            }else{
+                $ReturnMessage = "資料庫查無此人";
+            }  
+        }else{
+            $ReturnMessage = "你不是最高管理員";
+        }
     case ($message['text'] == "工作檢核"): //工作檢核功能
         $client->replyMessage(array(
             'replyToken' => $event['replyToken'],
