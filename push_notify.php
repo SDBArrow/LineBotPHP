@@ -9,24 +9,24 @@ $work = new Linebot();
 
 switch(true){
     //heroku 00:00會執行此檔案，但由於heroku沒在使用會進入休眠狀態，所以正常需要一分鐘緩衝時間，最慢五分鐘過
-    case (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "20:49" || date('H:i') == "20:50" || date('H:i') == "20:51" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
   		//標頭
 		$ReturnMessage = "\n=====每日自動提醒====="; //丟去副程式WorkSchedule
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		//今日遛狗
 		$time = date('Y-m-d');//抓時間
 		$ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
-		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
+		$work -> notifypushText("\n".$ReturnMessage, $client); //回傳訊息
 		//明日遛狗
 		$time = date('Y-m-d', strtotime("+1 day"));  //抓時間
 		$ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
-		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
+		$work -> notifypushText("\n".$ReturnMessage, $client); //回傳訊息
 		//後天遛狗
 		$time = date('Y-m-d', strtotime("+2 day"));  //抓時間
 		$ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
-		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
+		$work -> notifypushText("\n".$ReturnMessage, $client); //回傳訊息
 		//工作檢核
-		$ReturnMessage = "=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
+		$ReturnMessage = "\n=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		break;
 	//檢測打卡有沒有缺漏
@@ -39,7 +39,7 @@ switch(true){
 		if ($table_sign_table["e419_refrigerator"] == "" || $table_sign_table["e419_ashcan"] == "" || $table_sign_table["e419_corridor"] == "" || $table_sign_table["e419_conditioner_light"] == "" || $table_sign_table["e420_corridor"] == "" || $table_sign_table["e420_equipment"] == "" || $table_sign_table["e420_chair"] == "" || $table_sign_table["e420_conditioner_light"] == "" || $table_sign_table["e420_Shoebox"] == "" || $table_sign_table["room_conditioner_light"] == ""){
 			$ReturnMessage = "\n=====工作檢核自動提醒====="; //丟去副程式WorkSchedule
 			$work -> notifypushText($ReturnMessage, $client); //回傳訊息
-			$ReturnMessage = $table_sign_table["name"]."工作檢核表尚未完成或有缺漏，請盡速補正"; //丟去副程式WorkSchedule
+			$ReturnMessage = "\n".$table_sign_table["name"]."\n=======================\n--->工作檢核表尚未完成或有缺漏，請盡速補正"; //丟去副程式WorkSchedule
 			$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		}
         break;
