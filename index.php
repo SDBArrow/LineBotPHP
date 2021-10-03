@@ -274,7 +274,7 @@ switch (true) {
         //判斷權限
         if (($work -> checksecurity($UserId))==2){ // 查詢是否為最高管理員
             //查詢資料庫的個人流水號
-            $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            $name = mb_substr($message['text'], 10, null, "UTF-8");  // 取輸入的名字
             include('./connect.php'); //連結資料庫設定
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
@@ -282,9 +282,14 @@ switch (true) {
             
             if ($rowtotal > 0){  //如果有這個人
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
-                $sql = "update member set security = 1 where userid = ".$table_member_userid;
+                $code = mb_substr($message['text'], 7, 2, "UTF-8");
+                if ( $code == "新增"){
+                    $sql = "update member set security = 1 where userid = ".$table_member_userid;
+                }elseif($code == "新增"){
+                    $sql = "update member set security = 0 where userid = ".$table_member_userid;
+                }
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                    $ReturnMessage = "已分享權限";
+                    $ReturnMessage = "已".$code."權限";
                 } else{
                     $ReturnMessage = "更新失敗";
                 }
