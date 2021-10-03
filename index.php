@@ -44,10 +44,26 @@ switch (true) {
         $ReturnMessage = "=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
-    case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
-        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.本周紀錄\n5.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n6.更新註冊名字(Line有改名的話)\n7.班表\n8.日期查詢範例：2022-01-01\n9.注意事項\n10.明日遛狗\n11.後天遛狗\n12.換班規則\n13.餵食規則\n14.座位表\n15.地板物品\n16.排班 代碼 @人名\n17.抽";
+    case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令表"): //指令介紹
+        $ReturnTitle = "指令表選擇";
+        $ReturnOptionsLabel1 = "普通指令表";
+        $ReturnOptionsLabel2 = "管理員指令表";
+        $ReturnOptions1 = "普通指令表";
+        $ReturnOptions2 = "管理員指令表";
+        $work -> ReplyText($ReturnTitle, $ReturnOptionsLabel1, $ReturnOptionsLabel2, $ReturnOptions1, $ReturnOptions2, $event, $client); //回傳訊息
+        break;
+    case ($message['text'] == "普通指令表"): //指令介紹
+        $ReturnMessage = "指令表\n1.今日遛狗\n2.註冊\n3.工作檢核\n4.本周紀錄\n5.值日生權限 @名字(當日值日生有交換需由原本值日生給權限)\n6.更新註冊名字(Line有改名的話)\n7.班表\n8.日期查詢範例：2022-01-01\n9.注意事項\n10.明日遛狗\n11.後天遛狗\n12.換班規則\n13.餵食規則\n14.座位表\n15.地板物品\n16.抽";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
+    case ($message['text'] == "管理員指令表"): //指令介紹
+        $UserId = $event['source']['userId']; //抓該訊息的發送者
+        //判斷權限
+        if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
+            $ReturnMessage = "1.排班 代碼 @人名\n";
+            $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
+            break;
+        }
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
         $ReturnMessage = "小飛之後帶下去上廁所，如果當下小飛沒馬上大號的話，要至少等小飛5~10分鐘再帶上來，小飛通常會下去一陣子後才上大號，其餘規則請至419_3門口查看";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
