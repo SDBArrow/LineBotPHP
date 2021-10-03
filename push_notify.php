@@ -25,6 +25,9 @@ switch(true){
 		$time = date('Y-m-d', strtotime("+2 day"));  //抓時間
 		$ReturnMessage = $work -> WorkSchedule($time); //丟去副程式WorkSchedule
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
+		//工作檢核
+		$ReturnMessage = "=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
+		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		break;
 	//檢測打卡有沒有缺漏
     case (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
