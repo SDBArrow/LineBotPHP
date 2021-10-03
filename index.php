@@ -282,7 +282,7 @@ switch (true) {
             
             if ($rowtotal > 0){  //如果有這個人
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
-                $code = mb_substr($message['text'], 7, 2, "UTF-8");
+                $code = mb_substr($message['text'], 6, 2, "UTF-8");
                 if ( $code == "新增"){
                     $sql = "update member set security = 1 where userid = ".$table_member_userid;
                 }elseif($code == "新增"){
