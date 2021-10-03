@@ -290,7 +290,7 @@ switch (true) {
                     } else{
                         $ReturnMessage = "更新失敗";
                     }
-                }elseif($code == "新增"){
+                }elseif($code == "移除"){
                     $sql = "update member set security = 0 where userid = ".$table_member_userid;
                     if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                         $ReturnMessage = "已".$code."權限";
