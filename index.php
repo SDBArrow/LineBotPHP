@@ -37,7 +37,7 @@ foreach ($client->parseEvents() as $event) {
 //一般訊息判斷
 switch (true) {
     case $message['text'] == "測試": //早安
-        $ReturnMessage = "=======================\n             柯秉村\n=======================\n--->工作檢核表尚未完成或有缺漏，請盡速補正";
+        $ReturnMessage = "柯秉村\n=======================\n--->工作檢核表尚未完成或有缺漏，請盡速補正";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "早安": //早安
