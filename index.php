@@ -8,6 +8,7 @@ $message = null;
 $event = null; //初始化   $event有資料來源所有資料
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 $work = new Linebot();
+require('./connect.php'); //連結資料庫設定
 
 //加入的處理
 foreach ($client->parseEvents() as $event) {
