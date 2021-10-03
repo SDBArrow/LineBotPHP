@@ -139,7 +139,7 @@ class LINEBotXiaoFei
             return $response;   //連線成功回傳值
         }
     }
-        //User對話去取個人資料訊息
+    //User對話去取個人資料訊息
     public function getUserProfile($message)
     {
         $header = array(

@@ -41,7 +41,7 @@ switch (true) {
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case $message['text'] == "本周紀錄": //早安
-        $ReturnMessage = "https://reurl.cc/WXqqYk";
+        $ReturnMessage = "=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         break;
     case ($message['text'] == "指令查詢" || $message['text'] == "指令" || $message['text'] == "指令介紹"): //指令介紹
