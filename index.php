@@ -63,6 +63,8 @@ switch (true) {
         if ($work -> checksecurity($UserId)){ // 查詢是否為管理員
             $ReturnMessage = "1.排班 代碼 @人名\n";
             $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        }else{
+            $ReturnMessage = "你不是管理員";
         }
         break;
     case ($message['text'] == "注意" || $message['text'] == "注意事項"): //注意事項
