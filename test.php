@@ -5,3 +5,8 @@ include('./connect.php'); //連結資料庫設定
 $sql = "SHOW COLUMNS FROM sign_table"; 
 $table_sign_table = mysqli_fetch_array(mysqli_query($db_connection, $sql));
 echo $table_sign_table[0];
+echo $table_sign_table[1];
+echo $table_sign_table[2];
+echo $table_sign_table[3];
+echo $table_sign_table[4];
+echo $table_sign_table[5];
