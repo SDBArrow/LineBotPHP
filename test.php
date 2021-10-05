@@ -5,10 +5,10 @@ include('./connect.php'); //連結資料庫設定
 $sql = "SHOW COLUMNS FROM sign_table"; 
 $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
 
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
-echo $table_sign_table['Field'];
+echo $table_sign_table['Field'][0];
+echo $table_sign_table['Field'][1];
+echo $table_sign_table['Field'][2];
+echo $table_sign_table['Field'][3];
+echo $table_sign_table['Field'][4];
+echo $table_sign_table['Field'][5];
+echo $table_sign_table['Field'][6];
