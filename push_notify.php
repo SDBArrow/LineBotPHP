@@ -48,6 +48,10 @@ switch(true){
 			echo $Field[$i];
 		}
 
+		//查詢簽到表資料
+		$sql = "select * from sign_table,member where sign_table.userid = member.userid and day_int = ".$time;
+		$table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+
 		//檢查工作項目打卡是否有遺漏
 		$Miss = FALSE;
 		for ($i = 2; $i < $rowtotal; $i++){
@@ -61,10 +65,6 @@ switch(true){
 				}
 			}
 		}
-
-		//查詢值日生名字
-		$sql = "select * from sign_table,member where sign_table.userid = member.userid and day_int = ".$time;
-		$table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
 
 		//有缺漏發送提醒訊息
 		if ($Miss){
