@@ -7,8 +7,16 @@ $result = mysqli_query($db_connection, $sql);
 $rowtotal = mysqli_num_rows($result);
 echo $rowtotal;
 
+
+while($table_sign_table = mysqli_fetch_assoc($result)){
+	$Field[$i] = $table_sign_table['Field'];
+	echo $Field[$i];
+}
+echo "end";
+/*
 for ($i = 0 ;  $i < $rowtotal ; $i++){
 	$table_sign_table = mysqli_fetch_assoc($result);
-	echo $table_sign_table['Field'];
-}
+	$Field[$i] = $table_sign_table['Field'];
+	echo $Field[$i];
+}*/
 
