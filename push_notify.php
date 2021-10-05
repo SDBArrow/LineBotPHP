@@ -56,7 +56,7 @@ switch(true){
 		$Miss = FALSE;
 		for ($i = 2; $i < $rowtotal; $i++){
 			if ($table_sign_table[$Field[$i]] == ""){
-				$MISS = True;
+				$Miss = True;
 				$sql = "update sign_table set ".$Field[$i]." = '缺漏' where day_int = ".$time;
 				if(mysqli_query($db_connection, $sql)){ //更新到資料庫
 					$ReturnMessage = "已更新工作審核表\n";
