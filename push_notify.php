@@ -30,7 +30,7 @@ switch(true){
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		break;
 	//檢測打卡有沒有缺漏，並補上缺漏
-    case (date('H:i') == "01:42" || date('H:i') == "01:43" || date('H:i') == "01:44" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
+    case (date('w') == 3/*date('H:i') == "01:42" || date('H:i') == "01:43" || date('H:i') == "01:44" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"*/):
 		
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
