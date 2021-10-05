@@ -207,4 +207,4 @@ ob_clean();
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
 // 下載 PDF 的檔案名稱 (不可取中文名，即使有也會自動省略中文名)
-$pdf->Output($_SERVER['DOCUMENT_ROOT'].'record.pdf', 'F');
+$pdf->Output($_SERVER['DOCUMENT_ROOT'].'record.pdf', 'FI');
