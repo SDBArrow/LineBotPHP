@@ -6,3 +6,9 @@ $sql = "SHOW COLUMNS FROM sign_table";
 $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
 
 echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
+echo $table_sign_table['Field'];
