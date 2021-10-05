@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 require_once('LINEBotXiaoFei.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
-$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
-//$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
+//$channelAccessToken =getenv('CAT_TEST') ;//初始化 紀錄圖片的ID
+$channelAccessToken = getenv('CAT_XIAOFEI'); //初始化 小飛群的ID
 $client = new LINENotifyXiaoFei($channelAccessToken); //把Token,Secret丟到LINENotifyXiaoFei建立連線
 require('./function_conform.php'); //引入LINEBotXiaoFei.php發送code寫在LINEBotTiny
 $work = new Linebot();
@@ -29,8 +29,8 @@ switch(true){
 		$ReturnMessage = "\n=======================\n          本周工作檢核紀錄\n=======================\n--->https://reurl.cc/WXqqYk";
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		break;
-	//檢測打卡有沒有缺漏，並補上缺漏
-    case (date('w') == 3/*date('H:i') == "01:42" || date('H:i') == "01:43" || date('H:i') == "01:44" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"*/):
+	//檢測打卡有沒有缺漏，並補上缺漏和發送提醒
+    case (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
 		
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
@@ -39,13 +39,11 @@ switch(true){
 		$sql = "SHOW COLUMNS FROM sign_table"; 
 		$result = mysqli_query($db_connection, $sql);
 		$rowtotal = mysqli_num_rows($result);
-		echo $rowtotal."\n";
 
 		//提取sign_table欄位名稱
 		for ($i = 0; $i < $rowtotal; $i++){
 			$table_sign_table = mysqli_fetch_assoc($result);
 			$Field[$i] = $table_sign_table['Field'];
-			echo $Field[$i];
 		}
 
 		//查詢簽到表資料
