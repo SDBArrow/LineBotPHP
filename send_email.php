@@ -17,11 +17,11 @@ $email->addContent(
     "text/html", "<strong>請看副檔</strong>"
 );
 
-$file_encoded = base64_encode(file_get_contents('record.php'));
+$file_encoded = base64_encode(file_get_contents('record.pdf'));
 $email->addAttachment(
     $file_encoded,
     "application/text",
-    "record.php",
+    "record.pdf",
     "attachment"
 );
 
