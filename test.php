@@ -1,37 +1,30 @@
 <?php
-date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
-$time = date('w');
-include('./connect.php'); //連結資料庫設定
+require('vendor/autoload.php');
+
+$hostname = '3b280a1883502f197cc8@cloudmailin.net';
+$username = 'app191581211@heroku.com';
+$password = 'kUx4pLBQX4josYvNXiFV3Aqj';
+
+$transport = (new Swift_SmtpTransport($hostname, 587, 'tls'))
+  ->setUsername($username)
+  ->setPassword($password);
+
+$mailer = new Swift_Mailer($transport);
 
 
-$sql = "SHOW COLUMNS FROM sign_table"; 
-$result = mysqli_query($db_connection, $sql);
-$rowtotal = mysqli_num_rows($result);
-echo $rowtotal."\n";
+//Creating an sending the email
+$message = (new Swift_Message())
+  ->setSubject('Hello from PHP SwiftMailer')
+  ->setFrom(['3b280a1883502f197cc8@cloudmailin.net'])
+  ->setTo(['j25889651556@gmail.com' => 'dogmission']);
 
-for ($i = 0; $i < $rowtotal; $i++){
-	$table_sign_table = mysqli_fetch_assoc($result);
-	$Field[$i] = $table_sign_table['Field'];
-	echo $Field[$i];
-}
+$headers = ($message->getHeaders())
+  -> addTextHeader('X-CloudMTA-Class', 'standard');
 
-$sql = "select * from sign_table,member where sign_table.userid = member.userid and day_int = ".$time;
-$table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-
-$Miss = FALSE;
-for ($i = 2; $i < $rowtotal; $i++){
-	if ($table_sign_table[$Field[$i]] == ""){
-		$MISS = True;
-		$sql = "update sign_table set ".[$Field[$i]]." = '缺漏' where day_int = ".$time;
-		if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-			$ReturnMessage = "已更新工作審核表\n";
-		} else{
-			$ReturnMessage = "更新失敗\n";
-		}
-	}
-}
-
-if ($Miss){
-
-}
-
+$message->setBody(
+  '<body>'.
+  '<h1>hello from php</h1>'.
+  '</body>'
+);
+$message->addPart('hello from PHP', 'text/plain');
+$mailer->send($message);
