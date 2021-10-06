@@ -10,7 +10,7 @@ require 'vendor/autoload.php'; // If you're using Composer (recommended)
 
 $email = new \SendGrid\Mail\Mail(); 
 $email->setFrom("j2588965156@gmail.com", "dogmission");
-$email->setSubject("Sending with SendGrid is Fun");
+$email->setSubject("20211003~20211009 工作檢核");
 $email->addTo("j25889651556@gmail.com", "yang");
 $email->addContent("text/plain", "20211003~20211009 工作檢核");
 $email->addContent(
