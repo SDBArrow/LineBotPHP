@@ -203,8 +203,9 @@ $html = '
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
 // ---------------------------------------------------------
-ob_clean();
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
 // 下載 PDF 的檔案名稱 (不可取中文名，即使有也會自動省略中文名)
+
+ob_clean(); //如果沒打這句輸出檔案會錯誤
 $pdf->Output($_SERVER['DOCUMENT_ROOT'].'record.pdf', 'FI');

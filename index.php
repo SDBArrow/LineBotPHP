@@ -215,21 +215,32 @@ switch (true) {
         if ( ($work -> checksecurity($UserId)) == 1 || ($work -> checksecurity($UserId)) == 2 ){ // 查詢是否為管理員
             //查詢資料庫的個人流水號
             include('./connect.php'); //連結資料庫設定
-            $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
+            $name = mb_substr($message['text'], 9, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
             $table_member = mysqli_query($db_connection, $sql);  //查詢結果
             $rowtotal = mysqli_num_rows($table_member); //總資料比數
         
             if ($rowtotal > 0){  //如果有這個人
+
+                $table_chose = mb_substr($message['text'], 3, 1, "UTF-8");  // 取出要更動的資料表
+
+                if ($table_chose){  //判斷要更動的班表
+                    $table_name = "new_userid";
+                }else{
+                    $table_name = "userid";
+                }
+
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
-                $duty_id = mb_substr($message['text'], 3, 2, "UTF-8");  // 取出輸入的工作日編號
-                $sql = "update duty_list set new_userid = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
+                $duty_id = mb_substr($message['text'], 5, 2, "UTF-8");  // 取出輸入的工作日編號
+                $sql = "update duty_list set ".$table_name." = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
+                
                 if(mysqli_query($db_connection, $sql)){ //更新到資料庫
                     $ReturnMessage = "已更新到工作日";
                 } else{
                     $ReturnMessage = "更新失敗";
                 }
-            }else{
+
+            }else{  //沒有這個人
                 $ReturnMessage = "被排班的人員尚未註冊";
             } 
         }else{
