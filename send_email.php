@@ -20,7 +20,7 @@ $email->addContent(
 $file_encoded = base64_encode(file_get_contents('record.pdf'));
 $email->addAttachment(
     $file_encoded,
-    "application/text",
+    "application/pdf",
     "record.pdf",
     "attachment"
 );
