@@ -17,11 +17,11 @@ $email->addContent(
     "text/html", "<strong>請看副檔</strong>"
 );
 
-$file_encoded = base64_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'record.pdf'));
+$file_encoded = base64_encode(file_get_contents("https://dogmission.herokuapp.com/record.pdf"));
 $email->addAttachment(
     $file_encoded,
     "application/pdf",
-    $_SERVER['DOCUMENT_ROOT']."record.pdf",
+    "record.pdf",
     "attachment"
 );
 
