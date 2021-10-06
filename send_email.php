@@ -12,9 +12,9 @@ $email = new \SendGrid\Mail\Mail();
 $email->setFrom("j2588965156@gmail.com", "dogmission");
 $email->setSubject("Sending with SendGrid is Fun");
 $email->addTo("j25889651556@gmail.com", "yang");
-$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+$email->addContent("text/plain", "20211003~20211009 工作檢核");
 $email->addContent(
-    "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
+    "text/html", "<strong>請看副檔</strong>"
 );
 $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
 try {
