@@ -16,6 +16,15 @@ $email->addContent("text/plain", "20211003~20211009 工作檢核");
 $email->addContent(
     "text/html", "<strong>請看副檔</strong>"
 );
+
+$file_encoded = base64_encode(file_get_contents('record.php'));
+$email->addAttachment(
+    $file_encoded,
+    "application/text",
+    "record.php",
+    "attachment"
+);
+
 $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
 try {
     $response = $sendgrid->send($email);
