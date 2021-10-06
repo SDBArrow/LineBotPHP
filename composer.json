@@ -1,8 +1,6 @@
 {
     "require": {
         "phpoffice/phpspreadsheet": "^1.15",
-        "mpdf/mpdf": "^8.0",
-        "swiftmailer/swiftmailer": "6.0",
         "sendgrid/sendgrid": "~7"
     }
 }
