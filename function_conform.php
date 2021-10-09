@@ -44,7 +44,7 @@ class Linebot{
                     $tempor = $tempor % 11;                 //兩個星期的第一次
                 }elseif($oddandeven == 1 && $weekdaytempor == 0){
                     $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
-                }elseif($oddandeven == 0 && $weekdaytempor == 2){      
+                }elseif($oddandeven == 1 && $weekdaytempor == 2){      
                     $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
                 }
             }else{
@@ -102,7 +102,7 @@ class Linebot{
                     $tempor = $tempor % 11;                 //兩個星期的第一次
                 }elseif($oddandeven == 1 && $weekdaytempor == 0){
                     $tempor = ($tempor % 11 + 1) % 11;             //兩個星期的第二次
-                }elseif($oddandeven == 0 && $weekdaytempor == 2){      
+                }elseif($oddandeven == 1 && $weekdaytempor == 2){      
                     $tempor = ($tempor % 11 + 2) % 11;             //兩個星期的第三次
                 }
             }else{
