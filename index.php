@@ -221,7 +221,7 @@ switch (true) {
         //查詢有沒有註冊
         if ($rowtotal > 0) {    //有註冊
             $email = mb_substr($message['text'] ,5,NULL,"UTF-8");
-            $sql = "update member set email = '".$email."' where lineuid = ".$UserId; //資料庫的name不能重複
+            $sql = "update member set email = '".$email."' where lineuid = '".$UserId."'"; //資料庫的name不能重複
             if (mysqli_query($db_connection, $sql)){    //新增到資料庫
                 $ReturnMessage = "Email已更新";
             } else{
