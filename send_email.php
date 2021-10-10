@@ -8,41 +8,42 @@ require 'vendor/autoload.php'; // If you're using Composer (recommended)
 // which is included in the download:
 // https://github.com/sendgrid/sendgrid-php/releases
 
-$timestart = date('Y-m-d', strtotime("-1 day"));  //抓時間
-$timeend = date('Y-m-d', strtotime("-8 day"));  //抓時間
+$timestart = date('Y-m-d', strtotime("-7 day"));  //抓時間
+$timeend = date('Y-m-d', strtotime("-1 day"));  //抓時間
 $send_email = getenv('email');
-
-
 include('./connect.php'); //連結資料庫設定
 $sql = "select * from member where security = 2";
-$table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-$user_name = $table_member["name"];
-$user_email = $table_member["email"];
+$reutrn_data = mysqli_query($db_connection, $sql);
 
-$email = new \SendGrid\Mail\Mail(); 
-$email->setFrom($send_email, "dogmission"); //寄件人資訊
-$email->setSubject($timestart."~".$timeend." 工作檢核");
-$email->addTo($user_email, $user_name);
-$email->addContent("text/plain", $timestart."~".$timeend." 工作檢核");
-$email->addContent(
-    "text/html", "<strong>請看副檔</strong>"
-);
+while ($table_member = $reutrn_data->fetch_assoc()) {
+    $user_name = $table_member["name"];
+    $user_email = $table_member["email"];
 
-$file_encoded = base64_encode(file_get_contents("https://dogmission.herokuapp.com/record.pdf"));
-$email->addAttachment(
-    $file_encoded,
-    "application/pdf",
-    "record.pdf",
-    "attachment"
-);
+    $email = new \SendGrid\Mail\Mail(); 
+    $email->setFrom($send_email, "dogmission"); //寄件人資訊
+    $email->setSubject($timestart." ~ ".$timeend." 工作檢核");
+    $email->addTo($user_email, $user_name);
+    $email->addContent("text/plain", $timestart."~".$timeend." 工作檢核");
+    $email->addContent(
+        "text/html", "<strong>請看副檔</strong>"
+    );
 
-$sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
-try {
-    $response = $sendgrid->send($email);
-    print $response->statusCode() . "\n";
-    print_r($response->headers());
-    print $response->body() . "\n";
-} catch (Exception $e) {
-    echo 'Caught exception: '. $e->getMessage() ."\n";
+    $file_encoded = base64_encode(file_get_contents("https://dogmission.herokuapp.com/record.pdf"));
+    $email->addAttachment(
+        $file_encoded,
+        "application/pdf",
+        "record.pdf",
+        "attachment"
+    );
+
+    $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+    try {
+        $response = $sendgrid->send($email);
+        print $response->statusCode() . "\n";
+        print_r($response->headers());
+        print $response->body() . "\n";
+    } catch (Exception $e) {
+        echo 'Caught exception: '. $e->getMessage() ."\n";
+    }
 }
 mysqli_close($db_connection); //關閉資料庫連線
