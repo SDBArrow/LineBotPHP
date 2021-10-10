@@ -221,14 +221,14 @@ switch (true) {
         //查詢有沒有註冊
         if ($rowtotal > 0) {    //有註冊
             $email = mb_substr($message['text'] ,4,NULL,"UTF-8");
-            $sql = "update member set email = ".$email."where userid = ".$UserId; //資料庫的name不能重複
+            $sql = "update member set email = '".$email."' where userid = ".$UserId; //資料庫的name不能重複
             if (mysqli_query($db_connection, $sql)){    //新增到資料庫
                 $ReturnMessage = "Email已更新";
             } else{
-                $ReturnMessage = $Name."，更新失敗，請洽管理員";
+                $ReturnMessage = "更新失敗，請洽管理員";
             }
         } else {  //沒註冊
-            $ReturnMessage = $Name."請先註冊";
+            $ReturnMessage = "請先註冊";
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
