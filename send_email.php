@@ -16,6 +16,7 @@ $sql = "select * from member where security = 2";
 $reutrn_data = mysqli_query($db_connection, $sql);
 
 while ($table_member = $reutrn_data->fetch_assoc()) {
+    //收件者 email 和 name
     $user_name = $table_member["name"];
     $user_email = $table_member["email"];
     //設定eamil發送者、接收者、內容
@@ -46,5 +47,4 @@ while ($table_member = $reutrn_data->fetch_assoc()) {
         echo 'Caught exception: '. $e->getMessage() ."\n";
     }
 }
-echo "done";
 mysqli_close($db_connection); //關閉資料庫連線

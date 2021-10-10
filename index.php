@@ -209,6 +209,31 @@ switch (true) {
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
         mysqli_close($db_connection);
         break;
+
+    case (mb_substr($message['text'] ,0,4,"UTF-8")  == "設定信箱" ): //更新 line 名稱
+        $UserId = $event['source']['userId']; //抓該訊息的發送者
+        //連線到資料庫取資料
+        include('./connect.php'); //連結資料庫設定
+        $sql = "select * from member where lineuid = '" . $UserId . "'"; 
+        $table_member = mysqli_query($db_connection, $sql);  //查詢結果
+        $rowtotal = mysqli_num_rows($table_member); //總資料比數
+    
+        //查詢有沒有註冊
+        if ($rowtotal > 0) {    //有註冊
+            $email = mb_substr($message['text'] ,4,NULL,"UTF-8");
+            $sql = "update member set email = ".$email."where userid = ".$UserId; //資料庫的name不能重複
+            if (mysqli_query($db_connection, $sql)){    //新增到資料庫
+                $ReturnMessage = "Email已更新";
+            } else{
+                $ReturnMessage = $Name."，更新失敗，請洽管理員";
+            }
+        } else {  //沒註冊
+            $ReturnMessage = $Name."請先註冊";
+        }
+        // 回傳名字到原本發訊息的地方(群組或機器人私訊)
+        $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
+        mysqli_close($db_connection);
+        break;
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
         $UserId = $event['source']['userId']; //抓該訊息的發送者
         //判斷權限
