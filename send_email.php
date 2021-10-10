@@ -9,7 +9,7 @@ require 'vendor/autoload.php'; // If you're using Composer (recommended)
 // https://github.com/sendgrid/sendgrid-php/releases
 
 $timestart = date('Y-m-d', strtotime("-1 day"));  //抓時間
-$timestart = date('Y-m-d', strtotime("-8 day"));  //抓時間
+$timeend = date('Y-m-d', strtotime("-8 day"));  //抓時間
 $myemail = getenv('email');
 
 include('./connect.php'); //連結資料庫設定
