@@ -44,3 +44,4 @@ try {
 } catch (Exception $e) {
     echo 'Caught exception: '. $e->getMessage() ."\n";
 }
+mysqli_close($db_connection); //關閉資料庫連線
