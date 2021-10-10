@@ -10,24 +10,19 @@ require 'vendor/autoload.php'; // If you're using Composer (recommended)
 
 $timestart = date('Y-m-d', strtotime("-1 day"));  //抓時間
 $timeend = date('Y-m-d', strtotime("-8 day"));  //抓時間
-$myemail = getenv('email');
-echo $timestart."\n";
-echo $timeend."\n";
-echo $myemail."\n";
+$send_email = getenv('email');
+
 
 include('./connect.php'); //連結資料庫設定
 $sql = "select * from member where security = 2";
 $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-$name = $table_member["name"];
-$email = $table_member["email"];
-
-echo $name."\n";
-echo $email."\n";
+$user_name = $table_member["name"];
+$user_email = $table_member["email"];
 
 $email = new \SendGrid\Mail\Mail(); 
-$email->setFrom($myemail, "dogmission"); //寄件人資訊
+$email->setFrom($send_email, "dogmission"); //寄件人資訊
 $email->setSubject($timestart."~".$timeend." 工作檢核");
-$email->addTo($email, $name);
+$email->addTo($user_email, $user_name);
 $email->addContent("text/plain", $timestart."~".$timeend." 工作檢核");
 $email->addContent(
     "text/html", "<strong>請看副檔</strong>"
