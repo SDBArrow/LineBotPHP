@@ -18,7 +18,7 @@ $reutrn_data = mysqli_query($db_connection, $sql);
 while ($table_member = $reutrn_data->fetch_assoc()) {
     $user_name = $table_member["name"];
     $user_email = $table_member["email"];
-
+    //設定eamil發送者、接收者、內容
     $email = new \SendGrid\Mail\Mail(); 
     $email->setFrom($send_email, "dogmission"); //寄件人資訊
     $email->setSubject($timestart." ~ ".$timeend." 工作檢核");
@@ -27,7 +27,7 @@ while ($table_member = $reutrn_data->fetch_assoc()) {
     $email->addContent(
         "text/html", "<strong>請看副檔</strong>"
     );
-
+    //附件檔案
     $file_encoded = base64_encode(file_get_contents("https://dogmission.herokuapp.com/record.pdf"));
     $email->addAttachment(
         $file_encoded,
@@ -35,7 +35,7 @@ while ($table_member = $reutrn_data->fetch_assoc()) {
         "record.pdf",
         "attachment"
     );
-
+    //發送email
     $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
     try {
         $response = $sendgrid->send($email);
@@ -46,4 +46,5 @@ while ($table_member = $reutrn_data->fetch_assoc()) {
         echo 'Caught exception: '. $e->getMessage() ."\n";
     }
 }
+echo "done";
 mysqli_close($db_connection); //關閉資料庫連線
