@@ -42,7 +42,6 @@ switch(true){
             }
             echo $ReturnMessage;
         }
-        mysqli_close($db_connection);
     //每天00:00要執行的
     case (date('H:i') == "13:23" || date('H:i') == "13:24" || date('H:i') == "13:25" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
