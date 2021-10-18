@@ -6,7 +6,7 @@ $work = new Linebot();
 
 switch(true){
     //一星期執行一次、每個星期天執行
-    case (date('w') == 0 && (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05")):
+    case (date('w') == 1 && (date('H:i') == "13:19" || date('H:i') == "13:20" || date('H:i') == "13:21" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05")):
         //寄送當周工作檢核至管理員的email
 
         //清空工作檢核表，並匯入當周新值日生
@@ -44,7 +44,7 @@ switch(true){
         }
         mysqli_close($db_connection);
     //每天00:00要執行的
-    case (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "13:19" || date('H:i') == "13:20" || date('H:i') == "13:21" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
