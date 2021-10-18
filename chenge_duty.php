@@ -6,23 +6,23 @@ $work = new Linebot();
 
 switch(true){
     //一星期執行一次、每個星期天執行
-    case (date('w') == 1 && (date('H:i') == "13:23" || date('H:i') == "13:24" || date('H:i') == "13:25" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05")):
+    case (date('w') == 1 && (date('H:i') == "13:52" || date('H:i') == "13:53" || date('H:i') == "13:54" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05")):
         //寄送當周工作檢核至管理員的email
 
         //清空工作檢核表，並匯入當周新值日生
         $time = date('Y-m-d');  //抓時間
+        $duty_1 = $work ->WorkScheduleOnlyUserid($time);
+        $time = date('Y-m-d', strtotime("-1 day"));  //抓時間
         $duty_0 = $work ->WorkScheduleOnlyUserid($time);
         $time = date('Y-m-d', strtotime("+1 day"));  //抓時間
-        $duty_1 = $work ->WorkScheduleOnlyUserid($time);
-        $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
         $duty_2 = $work ->WorkScheduleOnlyUserid($time);
-        $time = date('Y-m-d', strtotime("+3 day"));  //抓時間
+        $time = date('Y-m-d', strtotime("+2 day"));  //抓時間
         $duty_3 = $work ->WorkScheduleOnlyUserid($time);
-        $time = date('Y-m-d', strtotime("+4 day"));  //抓時間
+        $time = date('Y-m-d', strtotime("+3 day"));  //抓時間
         $duty_4 = $work ->WorkScheduleOnlyUserid($time);
-        $time = date('Y-m-d', strtotime("+5 day"));  //抓時間
+        $time = date('Y-m-d', strtotime("+4 day"));  //抓時間
         $duty_5 = $work ->WorkScheduleOnlyUserid($time);
-        $time = date('Y-m-d', strtotime("+6 day"));  //抓時間
+        $time = date('Y-m-d', strtotime("+5 day"));  //抓時間
         $duty_6 = $work ->WorkScheduleOnlyUserid($time);
         
         $sql[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
@@ -43,7 +43,7 @@ switch(true){
             echo $ReturnMessage;
         }
     //每天00:00要執行的
-    case (date('H:i') == "13:43" || date('H:i') == "13:44" || date('H:i') == "13:45" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "13:52" || date('H:i') == "13:53" || date('H:i') == "13:54" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
         if(mysqli_query($db_connection, $sql)){ //更新到資料庫
