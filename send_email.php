@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php'; // If you're using Composer (recommended)
+date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 // Comment out the above line if not using Composer
 // require("<PATH TO>/sendgrid-php.php");
 // If not using Composer, uncomment the above line and
