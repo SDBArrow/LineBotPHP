@@ -11,7 +11,7 @@ date_default_timezone_set("Asia/Taipei"); //設定時區為台北時區
 
 switch(true){
     //發送近三日遛狗名單和簽到表
-    case (date('w') == 3 && (date('H:i') == "01:51" || date('H:i') == "01:52" || date('H:i') == "01:53" || date('H:i') == "01:54" || date('H:i') == "01:16" || date('H:i') == "00:05")):
+    case (date('w') == 3 && (date('H:i') == "01:57" || date('H:i') == "01:58" || date('H:i') == "01:59" || date('H:i') == "01:54" || date('H:i') == "01:16" || date('H:i') == "00:05")):
         $timestart = date('Y-m-d', strtotime("-7 day"));  //抓時間
         $timeend = date('Y-m-d', strtotime("-1 day"));  //抓時間
         $send_email = getenv('email');
