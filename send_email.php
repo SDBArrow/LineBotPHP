@@ -17,9 +17,16 @@ switch(true){
         $send_email = getenv('email');
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where security = 2";
-        $reutrn_data = mysqli_query($db_connection, $sql);
-        
-        while ($table_member = $reutrn_data->fetch_assoc()) {
+        $result = $db_connection->query($sql); //查詢資料
+
+        if($db_connection->affected_rows > 0){ //檢查是否查詢成功
+            $ReturSQLnMessage = "資料查詢成功\n";
+        } else{
+            $ReturnSQLMessage = "資料查詢失敗\n";
+        }
+        echo $ReturnSQLMessage;
+
+        while ($table_member = $result->fetch_assoc()) {
             //收件者 email 和 name
             $user_name = $table_member["name"];
             $user_email = $table_member["email"];
@@ -52,6 +59,7 @@ switch(true){
             }
         }
         mysqli_close($db_connection); //關閉資料庫連線
+        break;
     default:
         break;
 }

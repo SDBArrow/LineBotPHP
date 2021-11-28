@@ -12,18 +12,18 @@ class Linebot{
         //今天單周還雙周
         $oddandeven = $weekcount % 2;
         $sql = "select * from week where week_int = " . $oddandeven;
-        $row_week = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $row_week = $db_connection->query($sql)->fetch_assoc();
         $week = $row_week["week_ch"];
     
         //今天星期幾
         $weekdaytempor = date('w', strtotime($time));
         $sql = "select * from day where day_int = " . $weekdaytempor;
-        $row_day = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $row_day = $db_connection->query($sql)->fetch_assoc();
         $day = $row_day["day_ch"];
     
         //查詢值日生
         $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
-        $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $row_userid = $db_connection->query($sql)->fetch_assoc();
         
         if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
             $userid = $row_userid["new_userid"];
@@ -60,12 +60,12 @@ class Linebot{
 
             //查詢替補
             $sql = "select * from member,duty_turn where id = " . $tempor." and member.userid = duty_turn.userid";
-            $row_dutytrun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+            $row_dutytrun = $db_connection->query($sql)->fetch_assoc();
             $dutytrun = $row_dutytrun["name"];
             $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "(替補)\n=======================\n--->" . $dutytrun; // 回復訊息
         } else {   //不是替補日
             $sql = "select * from member,duty_list where duty_list.day = " . $weekdaytempor . " and duty_list.week = " . $oddandeven." and member.userid = ".$userid;
-            $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+            $table_member = $db_connection->query($sql)->fetch_assoc();
             $name = $table_member["name"];
             $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
         }
@@ -85,7 +85,7 @@ class Linebot{
 
         //查詢值日生
         $sql = "select * from duty_list where day = " . $weekdaytempor . " and week = " . $oddandeven;
-        $row_userid = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+        $row_userid = $db_connection->query($sql)->fetch_assoc(); 
         if (strtotime($time) - strtotime("2021-10-03 00:00:00")>=0){ //判斷新班表還舊班表
             $userid = $row_userid["new_userid"];
         }else{
@@ -116,7 +116,7 @@ class Linebot{
             }
             //查詢替補
             $sql = "select * from duty_turn where id = ".$tempor;
-            $table_duty_trun = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+            $table_duty_trun = $db_connection->query($sql)->fetch_assoc(); 
             $userid = $table_duty_trun["userid"];
             $ReturnMessage = $userid; // 回復訊息
         } else {   //不是替補日
@@ -210,7 +210,7 @@ class Linebot{
     {
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+        $table_member = $db_connection->query($sql)->fetch_assoc();  //查詢結果
         $duty_level = $table_member["duty_level"]; //取出權限等級
         mysqli_close($db_connection);
         return $duty_level;
@@ -221,7 +221,7 @@ class Linebot{
     {
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));  //查詢結果
+        $table_member = $db_connection->query($sql)->fetch_assoc();  //查詢結果
         $Security = $table_member["security"]; //取出權限等級
         mysqli_close($db_connection);
         return $Security;

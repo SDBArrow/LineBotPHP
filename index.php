@@ -150,12 +150,13 @@ switch (true) {
         //連線到資料庫取資料
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; //資料庫的name不能重複
-        $tabel_member = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($tabel_member); //總資料比數
+        $result = $db_connection->query($sql);  //查詢結果
+        $rowtotal = $result->num_rows; //總資料比數
 
         if ($rowtotal < 1) {    //筆數 = 0 代表無資料
             $sql = "insert into member (name, lineuid) value ('".$Name."','".$UserId."');";
-            if (mysqli_query($db_connection, $sql)){    //新增到資料庫
+            $db_connection->query($sql); 
+            if($db_connection->affected_rows > 0){ //檢查是否更新成功
                 $ReturnMessage = "國家感謝您的貢獻\nName:" . $Name . "\n已新增到資料庫";
             } else{
                 $ReturnMessage = $Name."，新增失敗，請洽管理員";
@@ -176,25 +177,26 @@ switch (true) {
         //連線到資料庫取資料
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($table_member); //總資料比數
+        $result = $db_connection->query($sql);  //查詢結果
+        $rowtotal = $result->num_rows; //總資料比數
 
         //查詢有沒有註冊
         if ($rowtotal > 0) {    //有註冊
             $sql = "select * from member where name = '" . $Name . "'"; //資料庫的name不能重複
-            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            $result = $db_connection->query($sql);  //查詢結果
+            $rowtotal = $result->num_rows; //總資料比數
             //判斷此名字有沒有存在
             if ($rowtotal < 1){  //沒有存在，更新成這名字
                 $sql = "update member set name = '" .$Name. "'where lineuid ='".$UserId ."'";
-                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                $db_connection->query($sql); 
+                if($db_connection->affected_rows > 0){ //檢查是否更新成功
                     $ReturnMessage = $Name."，已更新資料";
                 } else{
                     $ReturnMessage = $Name."，更新失敗，請洽管理員";
                 }
             }else{ //有存在，繼續判斷是沒更動還是有人使用
                 $sql = "select * from member where lineuid = '" . $UserId . "'";
-                $table_member = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+                $table_member = $db_connection->query($sql)->fetch_assoc();
                 $table_member_name = $table_member["name"];
                 if ($Name == $table_member_name ){   //判斷名字是重複還是沒有更動
                     $ReturnMessage = $Name."，名字無更動";
@@ -215,14 +217,15 @@ switch (true) {
         //連線到資料庫取資料
         include('./connect.php'); //連結資料庫設定
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
-        $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-        $rowtotal = mysqli_num_rows($table_member); //總資料比數
+        $result = $db_connection->query($sql);  //查詢結果
+        $rowtotal = $result->num_rows; //總資料比數
     
         //查詢有沒有註冊
         if ($rowtotal > 0) {    //有註冊
             $email = mb_substr($message['text'] ,5,NULL,"UTF-8");
             $sql = "update member set email = '".$email."' where lineuid = '".$UserId."'"; //資料庫的name不能重複
-            if (mysqli_query($db_connection, $sql)){    //新增到資料庫
+            $db_connection->query($sql); 
+            if($db_connection->affected_rows > 0){ //檢查是否更新成功
                 $ReturnMessage = "Email已更新";
             } else{
                 $ReturnMessage = "更新失敗，請洽管理員";
@@ -242,8 +245,8 @@ switch (true) {
             include('./connect.php'); //連結資料庫設定
             $name = mb_substr($message['text'], 9, null, "UTF-8");  // 取輸入的名字
             $sql = "select * from member where name = '" . $name . "'"; 
-            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            $result = $db_connection->query($sql);  //查詢結果
+            $rowtotal = $result->num_rows; //總資料比數
         
             if ($rowtotal > 0){  //如果有這個人
 
@@ -254,12 +257,12 @@ switch (true) {
                 }else{
                     $table_name = "userid";
                 }
-
-                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出流水號
+                $table_member_userid =  $table_member->fetch_assoc()["userid"]; //取出流水號
                 $duty_id = mb_substr($message['text'], 5, 2, "UTF-8");  // 取出輸入的工作日編號
                 $sql = "update duty_list set ".$table_name." = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
                 
-                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                $db_connection->query($sql); 
+                if($db_connection->affected_rows > 0){ //檢查是否更新成功
                     $ReturnMessage = "已更新到工作日";
                 } else{
                     $ReturnMessage = "更新失敗";
@@ -284,13 +287,14 @@ switch (true) {
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             include('./connect.php'); //連結資料庫設定
             $sql = "select * from member where name = '" . $name . "'"; 
-            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            $result = $db_connection->query($sql);  //查詢結果
+            $rowtotal = $result->num_rows; //總資料比數
             
             if ($rowtotal > 0){  //如果有這個人
-                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
+                $table_member_userid =  $table_member->fetch_assoc()["userid"]; //取出userid流水號
                 $sql = "update member set duty_level = 1 where userid = ".$table_member_userid;
-                if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                $db_connection->query($sql); 
+                if($db_connection->affected_rows > 0){ //檢查是否更新成功
                     $ReturnMessage = "已分享權限";
                 } else{
                     $ReturnMessage = "更新失敗";
@@ -313,22 +317,24 @@ switch (true) {
             $name = mb_substr($message['text'], 10, null, "UTF-8");  // 取輸入的名字
             include('./connect.php'); //連結資料庫設定
             $sql = "select * from member where name = '" . $name . "'"; 
-            $table_member = mysqli_query($db_connection, $sql);  //查詢結果
-            $rowtotal = mysqli_num_rows($table_member); //總資料比數
+            $result = $db_connection->query($sql);  //查詢結果
+            $rowtotal = $result->num_rows; //總資料比數
             
             if ($rowtotal > 0){  //如果有這個人
                 $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
                 $code = mb_substr($message['text'], 6, 2, "UTF-8");
                 if ( $code == "新增"){
                     $sql = "update member set security = 1 where userid = ".$table_member_userid;
-                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $db_connection->query($sql); 
+                    if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = "已".$code."權限";
                     } else{
                         $ReturnMessage = "更新失敗";
                     }
                 }elseif($code == "移除"){
                     $sql = "update member set security = 0 where userid = ".$table_member_userid;
-                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $db_connection->query($sql); 
+                    if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = "已".$code."權限";
                     } else{
                         $ReturnMessage = "更新失敗";
@@ -538,10 +544,11 @@ switch (true) {
                     $weekdaytempor = date('w'); // 取出今天星期幾
                     include('./connect.php'); //連結資料庫設定
                     $sql = "update sign_table set ".$item." = '完成：".$Name."' where day_int = ".$weekdaytempor; 
-                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+                    $db_connection->query($sql); 
+                    if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = $Name."，打卡成功：".$item;
                     } else{
-                        $ReturnMessage = $Name."，該項目不存在";
+                        $ReturnMessage = $Name."，打卡失敗，請在試一次";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
@@ -565,11 +572,12 @@ switch (true) {
                     $item = mb_substr($event['postback']['data'], 12, null, "UTF-8"); // 取出打卡的工作項目
                     $weekdaytempor = date('w'); // 取出今天星期幾
                     include('./connect.php'); //連結資料庫設定
-                    $sql = "update sign_table set ".$item." = '還有人在使用：".$Name."' where day_int = ".$weekdaytempor; 
-                    if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-                        $ReturnMessage = $Name."，打卡成功：.$item";
+                    $sql = "update sign_table set ".$item." = '還有人在使用：".$Name."' where day_int = ".$weekdaytempor;
+                    $db_connection->query($sql); 
+                    if($db_connection->affected_rows > 0){ //檢查是否更新成功
+                        $ReturnMessage = $Name."，打卡成功：".$item;
                     } else{
-                        $ReturnMessage = $Name."，該項目不存在";
+                        $ReturnMessage = $Name."，打卡失敗，請再試一次";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線

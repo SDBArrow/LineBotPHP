@@ -38,18 +38,18 @@ switch(true){
 
 		//查詢sign_table 資料表欄位
 		$sql = "SHOW COLUMNS FROM sign_table"; 
-		$result = mysqli_query($db_connection, $sql);
-		$rowtotal = mysqli_num_rows($result);
+		$result = $db_connection->query($sql); 
+		$rowtotal = $result->num_rows;
 
 		//提取sign_table欄位名稱
 		for ($i = 0; $i < $rowtotal; $i++){
-			$table_sign_table = mysqli_fetch_assoc($result);
+			$table_sign_table = $result->fetch_assoc();
 			$Field[$i] = $table_sign_table['Field'];
 		}
 
 		//查詢簽到表資料
 		$sql = "select * from sign_table,member where sign_table.userid = member.userid and day_int = ".$time;
-		$table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
+		$table_sign_table = $db_connection->query($sql)->fetch_assoc();
 
 		//檢查工作項目打卡是否有遺漏
 		$Miss = FALSE;
@@ -57,11 +57,13 @@ switch(true){
 			if ($table_sign_table[$Field[$i]] == ""){
 				$Miss = True;
 				$sql = "update sign_table set ".$Field[$i]." = '缺漏' where day_int = ".$time;
-				if(mysqli_query($db_connection, $sql)){ //更新到資料庫
-					echo "已更新工作審核表\n";
-				} else{
-					echo "更新失敗\n";
+				$db_connection->query($sql); //更新到資料庫
+				if($db_connection->affected_rows > 0){ //檢查是否更新成功
+					$ReturnSQLMessage = "已更新工作審核表\n";
+				}else{
+					$ReturnSQLMessage = "更新失敗\n";
 				}
+				echo $ReturnSQLMessage;
 			}
 		}
 

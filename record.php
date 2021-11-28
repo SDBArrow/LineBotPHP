@@ -178,8 +178,7 @@ for ($day = 0; $day < 7; $day++) {
      */
 
     $sql = "select * from sign_table,day,member where sign_table.userid = member.userid and sign_table.day_int = day.day_int and sign_table.day_int = ". $day;
-    $table_sign_table = mysqli_fetch_assoc(mysqli_query($db_connection, $sql));
-
+    $table_sign_table = $db_connection->query($sql)->fetch_assoc(); //查詢資料
     $html .= '
         <tr>
             <td align="center" style="line-height: 1.5; width: 80px;">'.$table_sign_table["day_ch"].'</td>
