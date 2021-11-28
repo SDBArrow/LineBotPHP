@@ -1,5 +1,5 @@
 <?php
-include('push_notify.php');
+require_once('push_notify.php');
 file_get_contents('https://dogmission.herokuapp.com/record.php'); //產生pdf
-include('send_email.php');
-include('chenge_duty.php');
+require_once('send_email.php');
+require_once('chenge_duty.php');
