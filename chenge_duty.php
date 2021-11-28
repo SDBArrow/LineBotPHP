@@ -6,7 +6,7 @@ $work = new Linebot();
 
 switch(true){
     //一星期執行一次、每個星期天執行簽到表清除及匯入
-    case (date('w') == 0 && (date('H:i') == "08:45" || date('H:i') == "08:46" || date('H:i') == "08:47" || date('H:i') == "08:48" || date('H:i') == "00:04" || date('H:i') == "00:05")):
+    case (date('w') == 0 && (date('H:i') == "09:03" || date('H:i') == "09:04" || date('H:i') == "09:05" || date('H:i') == "09:06" || date('H:i') == "00:04" || date('H:i') == "00:05")):
        
         //查詢下星期每天的值日生userid
         for ($var = 0; $var < 7; $var++){
@@ -23,7 +23,8 @@ switch(true){
 
         //資料庫更新
         for($var = 0; $var < count($sql); $var++){
-            if(mysqli_query($db_connection, $sql[$var])){ //更新到資料庫
+            mysqli_query($db_connection, $sql[$var]);
+            if($db_connection->affected_rows > 0){ //更新到資料庫
                 $ReturnMessage = "檢核表更新成功\n";
             } else{
                 $ReturnMessage = "檢核表更新失敗\n";
@@ -31,10 +32,11 @@ switch(true){
             echo $ReturnMessage;
         }
     //每天00:00要執行的
-    case (date('H:i') == "08:45" || date('H:i') == "08:46" || date('H:i') == "08:47" || date('H:i') == "08:48" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') == "09:03" || date('H:i') == "09:04" || date('H:i') == "09:05" || date('H:i') == "09:06" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
-        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+        mysqli_query($db_connection, $sql);
+        if($db_connection->affected_rows > 0){ //更新到資料庫
             $ReturnMessage = "權限移除成功\n";
         } else{
             $ReturnMessage = "權限移除失敗\n";
@@ -44,7 +46,8 @@ switch(true){
         $time = date('w');  //抓時間
         //新增權限給今日值日生
         $sql = "update sign_table, member set member.duty_level = 1 where sign_table.day_int = ".$time." and sign_table.userid = member.userid";
-        if(mysqli_query($db_connection, $sql)){ //更新到資料庫
+        mysqli_query($db_connection, $sql);
+        if($db_connection->affected_rows > 0){ //更新到資料庫
             $ReturnMessage = "權限更新成功\n";
         }else{
             $ReturnMessage = "權限更新失敗\n";
