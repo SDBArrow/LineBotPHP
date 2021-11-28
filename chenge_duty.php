@@ -23,7 +23,7 @@ switch(true){
 
         //資料庫更新
         for($var = 0; $var < count($sql); $var++){
-            $$db_connection->query($sql[$var]);
+            $db_connection->query($sql[$var]);
             if($db_connection->affected_rows > 0){ //更新到資料庫
                 $ReturnMessage = "檢核表更新成功\n";
             } else{
@@ -35,7 +35,7 @@ switch(true){
     case (date('H:i') == "09:07" || date('H:i') == "09:08" || date('H:i') == "09:09" || date('H:i') == "09:10" || date('H:i') == "00:04" || date('H:i') == "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
-        $$db_connection->query($sql);
+        $db_connection->query($sql);
         if($db_connection->affected_rows > 0){ //更新到資料庫
             $ReturnMessage = "權限移除成功\n";
         } else{
@@ -46,7 +46,7 @@ switch(true){
         $time = date('w');  //抓時間
         //新增權限給今日值日生
         $sql = "update sign_table, member set member.duty_level = 1 where sign_table.day_int = ".$time." and sign_table.userid = member.userid";
-        $$db_connection->query($sql);
+        $db_connection->query($sql);
         if($db_connection->affected_rows > 0){ //更新到資料庫
             $ReturnMessage = "權限更新成功\n";
         }else{
