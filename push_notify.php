@@ -10,7 +10,7 @@ $work = new Linebot();
 //heroku 00:00會執行此檔案，但由於heroku沒在使用會進入休眠狀態，所以正常需要一分鐘緩衝時間，最慢五分鐘過
 switch(true){
     //發送近三日遛狗名單和簽到表
-    case (date('H:i') == "00:00" || date('H:i') == "00:01" || date('H:i') == "00:02" || date('H:i') == "00:03" || date('H:i') == "00:04" || date('H:i') == "00:05"):
+    case (date('H:i') <= "00:05"):
   		//標頭
 		$ReturnMessage = "\n=====每日自動提醒====="; //丟去副程式WorkSchedule
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
@@ -31,7 +31,7 @@ switch(true){
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		break;
 	//檢測打卡有沒有缺漏，並補上缺漏和發送提醒
-    case (date('H:i') == "23:30" || date('H:i') == "23:31" || date('H:i') == "23:32" || date('H:i') == "23:33" || date('H:i') == "23:34" || date('H:i') == "23:35"):
+    case (date('H:i') >= "23:30" && date('H:i') <= "23:35"):
 		
 		include('./connect.php'); //連結資料庫設定
 		$time = date('w');  //抓時間
