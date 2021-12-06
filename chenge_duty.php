@@ -6,11 +6,11 @@ $work = new Linebot();
 
 switch(true){
     //一星期執行一次、每個星期天執行簽到表清除及匯入
-    case (date('w') == 1 && date('H:i') <= "23:05"):
+    case (date('w') == 0 && date('H:i') <= "00:05"):
        
         //查詢下星期每天的值日生userid
         for ($var = 0; $var < 7; $var++){
-            $time = date('Y-m-d', strtotime(($var-1)." day"));  //抓時間
+            $time = date('Y-m-d', strtotime(($var)." day"));  //抓時間
             $duty[$var] = $work ->WorkScheduleOnlyUserid($time);
         }
         
@@ -32,7 +32,7 @@ switch(true){
             echo $ReturnSQLMessage;
         }
     //每天00:00要執行的
-    case (date('H:i') <= "23:05"):
+    case (date('H:i') <= "00:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
         $db_connection->query($sql); //更新到資料庫
