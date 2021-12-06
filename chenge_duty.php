@@ -10,7 +10,7 @@ switch(true){
        
         //查詢下星期每天的值日生userid
         for ($var = -1; $var < 6; $var++){
-            $time = date('Y-m-d', strtotime("+".$var." day"));  //抓時間
+            $time = date('Y-m-d', strtotime($var." day"));  //抓時間
             $duty[$var] = $work ->WorkScheduleOnlyUserid($time);
         }
         
