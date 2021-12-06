@@ -15,15 +15,15 @@ switch(true){
         }
         
         //清空資料表
-        $sql[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
+        $SQL[0] = "update sign_table set userid = null, e419_refrigerator = '', e419_refrigerator = '', e419_ashcan = '', e419_corridor = '', e419_conditioner_light = '', e420_corridor = '', e420_equipment = '', e420_chair = '', e420_conditioner_light = '', e420_Shoebox = '', room_conditioner_light = ''";
         //匯入值日生
         for ($var = 1; $var <= count($duty); $var++){
-            $sql[$var] = "update sign_table set userid = ".$duty[$var-1]." where day_int = ".$var-1;
+            $SQL[$var] = "update sign_table set userid = ".$duty[$var-1]." where day_int = ".$var-1;
         }
 
         //資料庫更新
-        for($var = 0; $var < count($sql); $var++){
-            $db_connection->query($sql[$var]); //更新到資料庫
+        for($var = 0; $var < count($SQL); $var++){
+            $db_connection->query($SQL[$var]); //更新到資料庫
             if($db_connection->affected_rows > 0){ //檢查是否更新成功
                 $ReturnSQLMessage = "檢核表更新成功\n";
             } else{
