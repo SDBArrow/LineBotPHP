@@ -6,7 +6,7 @@ $work = new Linebot();
 
 switch(true){
     //一星期執行一次、每個星期天執行簽到表清除及匯入
-    case (date('w') == 0 && date('H:i') <= "00:05"):
+    case (date('w') == 1 && date('H:i') <= "23:05"):
        
         //查詢下星期每天的值日生userid
         for ($var = 0; $var < 7; $var++){
