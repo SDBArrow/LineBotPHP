@@ -32,7 +32,7 @@ switch(true){
             echo $ReturnSQLMessage;
         }
     //每天00:00要執行的
-    case (date('H:i') <= "00:05"):
+    case (date('H:i') <= "23:05"):
         //清除昨天的值日生權限
         $sql = "update member set duty_level = 0";
         $db_connection->query($sql); //更新到資料庫
