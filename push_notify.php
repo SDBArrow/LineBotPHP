@@ -10,7 +10,7 @@ $work = new Linebot();
 //heroku 00:00會執行此檔案，但由於heroku沒在使用會進入休眠狀態，所以正常需要一分鐘緩衝時間，最慢五分鐘過
 switch(true){
     //發送近三日遛狗名單和簽到表
-    case (date('H:i') <= "00:05"):
+    case (date('H:i') <= "00:35"  && date('H:i') >= "00:30"):
   		//標頭
 		$ReturnMessage = "\n=====每日自動提醒====="; //丟去副程式WorkSchedule
 		$work -> notifypushText($ReturnMessage, $client); //回傳訊息
