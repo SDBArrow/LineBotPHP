@@ -548,7 +548,7 @@ switch (true) {
                     if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = $Name."，打卡成功：".$item;
                     } else{
-                        $ReturnMessage = $Name."，打卡失敗，請在試一次";
+                        $ReturnMessage = $Name."，已有打卡紀錄";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
@@ -577,7 +577,7 @@ switch (true) {
                     if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = $Name."，打卡成功：".$item;
                     } else{
-                        $ReturnMessage = $Name."，打卡失敗，請再試一次";
+                        $ReturnMessage = $Name."，已有打卡紀錄";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
                     mysqli_close($db_connection);  //關閉資料庫連線
