@@ -225,10 +225,10 @@ switch (true) {
             $email = mb_substr($message['text'] ,5,NULL,"UTF-8");
             $sql = "update member set email = '".$email."' where lineuid = '".$UserId."'"; //資料庫的name不能重複
             $db_connection->query($sql); 
-            if($db_connection->affected_rows > 0){ //檢查是否更新成功
+            if($db_connection->affected_rows > 0){ //檢查是否有更新
                 $ReturnMessage = "Email已更新";
             } else{
-                $ReturnMessage = "更新失敗，請洽管理員";
+                $ReturnMessage = "資料無更動";
             }
         } else {  //沒註冊
             $ReturnMessage = "請先註冊";
@@ -257,15 +257,16 @@ switch (true) {
                 }else{
                     $table_name = "userid";
                 }
-                $table_member_userid =  $table_member->fetch_assoc()["userid"]; //取出流水號
+                
+                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出流水號
                 $duty_id = mb_substr($message['text'], 5, 2, "UTF-8");  // 取出輸入的工作日編號
                 $sql = "update duty_list set ".$table_name." = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
                 
                 $db_connection->query($sql); 
-                if($db_connection->affected_rows > 0){ //檢查是否更新成功
+                if($db_connection->affected_rows > 0){ //檢查是否有更動
                     $ReturnMessage = "已更新到工作日";
                 } else{
-                    $ReturnMessage = "更新失敗";
+                    $ReturnMessage = "資料無更動";
                 }
 
             }else{  //沒有這個人
@@ -297,7 +298,7 @@ switch (true) {
                 if($db_connection->affected_rows > 0){ //檢查是否更新成功
                     $ReturnMessage = "已分享權限";
                 } else{
-                    $ReturnMessage = "更新失敗";
+                    $ReturnMessage = "權限無更動";
                 }
             }else{
                 $ReturnMessage = "資料庫查無此人";
@@ -329,7 +330,7 @@ switch (true) {
                     if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = "已".$code."權限";
                     } else{
-                        $ReturnMessage = "更新失敗";
+                        $ReturnMessage = "權限無更動";
                     }
                 }elseif($code == "移除"){
                     $sql = "update member set security = 0 where userid = ".$table_member_userid;
@@ -337,7 +338,7 @@ switch (true) {
                     if($db_connection->affected_rows > 0){ //檢查是否更新成功
                         $ReturnMessage = "已".$code."權限";
                     } else{
-                        $ReturnMessage = "更新失敗";
+                        $ReturnMessage = "權限無更動";
                     }
                 }else{
                     $ReturnMessage = "沒有這個指令";
