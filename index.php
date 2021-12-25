@@ -291,7 +291,7 @@ switch (true) {
             $rowtotal = $result->num_rows; //總資料比數
             
             if ($rowtotal > 0){  //如果有這個人
-                $table_member_userid =  $table_member->fetch_assoc()["userid"]; //取出userid流水號
+                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出userid流水號
                 $sql = "update member set duty_level = 1 where userid = ".$table_member_userid;
                 $db_connection->query($sql); 
                 if($db_connection->affected_rows > 0){ //檢查是否更新成功
@@ -321,7 +321,7 @@ switch (true) {
             $rowtotal = $result->num_rows; //總資料比數
             
             if ($rowtotal > 0){  //如果有這個人
-                $table_member_userid =  mysqli_fetch_assoc($table_member)["userid"]; //取出userid流水號
+                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出userid流水號
                 $code = mb_substr($message['text'], 6, 2, "UTF-8");
                 if ( $code == "新增"){
                     $sql = "update member set security = 1 where userid = ".$table_member_userid;
