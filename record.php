@@ -45,7 +45,7 @@ class MYPDF extends TCPDF {
         <td align="center" style="border-bottom: 1px solid black; width: 105px;">E419走廊清潔</td>
         <td align="center" style="border-bottom: 1px solid black; width: 130px;">關E419冷氣、電燈</td>
         <td align="center" style="border-bottom: 1px solid black; width: 105px;">E420走廊清潔</td> 
-        <td align="center" style="border-bottom: 1px solid black; width: 125px;">E420檢查設備、消耗品</td> 
+        <td align="center" style="border-bottom: 1px solid black; width: 135px;">E420檢查設備、消耗品</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 105px;">E420整理桌椅</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 130px;">關E420冷氣、電燈</td> 
         <td align="center" style="border-bottom: 1px solid black; width: 90px;">E420鞋櫃</td> 
@@ -188,7 +188,7 @@ for ($day = 0; $day < 7; $day++) {
             <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e419_corridor"].'</td>
             <td align="center" style="line-height: 1.5; width: 130px;">'.$table_sign_table["e419_conditioner_light"].'</td>
             <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e420_corridor"].'</td>
-            <td align="center" style="line-height: 1.5; width: 125px;">'.$table_sign_table["e420_equipment"].'</td>
+            <td align="center" style="line-height: 1.5; width: 135px;">'.$table_sign_table["e420_equipment"].'</td>
             <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e420_chair"].'</td>
             <td align="center" style="line-height: 1.5; width: 130px;">'.$table_sign_table["e420_conditioner_light"].'</td>
             <td align="center" style="line-height: 1.5; width: 90px;">'.$table_sign_table["e420_Shoebox"].'</td>
