@@ -444,7 +444,7 @@ switch (true) {
                                 )
                             ),
                             array(
-                                'title' => 'E420檢查設備', //標題 2 <不一定需要>
+                                'title' => 'E420檢查設備、消耗品', //標題 2 <不一定需要>
                                 'text' => '請確實執行', //文字 1
                                 'actions' => array(
                                     array(
