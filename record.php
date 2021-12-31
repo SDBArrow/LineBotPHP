@@ -181,8 +181,8 @@ for ($day = 0; $day < 7; $day++) {
     $table_sign_table = $db_connection->query($sql)->fetch_assoc(); //查詢資料
     $html .= '
         <tr>
-            <td align="center" style="line-height: 1.5; width: 60px;">'.$table_sign_table["day_ch"].'</td>
-            <td align="center" style="line-height: 1.5; width: 60px;">'.$table_sign_table["name"].'</td>
+            <td align="center" style="line-height: 1.5; width: 55px;">'.$table_sign_table["day_ch"].'</td>
+            <td align="center" style="line-height: 1.5; width: 55px;">'.$table_sign_table["name"].'</td>
             <td align="center" style="line-height: 1.5; width: 90px;">'.$table_sign_table["e419_refrigerator"].'</td>
             <td align="center" style="line-height: 1.5; width: 100px;">'.$table_sign_table["e419_ashcan"].'</td>
             <td align="center" style="line-height: 1.5; width: 105px;">'.$table_sign_table["e419_corridor"].'</td>
