@@ -58,7 +58,7 @@ switch(true){
                 echo 'Caught exception: '. $e->getMessage() ."\n";
             }
         }
-        mysqli_close($db_connection); //關閉資料庫連線
+        $db_connection -> close(); //關閉資料庫連線
         break;
     default:
         break;

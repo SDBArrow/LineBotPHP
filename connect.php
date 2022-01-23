@@ -18,7 +18,7 @@ $db_connection->ssl_set($cleardb_key, $cleardb_cert, $cleardb_ca, NULL, NULL);
 //連線   MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT:php新版本會有這問題
 $db_connection->real_connect($server, $db_username, $db_password, $db_name, 3306, NULL, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
 
-mysqli_query($db_connection, "SET NAMES 'UTF8'"); //設定編碼
+$db_connection->query("SET NAMES 'UTF8'");//設定編碼
 
 /* no SSL
 $con = mysqli_connect($server,$db_username,$db_password);//連結資料庫

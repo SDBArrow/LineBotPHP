@@ -75,7 +75,7 @@ switch(true){
 			$work -> notifypushText($ReturnMessage, $client); //回傳訊息
 		}
 
-		mysqli_close($db_connection);
+		$db_connection -> close();
         break;
     default:
         break;

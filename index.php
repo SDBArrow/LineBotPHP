@@ -166,7 +166,7 @@ switch (true) {
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
     case ($message['text'] == "更新" || $message['text'] == "更新註冊名字"): //更新 line 名稱
 
@@ -209,7 +209,7 @@ switch (true) {
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
 
     case (mb_substr($message['text'] ,0,4,"UTF-8")  == "設定信箱" ): //更新 line 名稱
@@ -235,7 +235,7 @@ switch (true) {
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
     case (mb_substr($message['text'] ,0,2,"UTF-8") == "排班"): //更新 line 名稱， 用於更改值日生
         $UserId = $event['source']['userId']; //抓該訊息的發送者
@@ -278,7 +278,7 @@ switch (true) {
     
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
     case (mb_substr($message['text'] ,0,5,"UTF-8") == "值日生權限" || mb_substr($message['text'] ,0,5,"UTF-8") == "值日生交換" ): //分享當日值日生權限
         $UserId = $event['source']['userId']; //抓該訊息的發送者
@@ -308,7 +308,7 @@ switch (true) {
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
     case (mb_substr($message['text'] ,0,5,"UTF-8") == "管理員權限"):
         $UserId = $event['source']['userId']; //抓該訊息的發送者
@@ -351,7 +351,7 @@ switch (true) {
         }
         // 回傳名字到原本發訊息的地方(群組或機器人私訊)
         $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
     case ($message['text'] == "工作檢核"): //工作檢核功能
         $client->replyMessage(array(
@@ -552,7 +552,7 @@ switch (true) {
                         $ReturnMessage = $Name."，已有打卡紀錄";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-                    mysqli_close($db_connection);  //關閉資料庫連線
+                    $db_connection -> close();  //關閉資料庫連線
                 }else{
                     $ReturnMessage = $Name."，你不是今天值日生";
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
@@ -581,7 +581,7 @@ switch (true) {
                         $ReturnMessage = $Name."，已有打卡紀錄";
                     }
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息
-                    mysqli_close($db_connection);  //關閉資料庫連線
+                    $db_connection -> close();  //關閉資料庫連線
                 }else{
                     $ReturnMessage = $Name."，你不是今天值日生";
                     $work -> ReplyText($ReturnMessage, $event, $client); //回傳訊息

@@ -70,7 +70,7 @@ class Linebot{
             $ReturnMessage = "=======================\n     " . $time . "(" . $week . ")" . $day . "\n=======================\n--->" . $name; // 回復訊息
         }
         //傳輸訊息
-        mysqli_close($db_connection); //關閉資料庫連線
+        $db_connection -> close(); //關閉資料庫連線
         return($ReturnMessage);
     }
 
@@ -123,7 +123,7 @@ class Linebot{
             $ReturnMessage = $userid; // 回復訊息
         }
         //傳輸訊息
-        mysqli_close($db_connection); //關閉資料庫連線
+        $db_connection -> close(); //關閉資料庫連線
         return($ReturnMessage);
     }
 
@@ -212,7 +212,7 @@ class Linebot{
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
         $table_member = $db_connection->query($sql)->fetch_assoc();  //查詢結果
         $duty_level = $table_member["duty_level"]; //取出權限等級
-        mysqli_close($db_connection);
+        $db_connection -> close();
         return $duty_level;
     }
 
@@ -223,7 +223,7 @@ class Linebot{
         $sql = "select * from member where lineuid = '" . $UserId . "'"; 
         $table_member = $db_connection->query($sql)->fetch_assoc();  //查詢結果
         $Security = $table_member["security"]; //取出權限等級
-        mysqli_close($db_connection);
+        $db_connection -> close();
         return $Security;
     }
 

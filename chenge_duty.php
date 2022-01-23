@@ -54,6 +54,6 @@ switch(true){
         }
         echo $ReturnSQLMessage;
     default:
-        mysqli_close($db_connection);
+        $db_connection -> close();
         break;
 }

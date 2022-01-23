@@ -195,7 +195,7 @@ for ($day = 0; $day < 7; $day++) {
             <td align="center" style="line-height: 1.5; width: auto;">'.$table_sign_table["room_conditioner_light"].'</td>
         </tr>';
 }
-mysqli_close($db_connection);
+$db_connection -> close();
 $html = '
 <table cellpadding="1">' . $html . '</table>';
 
