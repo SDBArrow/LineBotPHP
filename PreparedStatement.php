@@ -10,7 +10,7 @@ $stmt -> bind_param('s',$name); #帶入參數值 's'代表一個string 若參數
 $stmt -> execute(); #執行
 $stmt->bind_result($district);
 $stmt->fetch();
-echo($district["security"]);
+echo($district);
 #使用完釋放資源
 $stmt -> close();
 $db_connection -> close();
