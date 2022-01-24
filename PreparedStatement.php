@@ -9,8 +9,8 @@ $stmt -> prepare($sql); #將SQL進行編譯
 $stmt -> bind_param('s',$name); #帶入參數值 's'代表一個string 若參數有兩個string則為'ss'以此類推
 $stmt -> execute(); #執行
 $stmt->bind_result($a0);
-echo($stmt->fetch());
-echo($a0);
+$stmt->fetch();
+
 #使用完釋放資源
 $stmt -> close();
 $db_connection -> close();

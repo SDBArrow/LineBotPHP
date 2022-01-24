@@ -244,24 +244,24 @@ switch (true) {
             //查詢資料庫的個人流水號
             include('./connect.php'); //連結資料庫設定
             $name = mb_substr($message['text'], 9, null, "UTF-8");  // 取輸入的名字
-            $sql = "select * from member where name = '" . $name . "'"; 
-            $result = $db_connection->query($sql);  //查詢結果
-            $rowtotal = $result->num_rows; //總資料比數
-        
-            if ($rowtotal > 0){  //如果有這個人
+            //防SQL Injecion
+            $sql = 'SELECT member.userid FROM member WHERE name=?'; 
+            $stmt = $db_connection -> stmt_init(); 
+            $stmt -> prepare($sql); 
+            $stmt -> bind_param('s',$name); 
+            $stmt -> execute(); 
+            $stmt->bind_result($table_member_userid);
 
+            if ($stmt->fetch()){  //如果有這個人
+                $stmt -> close();
                 $table_chose = mb_substr($message['text'], 3, 1, "UTF-8");  // 取出要更動的資料表
-
                 if ($table_chose){  //判斷要更動的班表
                     $table_name = "new_userid";
                 }else{
                     $table_name = "userid";
                 }
-                
-                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出流水號
                 $duty_id = mb_substr($message['text'], 5, 2, "UTF-8");  // 取出輸入的工作日編號
                 $sql = "update duty_list set ".$table_name." = '" .$table_member_userid. "' where duty_id ='".$duty_id ."'"; 
-                
                 $db_connection->query($sql); 
                 if($db_connection->affected_rows > 0){ //檢查是否有更動
                     $ReturnMessage = "已更新到工作日";
@@ -287,12 +287,17 @@ switch (true) {
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 7, null, "UTF-8");  // 取輸入的名字
             include('./connect.php'); //連結資料庫設定
-            $sql = "select * from member where name = '" . $name . "'"; 
-            $result = $db_connection->query($sql);  //查詢結果
-            $rowtotal = $result->num_rows; //總資料比數
-            
-            if ($rowtotal > 0){  //如果有這個人
-                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出userid流水號
+
+            //防SQL Injecion
+            $sql = 'SELECT member.userid FROM member WHERE name=?'; 
+            $stmt = $db_connection -> stmt_init(); 
+            $stmt -> prepare($sql); 
+            $stmt -> bind_param('s',$name); 
+            $stmt -> execute(); 
+            $stmt->bind_result($table_member_userid);
+
+            if ($stmt->fetch()){  //如果有這個人
+                $stmt -> close();
                 $sql = "update member set duty_level = 1 where userid = ".$table_member_userid;
                 $db_connection->query($sql); 
                 if($db_connection->affected_rows > 0){ //檢查是否更新成功
@@ -317,12 +322,16 @@ switch (true) {
             //查詢資料庫的個人流水號
             $name = mb_substr($message['text'], 10, null, "UTF-8");  // 取輸入的名字
             include('./connect.php'); //連結資料庫設定
-            $sql = "select * from member where name = '" . $name . "'"; 
-            $result = $db_connection->query($sql);  //查詢結果
-            $rowtotal = $result->num_rows; //總資料比數
-            
-            if ($rowtotal > 0){  //如果有這個人
-                $table_member_userid =  $result->fetch_assoc()["userid"]; //取出userid流水號
+            //防SQL Injecion
+            $sql = 'SELECT member.userid FROM member WHERE name=?'; 
+            $stmt = $db_connection -> stmt_init(); 
+            $stmt -> prepare($sql); 
+            $stmt -> bind_param('s',$name); 
+            $stmt -> execute(); 
+            $stmt->bind_result($table_member_userid);
+
+            if ($stmt->fetch()){  //如果有這個人
+                $stmt -> close();
                 $code = mb_substr($message['text'], 6, 2, "UTF-8");
                 if ( $code == "新增"){
                     $sql = "update member set security = 1 where userid = ".$table_member_userid;
