@@ -1,7 +1,7 @@
 <?php
 include('./connect.php'); //連結資料庫設定
 
-$name = '楊子弘'; #自訂變數
+$name = '王子弘'; #自訂變數
 $sql = 'SELECT member.userid FROM member WHERE name=?'; #SQL指令 ?代表參數
 
 $stmt = $db_connection -> stmt_init(); #使用前初始化
